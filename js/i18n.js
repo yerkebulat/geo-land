@@ -11,7 +11,7 @@ const I18N = {
     nav_dashboard: "Басты бет",
     nav_logout: "Шығу",
     hero_eyebrow: "География олимпиадасына дайындық",
-    hero_title: "Жер — емтихан.",
+    hero_title: "Әлем — емтихан.",
     hero_title_em: "Дайынсың ба?",
     hero_sub:
       "NIS Қаратау (Шымкент) ұстазы Нұрсұлтан Өтебаевтың оқушыларына арналған жеке платформа. Мектептен IGeo-ға дейін — бір картада.",
@@ -168,7 +168,7 @@ const I18N = {
     nav_dashboard: "Dashboard",
     nav_logout: "Log out",
     hero_eyebrow: "Geography olympiad prep",
-    hero_title: "Earth is an exam.",
+    hero_title: "The world is an exam.",
     hero_title_em: "Are you ready?",
     hero_sub:
       "Personal platform by mentor Nursultan Utebayev (NIS Karatau, Shymkent). From school contests to IGeo — one map room.",
