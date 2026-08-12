@@ -29,6 +29,7 @@
   <script src="js/i18n.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/storage.js"></script>
+  <script src="js/open-categories.js"></script>
   <script src="js/open-sets.js"></script>
   <script src="js/app-nav.js"></script>
   <script>
@@ -61,26 +62,6 @@
           </div>`;
     }
 
-    function openSetCardsHtml(sets) {
-      if (!sets || !sets.length) return "";
-      return sets
-        .map(
-          (s) => `
-          <div class="dash-card">
-            <span class="icon">✍️</span>
-            <h3>${escapeHtml(s.title)}</h3>
-            <p>${escapeHtml(s.description || Lang.t("card_open_d"))}</p>
-            <p class="meta">${s.questionCount || 0} ${Lang.t("q_of")} · ${s.totalPoints || 0} ${Lang.t(
-            "points_short"
-          )}</p>
-            <a class="btn btn-primary btn-sm" href="open.html?id=${encodeURIComponent(s.id)}">${Lang.t(
-            "start"
-          )}</a>
-          </div>`
-        )
-        .join("");
-    }
-
     async function bootDash() {
       const user = Auth.require();
       if (!user) return;
@@ -94,21 +75,13 @@
       );
 
       const grid = document.getElementById("dash-grid");
-      let published = [];
-      try {
-        published = await OpenSets.listPublished();
-      } catch (e) {
-        console.warn(e);
-      }
-
-      const builtInOpen = `
-          <div class="dash-card">
+      const openHubCard = `
+          <a class="dash-card" href="open-hub.html" style="color:inherit;text-decoration:none">
             <span class="icon">✍️</span>
             <h3 data-i18n="card_open">Ашық сұрақтар</h3>
-            <p data-i18n="card_open_d">Жазбаша жауап. AI алдын ала бағалайды.</p>
-            <p class="meta">№1 · 30 <span data-i18n="points_short">б</span></p>
-            <a class="btn btn-ghost btn-sm" href="open.html?id=open-1" data-i18n="start">Бастау</a>
-          </div>`;
+            <p data-i18n="open_hub_card_d">Алдымен тақырыпты таңдаңыз, содан кейін жинаққа жауап беріңіз.</p>
+            <span class="btn btn-primary btn-sm" data-i18n="start">Бастау</span>
+          </a>`;
 
       if (user.role === "teacher") {
         grid.innerHTML = `
@@ -121,7 +94,7 @@
           <a class="dash-card" href="teacher-open.html" style="color:inherit;text-decoration:none">
             <span class="icon">➕</span>
             <h3 data-i18n="open_manage_title">Ашық сұрақтар жасау</h3>
-            <p data-i18n="open_manage_lead">Жаңа сұрақтар, суреттер, жариялау.</p>
+            <p data-i18n="open_manage_lead">Тақырып, сұрақтар, URL сурет, жариялау.</p>
             <span class="btn btn-teal btn-sm" data-i18n="open_create_new">Жаңа жинақ</span>
           </a>
           <div class="dash-card">
@@ -138,8 +111,7 @@
             <p class="meta">1 · <span data-i18n="available">Қолжетімді</span></p>
             <a class="btn btn-ghost btn-sm" href="calc.html?id=calc-1" data-i18n="start">Бастау</a>
           </div>
-          ${builtInOpen}
-          ${openSetCardsHtml(published)}
+          ${openHubCard}
           ${materialsCardHtml()}
           ${whatsappCardHtml()}
         `;
@@ -159,8 +131,7 @@
             <p class="meta">Есептер №1 · 10 <span data-i18n="points_short">б</span></p>
             <a class="btn btn-teal btn-sm" href="calc.html?id=calc-1" data-i18n="start">Бастау</a>
           </div>
-          ${builtInOpen}
-          ${openSetCardsHtml(published)}
+          ${openHubCard}
           <a class="dash-card" href="history.html" style="color:inherit;text-decoration:none">
             <span class="icon">📊</span>
             <h3 data-i18n="card_history">Менің нәтижелерім</h3>

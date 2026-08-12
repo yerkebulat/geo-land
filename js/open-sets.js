@@ -62,6 +62,12 @@ const OpenSets = {
     return all.filter((s) => s.published);
   },
 
+  async listPublishedByCategory(categoryId) {
+    const all = await this.listPublished();
+    if (!categoryId) return all;
+    return all.filter((s) => s.category === categoryId);
+  },
+
   async get(id) {
     await this._ready();
     if (!id) return null;
@@ -84,10 +90,12 @@ const OpenSets = {
       imageUrl: q.imageUrl || "",
       modelAnswer: q.modelAnswer ? String(q.modelAnswer).trim() : "",
     }));
+    const category = String(set.category || "").trim();
     const doc = {
       id: set.id || this._uid("os"),
       title: String(set.title || "").trim() || "Open set",
       description: String(set.description || "").trim(),
+      category: category || "physical",
       published: !!set.published,
       createdBy: set.createdBy || username || "nursultan.utebayev",
       createdAt: set.createdAt || now,
@@ -143,6 +151,7 @@ const OpenSets = {
       id: set.id,
       title: set.title,
       description: set.description || "",
+      category: set.category || "",
       intro:
         Lang && Lang.current === "en"
           ? "Write full answers. AI will draft a score; your teacher can adjust it."

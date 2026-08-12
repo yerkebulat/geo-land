@@ -60,6 +60,7 @@ async function renderList(user) {
         : `<div class="table-wrap"><table class="data">
             <thead><tr>
               <th>${t("th_task")}</th>
+              <th>${t("open_category")}</th>
               <th>${t("th_score")}</th>
               <th>${t("th_status")}</th>
               <th>${t("th_date")}</th>
@@ -71,6 +72,7 @@ async function renderList(user) {
                   (s) => `<tr>
                   <td><strong>${escapeHtml(s.title)}</strong><br/>
                     <span style="color:var(--text-dim);font-size:0.8rem">${s.questionCount || 0} ${t("q_of")}</span></td>
+                  <td>${OpenCategories.icon(s.category)} ${escapeHtml(OpenCategories.label(s.category))}</td>
                   <td>${s.totalPoints || 0} ${t("points_short")}</td>
                   <td>${
                     s.published
@@ -150,6 +152,7 @@ async function renderEditor(user, setId) {
     id: set ? set.id : OpenSets._uid("os"),
     title: set ? set.title : "",
     description: set ? set.description || "" : "",
+    category: set ? set.category || "physical" : "physical",
     published: set ? !!set.published : false,
     createdAt: set ? set.createdAt : null,
     createdBy: set ? set.createdBy : user.username,
@@ -171,6 +174,10 @@ async function renderEditor(user, setId) {
         <div class="form-group">
           <label>${t("open_set_title")}</label>
           <input id="set-title" type="text" value="${escapeHtml(state.title)}" />
+        </div>
+        <div class="form-group">
+          <label>${t("open_category")}</label>
+          <select id="set-category">${OpenCategories.optionsHtml(state.category)}</select>
         </div>
         <div class="form-group">
           <label>${t("open_set_desc")}</label>
@@ -290,11 +297,18 @@ async function renderEditor(user, setId) {
           }
           q.imageUrl = u;
         }
+        const category = document.getElementById("set-category").value;
+        if (!category) {
+          alert(t("open_category_required"));
+          status.textContent = "";
+          return;
+        }
         const saved = await OpenSets.save(
           {
             id: state.id,
             title,
             description: document.getElementById("set-desc").value,
+            category,
             published: document.getElementById("set-published").checked,
             createdAt: state.createdAt,
             createdBy: state.createdBy,
@@ -302,6 +316,7 @@ async function renderEditor(user, setId) {
           },
           user.username
         );
+        state.category = category;
         status.textContent = t("saved_ok");
         state.id = saved.id;
         state.createdAt = saved.createdAt;
