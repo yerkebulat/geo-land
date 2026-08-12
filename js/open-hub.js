@@ -1,12 +1,31 @@
 /* Student/teacher: pick open-question category, then choose a set */
 
+/** Built-in pack treated as a published set under Аралас (not in Firestore) */
+function builtInMixedSet() {
+  return {
+    id: "open-1",
+    title:
+      Lang.current === "en"
+        ? "Open questions #1 — Mixed (built-in)"
+        : "Ашық сұрақтар №1 — Аралас (кірістірілген)",
+    description:
+      Lang.current === "en"
+        ? "Mineralogy, geopolitics, meteorology · 14 questions · 30 pts · AI + teacher"
+        : "Минералогия, геосаясат, метеорология · 14 сұрақ · 30 б · AI + мұғалім",
+    category: "mixed",
+    published: true,
+    questionCount: 14,
+    totalPoints: 30,
+    builtIn: true,
+  };
+}
+
 async function bootOpenHub() {
   const user = Auth.require();
   if (!user) return;
   mountAppNav("dash");
   await Storage.init();
 
-  const root = document.getElementById("open-hub-root");
   const params = new URLSearchParams(location.search);
   const cat = params.get("cat");
 
@@ -24,18 +43,35 @@ async function bootOpenHub() {
   });
 }
 
-async function renderCategoryGrid(user) {
-  const root = document.getElementById("open-hub-root");
+async function loadPublishedSets() {
   let published = [];
   try {
     published = await OpenSets.listPublished();
   } catch (e) {
     console.warn(e);
   }
+  return published;
+}
+
+/** Teacher sets + built-in open-1 only under mixed */
+function setsForCategory(published, catId) {
+  const list = published.filter((s) => s.category === catId);
+  if (catId === "mixed") {
+    // Avoid duplicate if teacher somehow used id open-1
+    if (!list.some((s) => s.id === "open-1")) {
+      list.unshift(builtInMixedSet());
+    }
+  }
+  return list;
+}
+
+async function renderCategoryGrid(user) {
+  const root = document.getElementById("open-hub-root");
+  const published = await loadPublishedSets();
 
   const counts = {};
   OpenCategories.list().forEach((c) => {
-    counts[c.id] = published.filter((s) => s.category === c.id).length;
+    counts[c.id] = setsForCategory(published, c.id).length;
   });
 
   root.innerHTML = `
@@ -59,20 +95,6 @@ async function renderCategoryGrid(user) {
         })
         .join("")}
     </div>
-    <div class="card" style="margin-top:1.5rem">
-      <h3 style="margin-bottom:0.5rem">🔀 ${Lang.t("open_mixed_title")}</h3>
-      <p style="color:var(--text-muted);font-size:0.92rem;margin-bottom:0.85rem">${Lang.t(
-        "open_mixed_lead"
-      )}</p>
-      <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
-        <a class="btn btn-primary btn-sm" href="open-hub.html?cat=mixed">${Lang.t(
-          "open_mixed_browse"
-        )}</a>
-        <a class="btn btn-ghost btn-sm" href="open.html?id=open-1">${Lang.t(
-          "start"
-        )} · open-1 (30 ${Lang.t("points_short")})</a>
-      </div>
-    </div>
   `;
   Lang.apply();
 }
@@ -81,12 +103,8 @@ async function renderCategorySets(user, catId) {
   const root = document.getElementById("open-hub-root");
   root.innerHTML = `<p class="empty-state">${Lang.t("loading")}</p>`;
 
-  let sets = [];
-  try {
-    sets = await OpenSets.listPublishedByCategory(catId);
-  } catch (e) {
-    console.warn(e);
-  }
+  const published = await loadPublishedSets();
+  const sets = setsForCategory(published, catId);
 
   const label = OpenCategories.label(catId);
   const icon = OpenCategories.icon(catId);
@@ -116,12 +134,16 @@ async function renderCategorySets(user, catId) {
               .map(
                 (s) => `
               <div class="dash-card">
-                <span class="icon">${icon}</span>
+                <span class="icon">${s.builtIn ? "📦" : icon}</span>
                 <h3>${escapeHtml(s.title)}</h3>
                 <p>${escapeHtml(s.description || "")}</p>
                 <p class="meta">${s.questionCount || 0} ${Lang.t("q_of")} · ${
                   s.totalPoints || 0
-                } ${Lang.t("points_short")}</p>
+                } ${Lang.t("points_short")}${
+                  s.builtIn
+                    ? ` · <span data-i18n="open_built_in">${Lang.t("open_built_in")}</span>`
+                    : ""
+                }</p>
                 <a class="btn btn-primary btn-sm" href="open.html?id=${encodeURIComponent(
                   s.id
                 )}">${Lang.t("start")}</a>
