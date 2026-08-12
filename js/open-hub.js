@@ -60,13 +60,18 @@ async function renderCategoryGrid(user) {
         .join("")}
     </div>
     <div class="card" style="margin-top:1.5rem">
-      <h3 style="margin-bottom:0.5rem">${Lang.t("open_mixed_title")}</h3>
+      <h3 style="margin-bottom:0.5rem">🔀 ${Lang.t("open_mixed_title")}</h3>
       <p style="color:var(--text-muted);font-size:0.92rem;margin-bottom:0.85rem">${Lang.t(
         "open_mixed_lead"
       )}</p>
-      <a class="btn btn-primary btn-sm" href="open.html?id=open-1">${Lang.t("start")} · open-1 (30 ${Lang.t(
-    "points_short"
-  )})</a>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+        <a class="btn btn-primary btn-sm" href="open-hub.html?cat=mixed">${Lang.t(
+          "open_mixed_browse"
+        )}</a>
+        <a class="btn btn-ghost btn-sm" href="open.html?id=open-1">${Lang.t(
+          "start"
+        )} · open-1 (30 ${Lang.t("points_short")})</a>
+      </div>
     </div>
   `;
   Lang.apply();

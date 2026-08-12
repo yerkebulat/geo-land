@@ -1132,6 +1132,39 @@ select {
   box-shadow: 0 0 0 3px rgba(90, 155, 196, 0.2);
 }
 
+.cat-chip-row,
+.mode-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.cat-chip,
+.mode-chip {
+  border: 1px solid var(--border-subtle);
+  background: #fff;
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.cat-chip:hover,
+.mode-chip:hover {
+  border-color: var(--border);
+  background: var(--bg-hover);
+}
+
+.cat-chip.is-on,
+.mode-chip.is-on {
+  background: linear-gradient(165deg, #4a8cb8, #2a6f9e);
+  border-color: transparent;
+  color: #fff;
+}
+
 .user-chip {
   display: flex;
   align-items: center;

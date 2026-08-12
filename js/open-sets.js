@@ -95,7 +95,7 @@ const OpenSets = {
       id: set.id || this._uid("os"),
       title: String(set.title || "").trim() || "Open set",
       description: String(set.description || "").trim(),
-      category: category || "physical",
+      category: category || "mixed",
       published: !!set.published,
       createdBy: set.createdBy || username || "nursultan.utebayev",
       createdAt: set.createdAt || now,

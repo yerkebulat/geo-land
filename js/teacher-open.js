@@ -148,12 +148,15 @@ async function renderEditor(user, setId) {
     return;
   }
 
+  // single = 1 question quick submit; patch = multi-question pack
+  const isNew = !set;
   const state = {
     id: set ? set.id : OpenSets._uid("os"),
     title: set ? set.title : "",
     description: set ? set.description || "" : "",
-    category: set ? set.category || "physical" : "physical",
-    published: set ? !!set.published : false,
+    category: set ? set.category || "mixed" : "mixed",
+    mode: set && set.questions && set.questions.length > 1 ? "patch" : "single",
+    published: set ? !!set.published : true,
     createdAt: set ? set.createdAt : null,
     createdBy: set ? set.createdBy : user.username,
     questions: set && set.questions && set.questions.length
@@ -162,6 +165,14 @@ async function renderEditor(user, setId) {
   };
 
   function paint() {
+    // single mode keeps only first question visible for editing simplicity
+    if (state.mode === "single" && state.questions.length > 1) {
+      // keep all in state when switching from patch; show all if already multi on edit
+    }
+
+    const modeSingleOn = state.mode === "single" ? " is-on" : "";
+    const modePatchOn = state.mode === "patch" ? " is-on" : "";
+
     root.innerHTML = `
       <div class="page-header">
         <div>
@@ -170,16 +181,40 @@ async function renderEditor(user, setId) {
         </div>
         <a href="teacher-open.html" class="btn btn-ghost btn-sm">${t("back")}</a>
       </div>
+
       <div class="card" style="margin-bottom:1rem">
         <div class="form-group">
-          <label>${t("open_set_title")}</label>
-          <input id="set-title" type="text" value="${escapeHtml(state.title)}" />
+          <label>${t("open_submit_mode")}</label>
+          <div class="mode-row">
+            <button type="button" class="mode-chip${modeSingleOn}" id="mode-single">${t(
+      "open_mode_single"
+    )}</button>
+            <button type="button" class="mode-chip${modePatchOn}" id="mode-patch">${t(
+      "open_mode_patch"
+    )}</button>
+          </div>
+          <p class="meta" style="margin-top:0.4rem">${
+            state.mode === "single" ? t("open_mode_single_hint") : t("open_mode_patch_hint")
+          }</p>
         </div>
+
         <div class="form-group">
           <label>${t("open_category")}</label>
-          <select id="set-category">${OpenCategories.optionsHtml(state.category)}</select>
+          <div class="cat-chip-row" id="cat-chips">${OpenCategories.chipsHtml(state.category)}</div>
+          <input type="hidden" id="set-category" value="${escapeHtml(state.category)}" />
         </div>
+
         <div class="form-group">
+          <label>${t("open_set_title")} ${
+      state.mode === "single"
+        ? `<span style="font-weight:400;color:var(--text-dim)">(${t("optional")})</span>`
+        : ""
+    }</label>
+          <input id="set-title" type="text" value="${escapeHtml(state.title)}" placeholder="${
+      state.mode === "single" ? t("open_title_auto") : ""
+    }" />
+        </div>
+        <div class="form-group" ${state.mode === "single" ? 'style="display:none"' : ""}>
           <label>${t("open_set_desc")}</label>
           <textarea id="set-desc" rows="2">${escapeHtml(state.description)}</textarea>
         </div>
@@ -190,21 +225,31 @@ async function renderEditor(user, setId) {
       </div>
       <div id="q-list"></div>
       <div class="quiz-actions" style="justify-content:space-between">
-        <button type="button" class="btn btn-ghost" id="btn-add-q">${t("open_add_question")}</button>
-        <button type="button" class="btn btn-primary" id="btn-save-set">${t("save")}</button>
+        <button type="button" class="btn btn-ghost" id="btn-add-q" ${
+          state.mode === "single" ? "hidden" : ""
+        }>${t("open_add_question")}</button>
+        <button type="button" class="btn btn-primary" id="btn-save-set">${
+          state.mode === "single" ? t("open_submit_one") : t("save")
+        }</button>
       </div>
       <p id="save-status" style="color:var(--text-muted);font-size:0.88rem;margin-top:0.75rem"></p>
     `;
 
     const qList = document.getElementById("q-list");
-    state.questions.forEach((q, i) => {
+    const visibleQs =
+      state.mode === "single" ? state.questions.slice(0, 1) : state.questions;
+    visibleQs.forEach((q, i) => {
       const card = document.createElement("div");
       card.className = "question-card";
       card.innerHTML = `
-        <div class="q-num">#${i + 1}
-          <button type="button" class="btn btn-danger btn-sm btn-rm-q" data-i="${i}" style="float:right">${t(
-        "delete"
-      )}</button>
+        <div class="q-num">${state.mode === "single" ? t("open_one_question") : "#" + (i + 1)}
+          ${
+            state.mode === "patch" && state.questions.length > 1
+              ? `<button type="button" class="btn btn-danger btn-sm btn-rm-q" data-i="${i}" style="float:right">${t(
+                  "delete"
+                )}</button>`
+              : ""
+          }
         </div>
         <div class="form-group">
           <label>${t("open_q_text")}</label>
@@ -240,6 +285,23 @@ async function renderEditor(user, setId) {
 
     Lang.apply();
 
+    document.getElementById("mode-single").onclick = () => {
+      state.mode = "single";
+      if (!state.questions.length) state.questions = [emptyQuestion()];
+      paint();
+    };
+    document.getElementById("mode-patch").onclick = () => {
+      state.mode = "patch";
+      paint();
+    };
+
+    root.querySelectorAll(".cat-chip").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.category = btn.dataset.cat;
+        paint();
+      });
+    });
+
     root.querySelectorAll(".q-text-in").forEach((el) => {
       el.addEventListener("input", () => {
         state.questions[Number(el.dataset.i)].text = el.value;
@@ -271,52 +333,82 @@ async function renderEditor(user, setId) {
       });
     });
 
-    document.getElementById("btn-add-q").onclick = () => {
-      state.questions.push(emptyQuestion());
-      paint();
-    };
+    const addBtn = document.getElementById("btn-add-q");
+    if (addBtn) {
+      addBtn.onclick = () => {
+        state.mode = "patch";
+        state.questions.push(emptyQuestion());
+        paint();
+      };
+    }
 
     document.getElementById("btn-save-set").onclick = async () => {
       const status = document.getElementById("save-status");
-      const title = document.getElementById("set-title").value.trim();
-      if (!title) {
-        alert(t("open_title_required"));
-        return;
-      }
-      const emptyQ = state.questions.some((q) => !String(q.text || "").trim());
+      // sync latest text from DOM before save
+      root.querySelectorAll(".q-text-in").forEach((el) => {
+        state.questions[Number(el.dataset.i)].text = el.value;
+      });
+      root.querySelectorAll(".q-pts-in").forEach((el) => {
+        state.questions[Number(el.dataset.i)].points = Number(el.value) || 1;
+      });
+      root.querySelectorAll(".q-model-in").forEach((el) => {
+        state.questions[Number(el.dataset.i)].modelAnswer = el.value;
+      });
+      root.querySelectorAll(".q-url-in").forEach((el) => {
+        state.questions[Number(el.dataset.i)].imageUrl = el.value.trim();
+      });
+
+      let qs = state.questions;
+      if (state.mode === "single") qs = state.questions.slice(0, 1);
+
+      const emptyQ = qs.some((q) => !String(q.text || "").trim());
       if (emptyQ) {
         alert(t("open_q_required"));
         return;
       }
+
+      let title = document.getElementById("set-title").value.trim();
+      if (!title) {
+        if (state.mode === "single") {
+          const first = String(qs[0].text || "").trim();
+          title = first.length > 60 ? first.slice(0, 57) + "…" : first;
+        } else {
+          alert(t("open_title_required"));
+          return;
+        }
+      }
+
+      const category = state.category || document.getElementById("set-category").value;
+      if (!category || !OpenCategories.get(category)) {
+        alert(t("open_category_required"));
+        return;
+      }
+
       status.textContent = t("saving");
       try {
-        for (const q of state.questions) {
+        for (const q of qs) {
           const u = (q.imageUrl || "").trim();
           if (u && !/^https?:\/\//i.test(u)) {
             throw new Error("invalid_url");
           }
           q.imageUrl = u;
         }
-        const category = document.getElementById("set-category").value;
-        if (!category) {
-          alert(t("open_category_required"));
-          status.textContent = "";
-          return;
-        }
+        const descEl = document.getElementById("set-desc");
         const saved = await OpenSets.save(
           {
             id: state.id,
             title,
-            description: document.getElementById("set-desc").value,
+            description: descEl ? descEl.value : state.description,
             category,
             published: document.getElementById("set-published").checked,
             createdAt: state.createdAt,
             createdBy: state.createdBy,
-            questions: state.questions,
+            questions: qs,
           },
           user.username
         );
         state.category = category;
+        state.questions = qs;
         status.textContent = t("saved_ok");
         state.id = saved.id;
         state.createdAt = saved.createdAt;

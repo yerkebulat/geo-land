@@ -1,6 +1,6 @@
 /**
  * Open-question topic categories (shared teacher + student).
- * id is stable in Firestore; labels via Lang / local maps.
+ * 9 topic tracks + Аралас (mixed).
  */
 const OPEN_CATEGORIES = [
   { id: "geology", icon: "🪨", kk: "Геология", en: "Geology" },
@@ -12,6 +12,7 @@ const OPEN_CATEGORIES = [
   { id: "country", icon: "🇰🇿", kk: "Елтану", en: "Country studies" },
   { id: "world_map", icon: "🗺️", kk: "Әлем картасы", en: "World map" },
   { id: "international", icon: "🌐", kk: "Халықаралық Гео", en: "International Geo" },
+  { id: "mixed", icon: "🔀", kk: "Аралас", en: "Mixed" },
 ];
 
 const OpenCategories = {
@@ -35,12 +36,22 @@ const OpenCategories = {
     return (c && c.icon) || "✍️";
   },
 
-  /** <option> list for teacher form */
   optionsHtml(selectedId) {
     return OPEN_CATEGORIES.map((c) => {
       const lab = this.label(c.id);
       const sel = c.id === selectedId ? " selected" : "";
       return `<option value="${c.id}"${sel}>${c.icon} ${lab}</option>`;
+    }).join("");
+  },
+
+  /** Clickable chips for teacher form */
+  chipsHtml(selectedId) {
+    return OPEN_CATEGORIES.map((c) => {
+      const lab = this.label(c.id);
+      const on = c.id === selectedId ? " is-on" : "";
+      return `<button type="button" class="cat-chip${on}" data-cat="${c.id}">
+        <span>${c.icon}</span> ${escapeHtml(lab)}
+      </button>`;
     }).join("");
   },
 };
