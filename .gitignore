@@ -1,0 +1,7 @@
+.DS_Store
+**/.DS_Store
+
+# Never commit real AI keys
+js/gemini-config.local.js
+.env
+.env.*

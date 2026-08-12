@@ -88,20 +88,29 @@ Edit accounts in `js/auth.js`.
 
 ## 4. Gemini API (AI open-question grading)
 
-1. Open [Google AI Studio](https://aistudio.google.com/apikey) → create an API key  
-2. Edit `js/gemini-config.js`:
+**Do not commit API keys** — GitHub push protection will reject the push.
 
-```js
-window.GEMINI_CONFIG = {
-  enabled: true,
-  apiKey: "AIza...",
-  model: "gemini-2.0-flash",
-};
+### Local / private machine (recommended for now)
+
+1. Open [Google AI Studio](https://aistudio.google.com/apikey) → create an API key  
+2. Copy the example file:
+
+```bash
+cp js/gemini-config.local.js.example js/gemini-config.local.js
 ```
 
-3. Commit & push (or test locally).
+3. Put your key in `js/gemini-config.local.js` (`enabled: true`).  
+   That file is **gitignored** and will not be pushed.
 
-**Note:** The key is visible in the browser on GitHub Pages. Fine for a private pilot; rotate if abused. Later we can hide it behind a Cloudflare Worker.
+4. Test with `python3 -m http.server` — open questions will AI-grade on your computer.
+
+### Live GitHub Pages
+
+The key cannot live in the public repo safely. Options:
+
+- **A)** Teacher grades open answers manually (works today without Gemini on Pages)  
+- **B)** Later: Cloudflare Worker / serverless proxy (key stays secret)  
+- **C)** Only for a short pilot: put key in repo and **Allow** secret in GitHub Security (key is public — rotate after)
 
 If Gemini is off, open answers still save; teacher grades manually.
 

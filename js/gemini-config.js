@@ -1,17 +1,17 @@
 /**
  * Google Gemini API (AI Studio free tier) for open-question grading.
  *
- * 1. Open https://aistudio.google.com/apikey
- * 2. Create API key
- * 3. Paste below and set enabled: true
+ * Do NOT commit real API keys — GitHub push protection will block you.
  *
- * WARNING: On GitHub Pages the key is visible in the browser.
- * For a private pilot (4 users) this is acceptable; rotate the key if leaked.
- * Later: move to Cloudflare Worker proxy.
+ * Local / private pilot options:
+ * 1) Create js/gemini-config.local.js (gitignored) with your key, OR
+ * 2) Paste key only on your machine and never commit, OR
+ * 3) Later: Cloudflare Worker so the key stays server-side
+ *
+ * Get a key: https://aistudio.google.com/apikey
  */
 window.GEMINI_CONFIG = {
   enabled: false,
   apiKey: "YOUR_GEMINI_API_KEY",
-  /** Free-tier friendly model; change if Google renames it */
   model: "gemini-2.0-flash",
 };
