@@ -107,9 +107,23 @@ async function renderList(user) {
   });
   root.querySelectorAll(".btn-del-set").forEach((btn) => {
     btn.addEventListener("click", async () => {
-      if (!confirm(t("open_delete_set_confirm"))) return;
-      await OpenSets.delete(btn.dataset.id);
-      renderList(user);
+      const id = btn.dataset.id;
+      const row = mine.find((s) => s.id === id);
+      const label = row ? row.title : id;
+      const msg =
+        Lang.current === "kk"
+          ? `Жинақты толығымен жоясыз ба?\n«${label}»\n\nБарлық сұрақтар өшеді. Қайтаруға болмайды.`
+          : `Delete this entire set?\n«${label}»\n\nAll questions in it will be removed. This cannot be undone.`;
+      if (!confirm(msg)) return;
+      btn.disabled = true;
+      try {
+        await OpenSets.delete(id);
+        await renderList(user);
+      } catch (e) {
+        console.error(e);
+        alert(t("delete_failed"));
+        btn.disabled = false;
+      }
     });
   });
 }
@@ -179,7 +193,16 @@ async function renderEditor(user, setId) {
           <h1>${set ? t("open_edit_title") : t("open_create_new")}</h1>
           <p data-i18n="open_edit_lead">${t("open_edit_lead")}</p>
         </div>
-        <a href="teacher-open.html" class="btn btn-ghost btn-sm">${t("back")}</a>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center">
+          <a href="teacher-open.html" class="btn btn-ghost btn-sm">${t("back")}</a>
+          ${
+            set
+              ? `<button type="button" class="btn btn-danger btn-sm" id="btn-delete-whole-set">${t(
+                  "open_delete_set"
+                )}</button>`
+              : ""
+          }
+        </div>
       </div>
 
       <div class="card" style="margin-bottom:1rem">
@@ -241,15 +264,13 @@ async function renderEditor(user, setId) {
     visibleQs.forEach((q, i) => {
       const card = document.createElement("div");
       card.className = "question-card";
+      const canRemoveOne = state.questions.length > 1 || state.mode === "patch";
       card.innerHTML = `
-        <div class="q-num">${state.mode === "single" ? t("open_one_question") : "#" + (i + 1)}
-          ${
-            state.mode === "patch" && state.questions.length > 1
-              ? `<button type="button" class="btn btn-danger btn-sm btn-rm-q" data-i="${i}" style="float:right">${t(
-                  "delete"
-                )}</button>`
-              : ""
-          }
+        <div class="q-num" style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem">
+          <span>${state.mode === "single" ? t("open_one_question") : "#" + (i + 1)}</span>
+          <button type="button" class="btn btn-danger btn-sm btn-rm-q" data-i="${i}" title="${t(
+        "open_delete_question"
+      )}">${t("open_delete_question")}</button>
         </div>
         <div class="form-group">
           <label>${t("open_q_text")}</label>
@@ -325,13 +346,93 @@ async function renderEditor(user, setId) {
       });
     });
     root.querySelectorAll(".btn-rm-q").forEach((btn) => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", async () => {
         const i = Number(btn.dataset.i);
-        if (state.questions.length <= 1) return;
+        // Sync DOM into state first
+        root.querySelectorAll(".q-text-in").forEach((el) => {
+          state.questions[Number(el.dataset.i)].text = el.value;
+        });
+
+        if (state.questions.length <= 1) {
+          // Only one question left → deleting it means delete whole set (if saved) or reset form
+          if (set) {
+            const msg =
+              Lang.current === "kk"
+                ? "Бұл жинақта бір ғана сұрақ қалды. Жинақты толығымен жоясыз ба?"
+                : "This set has only one question. Delete the entire set?";
+            if (!confirm(msg)) return;
+            try {
+              await OpenSets.delete(state.id);
+              window.location.href = "teacher-open.html";
+            } catch (e) {
+              console.error(e);
+              alert(t("delete_failed"));
+            }
+          } else {
+            if (!confirm(t("open_delete_question_confirm"))) return;
+            state.questions = [emptyQuestion()];
+            state.title = "";
+            paint();
+          }
+          return;
+        }
+
+        if (!confirm(t("open_delete_question_confirm"))) return;
         state.questions.splice(i, 1);
+        if (state.questions.length === 1) state.mode = "single";
+
+        // Auto-save if editing an existing set so deletion sticks immediately
+        if (set) {
+          try {
+            const title =
+              document.getElementById("set-title").value.trim() ||
+              state.title ||
+              "Open set";
+            const descEl = document.getElementById("set-desc");
+            await OpenSets.save(
+              {
+                id: state.id,
+                title,
+                description: descEl ? descEl.value : state.description,
+                category: state.category,
+                published: document.getElementById("set-published").checked,
+                createdAt: state.createdAt,
+                createdBy: state.createdBy,
+                questions: state.questions,
+              },
+              user.username
+            );
+            const st = document.getElementById("save-status");
+            if (st) st.textContent = t("open_question_deleted_saved");
+          } catch (e) {
+            console.error(e);
+            alert(t("delete_failed"));
+          }
+        }
         paint();
       });
     });
+
+    const delWhole = document.getElementById("btn-delete-whole-set");
+    if (delWhole) {
+      delWhole.onclick = async () => {
+        const label = state.title || state.id;
+        const msg =
+          Lang.current === "kk"
+            ? `Жинақты толығымен жоясыз ба?\n«${label}»\n\nБарлық сұрақтар өшеді.`
+            : `Delete this entire set?\n«${label}»\n\nAll questions will be removed.`;
+        if (!confirm(msg)) return;
+        delWhole.disabled = true;
+        try {
+          await OpenSets.delete(state.id);
+          window.location.href = "teacher-open.html";
+        } catch (e) {
+          console.error(e);
+          alert(t("delete_failed"));
+          delWhole.disabled = false;
+        }
+      };
+    }
 
     const addBtn = document.getElementById("btn-add-q");
     if (addBtn) {
