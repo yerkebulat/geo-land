@@ -1,0 +1,15 @@
+name = "geo-land-gemini-grade"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Set secret (do not put the key in this file):
+#   npx wrangler secret put GEMINI_API_KEY
+#
+# Optional:
+#   npx wrangler secret put GEMINI_API_KEY
+#   In Dashboard → Variables: GEMINI_MODEL, ALLOWED_ORIGINS
+
+[vars]
+# Comma-separated origins allowed to call the worker
+ALLOWED_ORIGINS = "https://yerkebulat.github.io,http://localhost:8080,http://127.0.0.1:8080,http://localhost:8765,http://127.0.0.1:8765"
+GEMINI_MODEL = "gemini-2.0-flash"

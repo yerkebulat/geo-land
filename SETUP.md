@@ -86,33 +86,29 @@ Edit accounts in `js/auth.js`.
 
 ---
 
-## 4. Gemini API (AI open-question grading)
+## 4. Gemini API via Cloudflare Worker (AI open-question grading)
 
-**Do not commit API keys** — GitHub push protection will reject the push.
+**Do not put API keys in the repo.** Use a free Cloudflare Worker (see full steps in **`worker/README.md`**).
 
-### Local / private machine (recommended for now)
+### Short version
 
-1. Open [Google AI Studio](https://aistudio.google.com/apikey) → create an API key  
-2. Copy the example file:
+1. Create Gemini key: [aistudio.google.com/apikey](https://aistudio.google.com/apikey)  
+2. Cloudflare → Workers → create `geo-land-gemini-grade` → paste code from `worker/gemini-grade/src/index.js`  
+3. Worker **Settings → Secrets** → `GEMINI_API_KEY` = your key  
+4. Copy worker URL (`https://….workers.dev`) into `js/gemini-config.js`:
 
-```bash
-cp js/gemini-config.local.js.example js/gemini-config.local.js
+```js
+window.GEMINI_CONFIG = {
+  enabled: true,
+  mode: "worker",
+  workerUrl: "https://geo-land-gemini-grade.YOUR_SUBDOMAIN.workers.dev",
+  model: "gemini-2.0-flash",
+};
 ```
 
-3. Put your key in `js/gemini-config.local.js` (`enabled: true`).  
-   That file is **gitignored** and will not be pushed.
+5. Commit & push — safe (no secret in git). Live Pages + local both use the worker.
 
-4. Test with `python3 -m http.server` — open questions will AI-grade on your computer.
-
-### Live GitHub Pages
-
-The key cannot live in the public repo safely. Options:
-
-- **A)** Teacher grades open answers manually (works today without Gemini on Pages)  
-- **B)** Later: Cloudflare Worker / serverless proxy (key stays secret)  
-- **C)** Only for a short pilot: put key in repo and **Allow** secret in GitHub Security (key is public — rotate after)
-
-If Gemini is off, open answers still save; teacher grades manually.
+If Gemini/worker is off, open answers still save; teacher grades manually.
 
 Open set: `data/open-1.json` (14 questions, 30 points).
 

@@ -1,11 +1,12 @@
 /**
- * Copy this file to: js/gemini-config.local.js
- * (gemini-config.local.js is gitignored — safe to put your key there)
+ * Optional LOCAL override (gitignored as gemini-config.local.js).
  *
- * Then enable Gemini in the browser after the main config loads.
+ * Prefer Cloudflare Worker for live site (see worker/README.md).
+ * Use this only for local experiments without a worker.
  */
 window.GEMINI_CONFIG = {
   enabled: true,
+  mode: "direct",
   apiKey: "PASTE_YOUR_KEY_HERE",
   model: "gemini-2.0-flash",
 };

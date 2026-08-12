@@ -1,17 +1,23 @@
 /**
- * Google Gemini API (AI Studio free tier) for open-question grading.
+ * Gemini grading config for Geo-Land.
  *
- * Do NOT commit real API keys — GitHub push protection will block you.
+ * PRODUCTION (recommended): Cloudflare Worker — key stays on the server.
+ *   mode: "worker"
+ *   workerUrl: your workers.dev URL from worker/README.md
  *
- * Local / private pilot options:
- * 1) Create js/gemini-config.local.js (gitignored) with your key, OR
- * 2) Paste key only on your machine and never commit, OR
- * 3) Later: Cloudflare Worker so the key stays server-side
+ * LOCAL only (optional): js/gemini-config.local.js (gitignored) with mode "direct"
+ *   and apiKey — never commit that file.
  *
- * Get a key: https://aistudio.google.com/apikey
+ * Get a Gemini key: https://aistudio.google.com/apikey
+ * Deploy worker: see worker/README.md
  */
 window.GEMINI_CONFIG = {
   enabled: false,
+  /** "worker" = Cloudflare proxy (safe for GitHub Pages). "direct" = browser→Gemini (local only). */
+  mode: "worker",
+  /** e.g. https://geo-land-gemini-grade.yourname.workers.dev */
+  workerUrl: "https://geo-land-gemini-grade.YOUR_SUBDOMAIN.workers.dev",
+  /** Used only when mode is "direct" (do not commit a real key). */
   apiKey: "YOUR_GEMINI_API_KEY",
   model: "gemini-2.0-flash",
 };

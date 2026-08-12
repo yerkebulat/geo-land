@@ -157,7 +157,7 @@ const I18N = {
     open_grading_hint: "Бірнеше секунд күтіңіз. Жауаптар сақталады.",
     open_ai_done: "AI алдын ала бағалады. Мұғалім түзете алады.",
     open_ai_failed_saved: "AI қолжетімсіз — жауаптар сақталды, мұғалім қолмен бағалайды.",
-    open_no_gemini: "Gemini API қосылмаған — жіберілгеннен кейін мұғалім қолмен бағалайды (SETUP.md).",
+    open_no_gemini: "AI бағалау өшірулі (Cloudflare Worker / Gemini). Жауаптар сақталады — мұғалім қолмен бағалайды.",
     storage_local:
       "Firebase қосылмаған — деректер осы құрылғыда ғана сақталады. Мұғалім басқа компьютерден көру үшін Firebase баптаңыз (SETUP.md).",
     storage_firebase: "Firebase қосылған — нәтижелер бұлтта.",
@@ -325,7 +325,7 @@ const I18N = {
     open_grading_hint: "Please wait a few seconds. Answers are saved.",
     open_ai_done: "AI drafted a score. Teacher can adjust it.",
     open_ai_failed_saved: "AI unavailable — answers saved for manual teacher grading.",
-    open_no_gemini: "Gemini API not configured — after submit, teacher grades manually (SETUP.md).",
+    open_no_gemini: "AI grading off (Cloudflare Worker / Gemini). Answers still save — teacher grades manually.",
     storage_local:
       "Firebase not configured — data stays on this device only. For teacher multi-device access, set up Firebase (see SETUP.md).",
     storage_firebase: "Firebase connected — results in the cloud.",

@@ -1,27 +1,27 @@
 /**
- * Grade open-question answers with Gemini Flash.
- * Returns per-question scores + feedback; teacher can override later.
+ * Grade open-question answers via Cloudflare Worker (preferred) or direct Gemini.
  */
 const GeminiGrader = {
   isConfigured() {
     const c = window.GEMINI_CONFIG;
-    return !!(c && c.enabled && c.apiKey && c.apiKey !== "YOUR_GEMINI_API_KEY");
+    if (!c || !c.enabled) return false;
+    if (c.mode === "worker") {
+      return !!(
+        c.workerUrl &&
+        !c.workerUrl.includes("YOUR_SUBDOMAIN") &&
+        c.workerUrl.startsWith("http")
+      );
+    }
+    // direct (local only)
+    return !!(c.apiKey && c.apiKey !== "YOUR_GEMINI_API_KEY");
   },
 
-  async gradeOpenSet(openTask, answers, lang) {
-    if (!this.isConfigured()) {
-      return {
-        ok: false,
-        error: "gemini_not_configured",
-        perQuestion: {},
-        totalScore: null,
-      };
-    }
-
+  _buildTasks(openTask, answers, lang) {
     const L = lang || (window.Lang && Lang.current) || "kk";
-    const items = openTask.questions.map((q, i) => {
+    return openTask.questions.map((q, i) => {
       const text = (q.text && (q.text[L] || q.text.kk || q.text.en)) || q.id;
-      const model = (q.modelAnswer && (q.modelAnswer[L] || q.modelAnswer.kk || q.modelAnswer.en)) || "";
+      const model =
+        (q.modelAnswer && (q.modelAnswer[L] || q.modelAnswer.kk || q.modelAnswer.en)) || "";
       const rubric = (q.rubric && (q.rubric[L] || q.rubric.kk || q.rubric.en)) || "";
       const student = (answers[q.id] || "").trim();
       return {
@@ -34,33 +34,109 @@ const GeminiGrader = {
         studentAnswer: student || "(empty)",
       };
     });
+  },
 
+  _normalizeFromParsed(parsed, openTask) {
+    const perQuestion = {};
+    let total = 0;
+    let maxTotal = 0;
+    openTask.questions.forEach((q) => {
+      maxTotal += q.points || 1;
+      const hit = (parsed.questions || []).find((x) => x.id === q.id);
+      const max = q.points || 1;
+      let score = hit ? Number(hit.score) : 0;
+      if (Number.isNaN(score)) score = 0;
+      score = Math.max(0, Math.min(max, score));
+      score = Math.round(score * 2) / 2;
+      total += score;
+      perQuestion[q.id] = {
+        score,
+        max,
+        feedback: (hit && hit.feedback) || "",
+        ai: true,
+      };
+    });
+    return {
+      ok: true,
+      perQuestion,
+      totalScore: Math.round(total * 2) / 2,
+      maxScore: maxTotal,
+      summary: parsed.summary || "",
+    };
+  },
+
+  async gradeOpenSet(openTask, answers, lang) {
+    if (!this.isConfigured()) {
+      return {
+        ok: false,
+        error: "gemini_not_configured",
+        perQuestion: {},
+        totalScore: null,
+      };
+    }
+
+    const tasks = this._buildTasks(openTask, answers, lang);
+    const cfg = window.GEMINI_CONFIG;
+
+    if (cfg.mode === "worker") {
+      return this._gradeViaWorker(tasks, openTask, cfg);
+    }
+    return this._gradeDirect(tasks, openTask, cfg);
+  },
+
+  async _gradeViaWorker(tasks, openTask, cfg) {
+    const base = String(cfg.workerUrl).replace(/\/$/, "");
+    try {
+      const res = await fetch(base, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tasks, model: cfg.model || "gemini-2.0-flash" }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) {
+        console.error("Worker grade error", res.status, data);
+        return {
+          ok: false,
+          error: data.error || "worker_http_" + res.status,
+          perQuestion: {},
+          totalScore: null,
+        };
+      }
+      // Worker already normalized
+      if (data.perQuestion) {
+        return {
+          ok: true,
+          perQuestion: data.perQuestion,
+          totalScore: data.totalScore,
+          maxScore: data.maxScore != null ? data.maxScore : openTask.totalPoints,
+          summary: data.summary || "",
+          model: data.model || cfg.model,
+        };
+      }
+      return {
+        ok: false,
+        error: "worker_bad_shape",
+        perQuestion: {},
+        totalScore: null,
+      };
+    } catch (e) {
+      console.error(e);
+      return { ok: false, error: "worker_network", perQuestion: {}, totalScore: null };
+    }
+  },
+
+  async _gradeDirect(tasks, openTask, cfg) {
     const system = `You are a strict but fair geography olympiad grader for NIS students in Kazakhstan.
 Grade student answers against model answers and rubrics.
 Respond ONLY with valid JSON (no markdown fences) of this shape:
 {
-  "questions": [
-    {
-      "id": "o1",
-      "score": 0,
-      "max": 3,
-      "feedback": "short feedback in the same language as the student answer (prefer Kazakh if mixed)"
-    }
-  ],
+  "questions": [ { "id": "o1", "score": 0, "max": 3, "feedback": "..." } ],
   "totalScore": 0,
   "totalMax": 30,
   "summary": "one short overall sentence"
 }
-Rules:
-- score must be a number between 0 and max (half points allowed: 0.5, 1.5, …).
-- Empty answers score 0.
-- Partial credit when partially correct.
-- Do not invent facts beyond the model answer/rubric.
-- Be consistent and concise in feedback (max 2 sentences each).`;
+Rules: score 0..max, half points ok, empty=0, partial credit, concise feedback.`;
 
-    const userPayload = JSON.stringify({ tasks: items }, null, 0);
-
-    const cfg = window.GEMINI_CONFIG;
     const model = cfg.model || "gemini-2.0-flash";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
       model
@@ -74,7 +150,7 @@ Rules:
           contents: [
             {
               role: "user",
-              parts: [{ text: system + "\n\nSTUDENT WORK:\n" + userPayload }],
+              parts: [{ text: system + "\n\nSTUDENT WORK:\n" + JSON.stringify({ tasks }) }],
             },
           ],
           generationConfig: {
@@ -83,51 +159,19 @@ Rules:
           },
         }),
       });
-
       if (!res.ok) {
-        const errText = await res.text();
-        console.error("Gemini error", res.status, errText);
         return { ok: false, error: "gemini_http_" + res.status, perQuestion: {}, totalScore: null };
       }
-
       const data = await res.json();
       const raw =
         data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join("") || "";
       const parsed = this._parseJson(raw);
       if (!parsed || !Array.isArray(parsed.questions)) {
-        console.error("Gemini parse fail", raw);
-        return { ok: false, error: "gemini_parse", perQuestion: {}, totalScore: null, raw };
+        return { ok: false, error: "gemini_parse", perQuestion: {}, totalScore: null };
       }
-
-      const perQuestion = {};
-      let total = 0;
-      let maxTotal = 0;
-      openTask.questions.forEach((q) => {
-        maxTotal += q.points || 1;
-        const hit = parsed.questions.find((x) => x.id === q.id);
-        const max = q.points || 1;
-        let score = hit ? Number(hit.score) : 0;
-        if (Number.isNaN(score)) score = 0;
-        score = Math.max(0, Math.min(max, score));
-        // round to 0.5
-        score = Math.round(score * 2) / 2;
-        total += score;
-        perQuestion[q.id] = {
-          score,
-          max,
-          feedback: (hit && hit.feedback) || "",
-          ai: true,
-        };
-      });
-
-      return {
-        ok: true,
-        perQuestion,
-        totalScore: Math.round(total * 2) / 2,
-        maxScore: maxTotal,
-        summary: parsed.summary || "",
-        model,
-      };
+      const result = this._normalizeFromParsed(parsed, openTask);
+      result.model = model;
+      return result;
     } catch (e) {
       console.error(e);
       return { ok: false, error: "gemini_network", perQuestion: {}, totalScore: null };
