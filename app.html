@@ -31,6 +31,23 @@
   <script src="js/storage.js"></script>
   <script src="js/app-nav.js"></script>
   <script>
+    /** Nursultan WhatsApp: 8 702 347 6701 → international +7 702 347 6701 */
+    const WA_URL = "https://wa.me/77023476701";
+
+    function whatsappCardHtml() {
+      return `
+          <div class="dash-card dash-card-wa">
+            <span class="icon">💬</span>
+            <h3 data-i18n="card_wa">WhatsApp</h3>
+            <p data-i18n="card_wa_d">Нұрсұлтан Утебаевқа жазу — QR сканерлеңіз немесе басыңыз.</p>
+            <a class="wa-qr-link" href="${WA_URL}" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+              <img class="wa-qr" src="assets/whatsapp-qr.png" width="160" height="160" alt="WhatsApp QR" />
+            </a>
+            <a class="btn btn-teal btn-sm" href="${WA_URL}" target="_blank" rel="noopener noreferrer" data-i18n="card_wa_open">WhatsApp ашу</a>
+            <p class="meta wa-phone">+7 702 347 6701</p>
+          </div>`;
+    }
+
     const user = Auth.require();
     if (user) {
       mountAppNav("dash");
@@ -72,6 +89,7 @@
             <p class="meta">№1 · 30 <span data-i18n="points_short">б</span></p>
             <a class="btn btn-ghost btn-sm" href="open.html?id=open-1" data-i18n="start">Бастау</a>
           </div>
+          ${whatsappCardHtml()}
         `;
       } else {
         grid.innerHTML = `
@@ -102,6 +120,7 @@
             <p data-i18n="card_history_d">Өткен талпыныстар мен ұпайлар.</p>
             <span class="btn btn-ghost btn-sm" data-i18n="view">Қарау</span>
           </a>
+          ${whatsappCardHtml()}
         `;
       }
       Lang.apply();
