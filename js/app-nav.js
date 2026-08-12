@@ -69,17 +69,10 @@ function mountAppNav(active) {
   });
 }
 
-function storageBannerHtml() {
-  const cloud = Storage.isCloud();
-  const key = cloud ? "storage_firebase" : "storage_local";
-  return `<div class="storage-banner" data-i18n="${key}"></div>`;
-}
-
+/* Storage banner removed from UI (Firebase is configured and working). */
 async function ensureStorageBanner(container) {
   await Storage.init();
-  if (!container) return;
-  container.innerHTML = storageBannerHtml();
-  Lang.apply();
+  if (container) container.innerHTML = "";
 }
 
 window.mountAppNav = mountAppNav;
