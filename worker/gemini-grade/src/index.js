@@ -1,12 +1,12 @@
 /**
  * Geo-Land — Cloudflare Worker: Gemini open-question grader
  *
- * Secrets (wrangler secret put / Dashboard → Settings → Variables):
- *   GEMINI_API_KEY   — required
+ * Secret (Settings → Variables and secrets):
+ *   GEMINI_API_KEY  — required (type: Secret)
  *
  * Optional vars:
- *   GEMINI_MODEL     — default gemini-2.0-flash
- *   ALLOWED_ORIGINS  — comma-separated, default includes github.io + localhost
+ *   GEMINI_MODEL
+ *   ALLOWED_ORIGINS  — comma-separated
  */
 
 const DEFAULT_ORIGINS = [
@@ -17,8 +17,18 @@ const DEFAULT_ORIGINS = [
   "http://127.0.0.1:8765",
 ];
 
+function getKey(env) {
+  // Support a few name variants people accidentally use
+  const raw =
+    (env && env.GEMINI_API_KEY) ||
+    (env && env.GEMINI_KEY) ||
+    (env && env.GOOGLE_API_KEY) ||
+    "";
+  return String(raw || "").trim();
+}
+
 function corsHeaders(origin, env) {
-  const allowed = (env.ALLOWED_ORIGINS || "")
+  const allowed = String((env && env.ALLOWED_ORIGINS) || "")
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
@@ -27,7 +37,7 @@ function corsHeaders(origin, env) {
   const allowOrigin = ok ? origin : list[0];
   return {
     "Access-Control-Allow-Origin": allowOrigin,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Access-Control-Max-Age": "86400",
     Vary: "Origin",
@@ -39,7 +49,7 @@ function json(data, status, origin, env) {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      ...corsHeaders(origin, env),
+      ...corsHeaders(origin, env || {}),
     },
   });
 }
@@ -117,103 +127,142 @@ function normalizeGrades(parsed, tasks) {
   };
 }
 
-export default {
-  async fetch(request, env) {
-    const origin = request.headers.get("Origin") || "";
+async function handleRequest(request, env) {
+  const origin = request.headers.get("Origin") || "";
+  env = env || {};
 
-    if (request.method === "OPTIONS") {
-      return new Response(null, { status: 204, headers: corsHeaders(origin, env) });
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: corsHeaders(origin, env) });
+  }
+
+  if (request.method === "GET") {
+    const key = getKey(env);
+    let bindingNames = [];
+    try {
+      bindingNames = Object.keys(env || {});
+    } catch {
+      bindingNames = [];
     }
+    return json(
+      {
+        service: "geo-land-gemini-grade",
+        ok: true,
+        hasGeminiKey: Boolean(key),
+        bindingNames,
+      },
+      200,
+      origin,
+      env
+    );
+  }
 
-    if (request.method === "GET") {
+  if (request.method !== "POST") {
+    return json({ ok: false, error: "method_not_allowed" }, 405, origin, env);
+  }
+
+  const apiKey = getKey(env);
+  if (!apiKey) {
+    let bindingNames = [];
+    try {
+      bindingNames = Object.keys(env || {});
+    } catch {
+      bindingNames = [];
+    }
+    return json(
+      {
+        ok: false,
+        error: "missing_server_key",
+        hint: "In Cloudflare Worker → Settings → Variables and secrets, add Secret named GEMINI_API_KEY, paste key, Save and deploy. Then hard-refresh.",
+        bindingNames,
+      },
+      500,
+      origin,
+      env
+    );
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ ok: false, error: "invalid_json" }, 400, origin, env);
+  }
+
+  const tasks = body.tasks;
+  if (!Array.isArray(tasks) || !tasks.length) {
+    return json({ ok: false, error: "missing_tasks" }, 400, origin, env);
+  }
+  if (tasks.length > 40) {
+    return json({ ok: false, error: "too_many_tasks" }, 400, origin, env);
+  }
+
+  const model = env.GEMINI_MODEL || body.model || "gemini-2.0-flash";
+  const userPayload = JSON.stringify({ tasks });
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+    model
+  )}:generateContent?key=${encodeURIComponent(apiKey)}`;
+
+  try {
+    const gemRes = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: SYSTEM_PROMPT + "\n\nSTUDENT WORK:\n" + userPayload }],
+          },
+        ],
+        generationConfig: {
+          temperature: 0.2,
+          responseMimeType: "application/json",
+        },
+      }),
+    });
+
+    if (!gemRes.ok) {
+      const errText = await gemRes.text();
+      console.error("Gemini error", gemRes.status, errText.slice(0, 400));
       return json(
-        { service: "geo-land-gemini-grade", ok: true },
-        200,
+        {
+          ok: false,
+          error: "gemini_http_" + gemRes.status,
+          hint:
+            gemRes.status === 400 || gemRes.status === 403
+              ? "Check GEMINI_API_KEY is valid in AI Studio and Gemini API is enabled."
+              : undefined,
+        },
+        502,
         origin,
         env
       );
     }
 
-    if (request.method !== "POST") {
-      return json({ ok: false, error: "method_not_allowed" }, 405, origin, env);
+    const data = await gemRes.json();
+    const raw =
+      (data.candidates &&
+        data.candidates[0] &&
+        data.candidates[0].content &&
+        data.candidates[0].content.parts &&
+        data.candidates[0].content.parts.map((p) => p.text).join("")) ||
+      "";
+
+    const parsed = parseModelJson(raw);
+    if (!parsed || !Array.isArray(parsed.questions)) {
+      return json({ ok: false, error: "gemini_parse" }, 502, origin, env);
     }
 
-    if (!env.GEMINI_API_KEY) {
-      return json({ ok: false, error: "missing_server_key" }, 500, origin, env);
-    }
+    const result = normalizeGrades(parsed, tasks);
+    result.model = model;
+    return json(result, 200, origin, env);
+  } catch (e) {
+    console.error(e);
+    return json({ ok: false, error: "gemini_network" }, 502, origin, env);
+  }
+}
 
-    let body;
-    try {
-      body = await request.json();
-    } catch {
-      return json({ ok: false, error: "invalid_json" }, 400, origin, env);
-    }
-
-    const tasks = body.tasks;
-    if (!Array.isArray(tasks) || !tasks.length) {
-      return json({ ok: false, error: "missing_tasks" }, 400, origin, env);
-    }
-
-    // soft size guard
-    if (tasks.length > 40) {
-      return json({ ok: false, error: "too_many_tasks" }, 400, origin, env);
-    }
-
-    const model = env.GEMINI_MODEL || body.model || "gemini-2.0-flash";
-    const userPayload = JSON.stringify({ tasks });
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
-      model
-    )}:generateContent?key=${encodeURIComponent(env.GEMINI_API_KEY)}`;
-
-    try {
-      const gemRes = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: SYSTEM_PROMPT + "\n\nSTUDENT WORK:\n" + userPayload }],
-            },
-          ],
-          generationConfig: {
-            temperature: 0.2,
-            responseMimeType: "application/json",
-          },
-        }),
-      });
-
-      if (!gemRes.ok) {
-        const errText = await gemRes.text();
-        console.error("Gemini error", gemRes.status, errText.slice(0, 500));
-        return json(
-          { ok: false, error: "gemini_http_" + gemRes.status },
-          502,
-          origin,
-          env
-        );
-      }
-
-      const data = await gemRes.json();
-      const raw =
-        (data.candidates &&
-          data.candidates[0] &&
-          data.candidates[0].content &&
-          data.candidates[0].content.parts &&
-          data.candidates[0].content.parts.map((p) => p.text).join("")) ||
-        "";
-
-      const parsed = parseModelJson(raw);
-      if (!parsed || !Array.isArray(parsed.questions)) {
-        return json({ ok: false, error: "gemini_parse" }, 502, origin, env);
-      }
-
-      const result = normalizeGrades(parsed, tasks);
-      result.model = model;
-      return json(result, 200, origin, env);
-    } catch (e) {
-      console.error(e);
-      return json({ ok: false, error: "gemini_network" }, 502, origin, env);
-    }
+export default {
+  async fetch(request, env, ctx) {
+    return handleRequest(request, env);
   },
 };
