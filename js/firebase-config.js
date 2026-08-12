@@ -9,12 +9,13 @@
  * Until then, the app uses localStorage (single-device only).
  */
 window.FIREBASE_CONFIG = {
-  enabled: false,
+  enabled: true,
   // Paste your Firebase web config:
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyB1bUazVYjxlYLa9k_yM2NqEF_ZlJZHRUs",
+  authDomain: "geo-land-c0400.firebaseapp.com",
+  projectId: "geo-land-c0400",
+  storageBucket: "geo-land-c0400.firebasestorage.app",
+  messagingSenderId: "512835186493",
+  appId: "1:512835186493:web:0517ffa3fb4c586d525f54",
+  measurementId: "G-JTJ6RVBZ78",
 };
