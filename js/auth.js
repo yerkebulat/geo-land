@@ -4,7 +4,7 @@ const USERS = [
     username: "nursultan.utebayev",
     password: "nursultan1234!",
     role: "teacher",
-    name: { kk: "Нұрсұлтан Өтебаев", en: "Nursultan Utebayev" },
+    name: { kk: "Нұрсұлтан Утебаев", en: "Nursultan Utebayev" },
   },
   {
     username: "arsen.sydykov",
