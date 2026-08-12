@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Geo-Land — geography olympiad prep by Nursultan Utebayev (NIS Karatau, Shymkent)" />
   <title>Geo-Land · Geography Olympiad Prep</title>
-  <link rel="stylesheet" href="css/main.css?v=4" />
+  <link rel="stylesheet" href="css/main.css?v=5" />
+  <link rel="preload" as="image" href="assets/earth-bluemarble.webp" type="image/webp" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>" />
 </head>
 <body>
@@ -67,14 +68,18 @@
       <div class="hero-visual">
         <figure class="earth-frame">
           <div class="earth-orb">
-            <img
-              src="assets/earth-bluemarble.png?v=4"
-              alt="The Earth seen from space — NASA Apollo 17 Blue Marble"
-              width="720"
-              height="720"
-              loading="eager"
-              decoding="async"
-            />
+            <picture>
+              <source srcset="assets/earth-bluemarble.webp" type="image/webp" />
+              <img
+                src="assets/earth-bluemarble.jpg"
+                alt="The Earth seen from space — NASA Apollo 17 Blue Marble"
+                width="560"
+                height="560"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </picture>
           </div>
           <figcaption class="earth-credit">NASA · Apollo 17 · Blue Marble</figcaption>
         </figure>
@@ -95,7 +100,7 @@
         <div class="path-step">
           <div class="path-dot">1</div>
           <div class="path-body">
-            <h3 data-i18n="path_1_t">Мектеп / муниципалдық</h3>
+            <h3 data-i18n="path_1_t">Мектеп</h3>
             <p data-i18n="path_1_d">Мектепішілік және аудандық кезең.</p>
             <span class="path-tag" data-i18n="path_1_tag">Бастау</span>
           </div>

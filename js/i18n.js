@@ -31,7 +31,7 @@ const I18N = {
     path_title_em: "жол",
     path_lead:
       "Қазақстаннан халықаралық олимпиадаға шығу — сатылы шыңға шығу. Әр деңгейдегі жеңіс келесі есікті ашады.",
-    path_1_t: "Мектеп / муниципалдық",
+    path_1_t: "Мектеп",
     path_1_d: "Мектепішілік және аудандық кезең. Негізгі білім мен карта дағдысы.",
     path_1_tag: "Бастау",
     path_2_t: "Қалалық деңгей",
@@ -189,7 +189,7 @@ const I18N = {
     path_title_em: "IGeo",
     path_lead:
       "From Kazakhstan to the International Geography Olympiad is a staged climb. Each win unlocks the next door.",
-    path_1_t: "School / municipal",
+    path_1_t: "School",
     path_1_d: "In-school and district stage. Core knowledge and map skills.",
     path_1_tag: "Start",
     path_2_t: "City level",
