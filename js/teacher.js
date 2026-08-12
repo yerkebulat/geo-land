@@ -87,7 +87,10 @@ function renderTeacherTable(list) {
               <td>${scoreText(s)}</td>
               <td>${statusPill(s)}</td>
               <td>${formatDate(s.createdAt)}</td>
-              <td><a class="btn btn-ghost btn-sm" href="submission.html?id=${encodeURIComponent(s.id)}" data-i18n="view">${Lang.t("view")}</a></td>
+              <td class="actions-cell">
+                <a class="btn btn-ghost btn-sm" href="submission.html?id=${encodeURIComponent(s.id)}">${Lang.t("view")}</a>
+                <button type="button" class="btn btn-danger btn-sm btn-delete-attempt" data-id="${escapeHtml(s.id)}" data-label="${escapeHtml(taskLabel(s) + " · " + s.username)}">${Lang.t("delete")}</button>
+              </td>
             </tr>`
             )
             .join("")}
@@ -95,6 +98,28 @@ function renderTeacherTable(list) {
       </table>
     </div>`;
   Lang.apply();
+
+  root.querySelectorAll(".btn-delete-attempt").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      const label = btn.dataset.label || id;
+      const msg =
+        Lang.current === "kk"
+          ? `Бұл талпынысты жоясыз ба?\n${label}\n\nБұл әрекетті қайтаруға болмайды.`
+          : `Delete this attempt?\n${label}\n\nThis cannot be undone.`;
+      if (!confirm(msg)) return;
+      btn.disabled = true;
+      try {
+        await Storage.deleteSubmission(id);
+        window.__teacherList = (window.__teacherList || []).filter((x) => x.id !== id);
+        renderTeacherTable(window.__teacherList);
+      } catch (e) {
+        console.error(e);
+        alert(Lang.t("delete_failed"));
+        btn.disabled = false;
+      }
+    });
+  });
 }
 
 window.bootTeacher = bootTeacher;

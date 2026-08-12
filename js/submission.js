@@ -85,11 +85,42 @@ async function renderSubmission(sub, user) {
           }
         </p>
       </div>
-      <a href="${backHref}" class="btn btn-ghost btn-sm" data-i18n="back">Артқа</a>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center">
+        <a href="${backHref}" class="btn btn-ghost btn-sm" data-i18n="back">Артқа</a>
+        ${
+          user.role === "teacher"
+            ? `<button type="button" class="btn btn-danger btn-sm" id="btn-delete-sub" data-i18n="delete">${Lang.t(
+                "delete"
+              )}</button>`
+            : ""
+        }
+      </div>
     </div>
     ${body}
   `;
   Lang.apply();
+
+  if (user.role === "teacher") {
+    const del = document.getElementById("btn-delete-sub");
+    if (del) {
+      del.addEventListener("click", async () => {
+        const msg =
+          Lang.current === "kk"
+            ? "Бұл талпынысты жоясыз ба? Қайтаруға болмайды."
+            : "Delete this attempt? This cannot be undone.";
+        if (!confirm(msg)) return;
+        del.disabled = true;
+        try {
+          await Storage.deleteSubmission(sub.id);
+          window.location.href = "teacher.html";
+        } catch (e) {
+          console.error(e);
+          alert(Lang.t("delete_failed"));
+          del.disabled = false;
+        }
+      });
+    }
+  }
 
   if (user.role === "teacher" && (sub.type === "calc" || sub.type === "open")) {
     const form = document.getElementById("grade-form");

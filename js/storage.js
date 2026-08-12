@@ -150,6 +150,20 @@ const Storage = {
     return list;
   },
 
+  async deleteSubmission(id) {
+    await this.init();
+    if (!id) return false;
+    if (this.mode === "firebase") {
+      await this._db.collection("submissions").doc(id).delete();
+      return true;
+    }
+    const list = this._readLocal();
+    const next = list.filter((x) => x.id !== id);
+    if (next.length === list.length) return false;
+    this._writeLocal(next);
+    return true;
+  },
+
   isCloud() {
     return this.mode === "firebase";
   },
