@@ -196,41 +196,70 @@ async function handleRequest(request, env) {
     return json({ ok: false, error: "too_many_tasks" }, 400, origin, env);
   }
 
-  const model = env.GEMINI_MODEL || body.model || "gemini-2.0-flash";
+  // Prefer env override; try several free-tier Flash names (2.0 was shut down mid-2026)
+  const preferred = env.GEMINI_MODEL || body.model || "";
+  const modelCandidates = [
+    preferred,
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
+    "gemini-2.0-flash",
+    "gemini-1.5-flash",
+    "gemini-1.5-flash-latest",
+    "gemini-flash-latest",
+  ].filter((m, i, arr) => m && arr.indexOf(m) === i);
+
   const userPayload = JSON.stringify({ tasks });
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
-    model
-  )}:generateContent?key=${encodeURIComponent(apiKey)}`;
+  const requestBody = {
+    contents: [
+      {
+        role: "user",
+        parts: [{ text: SYSTEM_PROMPT + "\n\nSTUDENT WORK:\n" + userPayload }],
+      },
+    ],
+    generationConfig: {
+      temperature: 0.2,
+      responseMimeType: "application/json",
+    },
+  };
 
   try {
-    const gemRes = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: SYSTEM_PROMPT + "\n\nSTUDENT WORK:\n" + userPayload }],
-          },
-        ],
-        generationConfig: {
-          temperature: 0.2,
-          responseMimeType: "application/json",
-        },
-      }),
-    });
+    let gemRes = null;
+    let usedModel = modelCandidates[0];
+    let lastStatus = 0;
+    let lastErr = "";
 
-    if (!gemRes.ok) {
-      const errText = await gemRes.text();
-      console.error("Gemini error", gemRes.status, errText.slice(0, 400));
+    for (const model of modelCandidates) {
+      usedModel = model;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+        model
+      )}:generateContent?key=${encodeURIComponent(apiKey)}`;
+      gemRes = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      });
+      if (gemRes.ok) break;
+      lastStatus = gemRes.status;
+      lastErr = (await gemRes.text()).slice(0, 300);
+      console.error("Gemini model fail", model, lastStatus, lastErr);
+      // try next model on 404 (model not found / shut down)
+      if (lastStatus !== 404) break;
+      gemRes = null;
+    }
+
+    if (!gemRes || !gemRes.ok) {
       return json(
         {
           ok: false,
-          error: "gemini_http_" + gemRes.status,
+          error: "gemini_http_" + (lastStatus || 502),
           hint:
-            gemRes.status === 400 || gemRes.status === 403
-              ? "Check GEMINI_API_KEY is valid in AI Studio and Gemini API is enabled."
-              : undefined,
+            lastStatus === 400 || lastStatus === 403
+              ? "Check GEMINI_API_KEY is valid in AI Studio."
+              : lastStatus === 404
+                ? "No working Gemini model name. Set Worker var GEMINI_MODEL to a model from AI Studio."
+                : undefined,
+          detail: lastErr || undefined,
+          triedModels: modelCandidates,
         },
         502,
         origin,
@@ -253,7 +282,7 @@ async function handleRequest(request, env) {
     }
 
     const result = normalizeGrades(parsed, tasks);
-    result.model = model;
+    result.model = usedModel;
     return json(result, 200, origin, env);
   } catch (e) {
     console.error(e);

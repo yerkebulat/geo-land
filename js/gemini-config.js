@@ -12,5 +12,5 @@ window.GEMINI_CONFIG = {
   mode: "worker",
   workerUrl: "https://geo-land-gemini-grade.yerkebulantazabek.workers.dev",
   apiKey: "YOUR_GEMINI_API_KEY",
-  model: "gemini-2.0-flash",
+  model: "gemini-2.5-flash",
 };
