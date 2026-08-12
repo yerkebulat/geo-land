@@ -11,8 +11,10 @@ function renderAppNav(active) {
   <nav class="nav">
     <div class="nav-inner">
       <a class="logo" href="app.html">
-        <span class="logo-mark">🌍</span>
-        <span>Geo-Land</span>
+        <span class="logo-mark" aria-hidden="true">
+          <img src="assets/logo-earth.webp" alt="" width="40" height="40" />
+        </span>
+        <span class="logo-text">Geo-Land</span>
       </a>
       <ul class="nav-links">
         <li><a href="app.html" class="${active === "dash" ? "active" : ""}" data-i18n="nav_dashboard">Басты бет</a></li>
