@@ -112,24 +112,10 @@ If Gemini/worker is off, open answers still save; teacher grades manually.
 
 Open set (built-in): `data/open-1.json` (14 questions, 30 points).
 
-### Teacher-created open sets + images
+### Teacher-created open sets (image URL only)
 
 1. Firestore collection `open_sets` (auto-created on first save)  
-2. Enable **Storage** in Firebase Console → get started  
-3. Storage rules (pilot — open read/write; tighten later):
-
-```
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /open-images/{allPaths=**} {
-      allow read, write: if true;
-    }
-  }
-}
-```
-
-4. Also allow Firestore `open_sets` in rules:
+2. Allow Firestore `open_sets` in rules:
 
 ```
 match /open_sets/{id} {
@@ -137,10 +123,10 @@ match /open_sets/{id} {
 }
 ```
 
-5. Teacher account only: **Ашық сұрақтар жасау** → new set → add questions/images → **Publish**  
-6. Students see published sets on the dashboard  
+3. Teacher account only: **Ашық сұрақтар жасау** → new set → questions + optional **image URL** → **Publish**  
+4. Students see published sets on the dashboard  
 
-If Storage fails, image **URL** paste still works; localStorage mode uses data-URLs.
+**No Firebase Storage** (Spark plan). For pictures, paste a public `https://` link (e.g. Google Drive “anyone with the link”).
 
 ---
 

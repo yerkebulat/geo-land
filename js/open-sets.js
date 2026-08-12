@@ -1,12 +1,11 @@
 /**
  * Teacher-authored open question sets.
  * Firestore: open_sets/{id}
- * Storage: open-images/{setId}/{file}
+ * Images: HTTPS URLs only (no Firebase Storage upload)
  * Local fallback: localStorage geoland_open_sets
  */
 const OpenSets = {
   LS_KEY: "geoland_open_sets",
-  MAX_IMAGE_BYTES: 2.5 * 1024 * 1024,
 
   _uid(prefix) {
     return (
@@ -125,41 +124,6 @@ const OpenSets = {
     if (!set) return null;
     set.published = !!published;
     return this.save(set, set.createdBy);
-  },
-
-  /**
-   * Upload image file → Storage URL, or return https URL as-is.
-   */
-  async resolveImage(fileOrUrl, setId) {
-    if (!fileOrUrl) return "";
-    if (typeof fileOrUrl === "string") {
-      const u = fileOrUrl.trim();
-      if (!u) return "";
-      if (/^https?:\/\//i.test(u)) return u;
-      throw new Error("invalid_url");
-    }
-    const file = fileOrUrl;
-    if (!file.type || !file.type.startsWith("image/")) throw new Error("not_image");
-    if (file.size > this.MAX_IMAGE_BYTES) throw new Error("image_too_large");
-
-    await this._ready();
-    if (Storage.mode === "firebase" && window.firebase && firebase.storage) {
-      const path = `open-images/${setId || "draft"}/${this._uid("img")}_${file.name.replace(
-        /[^\w.\-]+/g,
-        "_"
-      )}`;
-      const ref = firebase.storage().ref().child(path);
-      await ref.put(file);
-      return await ref.getDownloadURL();
-    }
-
-    // local fallback: data URL (works offline, heavy)
-    return await new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
   },
 
   /** Normalize set to shape open-runner expects */

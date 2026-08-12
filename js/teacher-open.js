@@ -131,7 +131,6 @@ function emptyQuestion() {
     points: 1,
     imageUrl: "",
     modelAnswer: "",
-    _file: null,
   };
 }
 
@@ -155,7 +154,7 @@ async function renderEditor(user, setId) {
     createdAt: set ? set.createdAt : null,
     createdBy: set ? set.createdBy : user.username,
     questions: set && set.questions && set.questions.length
-      ? set.questions.map((q) => ({ ...q, _file: null }))
+      ? set.questions.map((q) => ({ ...q }))
       : [emptyQuestion()],
   };
 
@@ -211,11 +210,11 @@ async function renderEditor(user, setId) {
         <div class="form-group">
           <label>${t("open_q_image")}</label>
           <input class="q-url-in" data-i="${i}" type="url" placeholder="https://..." value="${escapeHtml(
-        q.imageUrl && !String(q.imageUrl).startsWith("data:") ? q.imageUrl : ""
+        q.imageUrl || ""
       )}" />
-          <input class="q-file-in" data-i="${i}" type="file" accept="image/*" style="margin-top:0.45rem" />
+          <p class="meta" style="margin-top:0.35rem">${t("open_q_image_hint")}</p>
           ${
-            q.imageUrl
+            q.imageUrl && /^https?:\/\//i.test(q.imageUrl)
               ? `<div class="q-img-preview"><img src="${escapeHtml(q.imageUrl)}" alt="" /></div>`
               : ""
           }
@@ -247,22 +246,8 @@ async function renderEditor(user, setId) {
     root.querySelectorAll(".q-url-in").forEach((el) => {
       el.addEventListener("change", () => {
         const i = Number(el.dataset.i);
-        if (el.value.trim()) {
-          state.questions[i].imageUrl = el.value.trim();
-          state.questions[i]._file = null;
-          paint();
-        }
-      });
-    });
-    root.querySelectorAll(".q-file-in").forEach((el) => {
-      el.addEventListener("change", () => {
-        const i = Number(el.dataset.i);
-        const f = el.files && el.files[0];
-        if (f) {
-          state.questions[i]._file = f;
-          state.questions[i].imageUrl = URL.createObjectURL(f);
-          paint();
-        }
+        state.questions[i].imageUrl = el.value.trim();
+        paint();
       });
     });
     root.querySelectorAll(".q-model-in").forEach((el) => {
@@ -299,12 +284,11 @@ async function renderEditor(user, setId) {
       status.textContent = t("saving");
       try {
         for (const q of state.questions) {
-          if (q._file) {
-            q.imageUrl = await OpenSets.resolveImage(q._file, state.id);
-            q._file = null;
-          } else if (q.imageUrl && q.imageUrl.startsWith("blob:")) {
-            q.imageUrl = "";
+          const u = (q.imageUrl || "").trim();
+          if (u && !/^https?:\/\//i.test(u)) {
+            throw new Error("invalid_url");
           }
+          q.imageUrl = u;
         }
         const saved = await OpenSets.save(
           {
@@ -314,7 +298,7 @@ async function renderEditor(user, setId) {
             published: document.getElementById("set-published").checked,
             createdAt: state.createdAt,
             createdBy: state.createdBy,
-            questions: state.questions.map(({ _file, ...rest }) => rest),
+            questions: state.questions,
           },
           user.username
         );
@@ -324,12 +308,7 @@ async function renderEditor(user, setId) {
         history.replaceState({}, "", `teacher-open.html?id=${encodeURIComponent(saved.id)}`);
       } catch (e) {
         console.error(e);
-        status.textContent =
-          e.message === "image_too_large"
-            ? t("open_image_too_large")
-            : e.message === "not_image"
-              ? t("open_not_image")
-              : t("save_failed");
+        status.textContent = e.message === "invalid_url" ? t("open_invalid_url") : t("save_failed");
       }
     };
   }
