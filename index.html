@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Geo-Land — geography olympiad prep by Nursultan Utebayev (NIS Karatau, Shymkent)" />
+  <title>Geo-Land · Geography Olympiad Prep</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="logo" href="index.html">
+        <span class="logo-mark">🌍</span>
+        <span data-i18n="brand">Geo-Land</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#path" data-i18n="nav_path">Жол</a></li>
+        <li><a href="#topics" data-i18n="nav_topics">Тақырыптар</a></li>
+        <li><a href="#mentor" data-i18n="nav_mentor">Ұстаз</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="lang-toggle" aria-label="Language">
+          <button type="button" data-lang="kk" class="active">ҚАЗ</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" id="btn-login-nav" data-i18n="nav_login">Кіру</button>
+        <button type="button" class="btn btn-primary btn-sm" id="btn-enter-nav" data-i18n="nav_enter">Geo-Land-қа кіру</button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="hero-eyebrow" data-i18n="hero_eyebrow">География олимпиадасына дайындық</p>
+        <h1>
+          <span data-i18n="hero_title">Жер — емтихан.</span><br />
+          <em data-i18n="hero_title_em">Дайынсың ба?</em>
+        </h1>
+        <p class="hero-sub" data-i18n="hero_sub">
+          NIS Қаратау (Шымкент) ұстазы Нұрсұлтан Өтебаевтың оқушыларына арналған жеке платформа.
+        </p>
+        <div class="hero-cta">
+          <button type="button" class="btn btn-primary" id="btn-hero-login" data-i18n="hero_cta_enter">Жүйеге кіру</button>
+          <a href="#path" class="btn btn-ghost" data-i18n="hero_cta_path">Жеңіс жолы</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <strong>2017</strong>
+            <span data-i18n="hero_stat_since">жылдан бері</span>
+          </div>
+          <div class="hero-stat">
+            <strong>20+</strong>
+            <span data-i18n="hero_stat_medals">республикалық медальдар</span>
+          </div>
+          <div class="hero-stat">
+            <strong>IGeo</strong>
+            <span data-i18n="hero_stat_igeo">IGeo медальдары</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="globe-card">
+          <div class="globe" aria-hidden="true"></div>
+          <div class="globe-meta">
+            <div class="globe-meta-row">
+              <span data-i18n="globe_level">Деңгей</span>
+              <span data-i18n="globe_level_v">Олимпиада</span>
+            </div>
+            <div class="globe-meta-row">
+              <span data-i18n="globe_focus">Бағыт</span>
+              <span data-i18n="globe_focus_v">География</span>
+            </div>
+            <div class="globe-meta-row">
+              <span data-i18n="globe_lang">Мазмұн</span>
+              <span data-i18n="globe_lang_v">Қазақша + English</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section ascent" id="path">
+    <div class="container">
+      <h2 class="section-title">
+        <span data-i18n="path_title">IGeo-ға апаратын</span>
+        <span data-i18n="path_title_em">жол</span>
+      </h2>
+      <p class="section-lead" data-i18n="path_lead">
+        Қазақстаннан халықаралық олимпиадаға шығу — сатылы шыңға шығу.
+      </p>
+      <div class="path-track">
+        <div class="path-step">
+          <div class="path-dot">1</div>
+          <div class="path-body">
+            <h3 data-i18n="path_1_t">Мектеп / муниципалдық</h3>
+            <p data-i18n="path_1_d">Мектепішілік және аудандық кезең.</p>
+            <span class="path-tag" data-i18n="path_1_tag">Бастау</span>
+          </div>
+        </div>
+        <div class="path-step">
+          <div class="path-dot">2</div>
+          <div class="path-body">
+            <h3 data-i18n="path_2_t">Қалалық деңгей</h3>
+            <p data-i18n="path_2_d">Қала олимпиадасы.</p>
+            <span class="path-tag" data-i18n="path_2_tag">Қала</span>
+          </div>
+        </div>
+        <div class="path-step">
+          <div class="path-dot">3</div>
+          <div class="path-body">
+            <h3 data-i18n="path_3_t">Облыстық деңгей</h3>
+            <p data-i18n="path_3_d">Облыс құрамасы.</p>
+            <span class="path-tag" data-i18n="path_3_tag">Облыс</span>
+          </div>
+        </div>
+        <div class="path-step">
+          <div class="path-dot">4</div>
+          <div class="path-body">
+            <h3 data-i18n="path_4_t">Республикалық олимпиада</h3>
+            <p data-i18n="path_4_d">Қазақстан чемпионаты.</p>
+            <span class="path-tag" data-i18n="path_4_tag">ҚР</span>
+          </div>
+        </div>
+        <div class="path-step final">
+          <div class="path-dot">★</div>
+          <div class="path-body">
+            <h3 data-i18n="path_5_t">IGeo — Халықаралық</h3>
+            <p data-i18n="path_5_d">Әлемдік география олимпиадасы.</p>
+            <span class="path-tag" data-i18n="path_5_tag">IGeo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="topics">
+    <div class="container">
+      <h2 class="section-title">
+        <span data-i18n="topics_title">Олимпиада</span>
+        <span data-i18n="topics_title_em">картасы</span>
+      </h2>
+      <p class="section-lead" data-i18n="topics_lead">IGeo және республикалық бағдарламадағы негізгі бірліктер.</p>
+      <div class="topics-grid">
+        <div class="topic-card"><span class="topic-icon">🪨</span><h3 data-i18n="topic_1">Геология</h3><p data-i18n="topic_1_s">Тау жыныстары</p></div>
+        <div class="topic-card"><span class="topic-icon">⛰️</span><h3 data-i18n="topic_2">Геоморфология</h3><p data-i18n="topic_2_s">Рельеф</p></div>
+        <div class="topic-card"><span class="topic-icon">🌊</span><h3 data-i18n="topic_3">Океанология</h3><p data-i18n="topic_3_s">Мұхиттар</p></div>
+        <div class="topic-card"><span class="topic-icon">💧</span><h3 data-i18n="topic_4">Гидрология</h3><p data-i18n="topic_4_s">Өзен, көл</p></div>
+        <div class="topic-card"><span class="topic-icon">👥</span><h3 data-i18n="topic_5">Демография</h3><p data-i18n="topic_5_s">Халқы</p></div>
+        <div class="topic-card"><span class="topic-icon">🏙️</span><h3 data-i18n="topic_6">Урбанистика</h3><p data-i18n="topic_6_s">Қалалар</p></div>
+        <div class="topic-card"><span class="topic-icon">🗺️</span><h3 data-i18n="topic_7">Саяси география</h3><p data-i18n="topic_7_s">Шекара</p></div>
+        <div class="topic-card"><span class="topic-icon">🌦️</span><h3 data-i18n="topic_8">Климатология</h3><p data-i18n="topic_8_s">Климат</p></div>
+        <div class="topic-card"><span class="topic-icon">🏭</span><h3 data-i18n="topic_9">Экономикалық гео</h3><p data-i18n="topic_9_s">Өнеркәсіп</p></div>
+        <div class="topic-card"><span class="topic-icon">📐</span><h3 data-i18n="topic_10">Картография</h3><p data-i18n="topic_10_s">Есептер</p></div>
+        <div class="topic-card"><span class="topic-icon">🌿</span><h3 data-i18n="topic_11">Биогеография</h3><p data-i18n="topic_11_s">Зоналар</p></div>
+        <div class="topic-card"><span class="topic-icon">🇰🇿</span><h3 data-i18n="topic_12">Қазақстан</h3><p data-i18n="topic_12_s">Отандық</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="mentor">
+    <div class="container">
+      <h2 class="section-title">
+        <span data-i18n="mentor_title">Ұстаз және</span>
+        <span data-i18n="mentor_title_em">нәтиже</span>
+      </h2>
+      <div class="split-grid" style="margin-top: 1.5rem">
+        <div class="card">
+          <h3 data-i18n="mentor_name">Нұрсұлтан Өтебаев</h3>
+          <p data-i18n="mentor_bio">NIS Қаратау (Шымкент) география мұғалімі.</p>
+          <p style="margin-top: 0.85rem" data-i18n="mentor_mission">Geo-Land — жеке дайындық бөлмесі.</p>
+        </div>
+        <div class="card">
+          <h3 data-i18n="medals_title">Медаль қабырғасы</h3>
+          <ul class="medal-list">
+            <li><span class="m">🥈</span><span data-i18n="medal_1">IGeo — күміс және қола</span></li>
+            <li><span class="m">🥇</span><span data-i18n="medal_2">Республикалық — бірнеше алтын</span></li>
+            <li><span class="m">🏅</span><span data-i18n="medal_3">20+ республикалық медальдар</span></li>
+            <li><span class="m">📅</span><span data-i18n="medal_4">2017 жылдан бері</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="enter">
+    <h2 data-i18n="cta_title">Картаны аш. Жүйеге кір.</h2>
+    <p data-i18n="cta_sub">Тіркелу жоқ — мұғалім берген логинмен кіріңіз.</p>
+    <button type="button" class="btn btn-primary" id="btn-cta-login" data-i18n="cta_btn">Geo-Land жүйесіне кіру</button>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span data-i18n="footer_copy">© Geo-Land · Нұрсұлтан Өтебаев</span>
+      <span data-i18n="footer_note">Олимпиадалық географияға дайындық</span>
+    </div>
+  </footer>
+
+  <!-- Login modal -->
+  <div class="modal-overlay" id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <div class="modal">
+      <button type="button" class="modal-close" id="login-close" aria-label="Close">&times;</button>
+      <h2 id="login-title" data-i18n="login_title">Жүйеге кіру</h2>
+      <p class="hint" data-i18n="login_hint">Мұғалім берген логин мен құпия сөзді енгізіңіз.</p>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-user" data-i18n="login_user">Логин</label>
+          <input id="login-user" name="username" autocomplete="username" required placeholder="name.surname" />
+        </div>
+        <div class="form-group">
+          <label for="login-pass" data-i18n="login_pass">Құпия сөз</label>
+          <input id="login-pass" name="password" type="password" autocomplete="current-password" required />
+        </div>
+        <div class="form-error" id="login-error"></div>
+        <button type="submit" class="btn btn-primary" style="width: 100%" data-i18n="login_btn">Кіру</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    Lang.bindToggles();
+    Lang.apply();
+
+    // If already logged in, enter goes to app
+    function openLogin() {
+      const user = Auth.current();
+      if (user) {
+        window.location.href = "app.html";
+        return;
+      }
+      document.getElementById("login-modal").classList.add("open");
+      document.getElementById("login-error").textContent = "";
+      setTimeout(() => document.getElementById("login-user").focus(), 100);
+    }
+
+    function closeLogin() {
+      document.getElementById("login-modal").classList.remove("open");
+    }
+
+    ["btn-login-nav", "btn-enter-nav", "btn-hero-login", "btn-cta-login"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("click", openLogin);
+    });
+
+    document.getElementById("login-close").addEventListener("click", closeLogin);
+    document.getElementById("login-modal").addEventListener("click", (e) => {
+      if (e.target.id === "login-modal") closeLogin();
+    });
+
+    document.getElementById("login-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = document.getElementById("login-user").value;
+      const password = document.getElementById("login-pass").value;
+      const res = Auth.login(username, password);
+      if (!res.ok) {
+        document.getElementById("login-error").textContent = Lang.t("login_error");
+        return;
+      }
+      window.location.href = "app.html";
+    });
+
+    if (location.hash === "#login" || location.hash === "#enter") {
+      openLogin();
+    }
+
+    // Update nav button if logged in
+    if (Auth.current()) {
+      const b = document.getElementById("btn-enter-nav");
+      if (b) b.textContent = Lang.t("nav_dashboard");
+    }
+  </script>
+</body>
+</html>

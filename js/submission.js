@@ -1,0 +1,191 @@
+/* View a single submission; teacher can grade calc sets */
+const LETTERS = ["A", "B", "C", "D", "E", "F"];
+
+function tField(obj) {
+  if (!obj) return "";
+  if (typeof obj === "string") return obj;
+  return obj[Lang.current] || obj.kk || obj.en || "";
+}
+
+async function bootSubmission() {
+  const user = Auth.require();
+  if (!user) return;
+  mountAppNav(user.role === "teacher" ? "teacher" : "history");
+  await Storage.init();
+  ensureStorageBanner(document.getElementById("storage-banner-host"));
+
+  const id = new URLSearchParams(location.search).get("id");
+  const root = document.getElementById("sub-root");
+  if (!id) {
+    root.innerHTML = `<div class="empty-state" data-i18n="not_found">Табылмады</div>`;
+    Lang.apply();
+    return;
+  }
+
+  const sub = await Storage.getSubmission(id);
+  if (!sub) {
+    root.innerHTML = `<div class="empty-state" data-i18n="not_found">Табылмады</div>`;
+    Lang.apply();
+    return;
+  }
+
+  // Access control: students only own; teacher all
+  if (user.role !== "teacher" && sub.username !== user.username) {
+    root.innerHTML = `<div class="empty-state" data-i18n="not_found">Табылмады</div>`;
+    Lang.apply();
+    return;
+  }
+
+  window.__sub = sub;
+  await renderSubmission(sub, user);
+  window.addEventListener("langchange", () => renderSubmission(window.__sub, user));
+}
+
+async function renderSubmission(sub, user) {
+  const root = document.getElementById("sub-root");
+  const backHref = user.role === "teacher" ? "teacher.html" : "history.html";
+  const title = tField(sub.taskTitle) || sub.taskId;
+
+  let body = "";
+  if (sub.type === "test") {
+    body = await renderTestSubmission(sub);
+  } else if (sub.type === "calc") {
+    body = await renderCalcSubmission(sub, user);
+  } else {
+    body = `<pre>${escapeHtml(JSON.stringify(sub.answers, null, 2))}</pre>`;
+  }
+
+  const scoreLine =
+    sub.status === "marked" && sub.teacherScore != null
+      ? `${sub.teacherScore} / ${sub.maxScore}`
+      : sub.score != null
+        ? `${sub.score} / ${sub.maxScore}`
+        : `— / ${sub.maxScore}`;
+
+  root.innerHTML = `
+    <div class="page-header">
+      <div>
+        <h1>${escapeHtml(title)}</h1>
+        <p>${escapeHtml(sub.username)} · ${sub.type} · ${scoreLine}
+          ${sub.teacherComment ? `<br/><span style="color:var(--text-muted)">${Lang.t("teacher_comment")}: ${escapeHtml(sub.teacherComment)}</span>` : ""}
+        </p>
+      </div>
+      <a href="${backHref}" class="btn btn-ghost btn-sm" data-i18n="back">Артқа</a>
+    </div>
+    ${body}
+  `;
+  Lang.apply();
+
+  if (user.role === "teacher" && sub.type === "calc") {
+    const form = document.getElementById("grade-form");
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const score = Number(document.getElementById("grade-score").value);
+        const comment = document.getElementById("grade-comment").value;
+        if (Number.isNaN(score) || score < 0 || score > sub.maxScore) {
+          alert(Lang.t("mark_score", { max: sub.maxScore }));
+          return;
+        }
+        const updated = await Storage.updateSubmission(sub.id, {
+          teacherScore: score,
+          score: score,
+          teacherComment: comment,
+          status: "marked",
+          gradedBy: user.username,
+          gradedAt: new Date().toISOString(),
+        });
+        window.__sub = updated || { ...sub, teacherScore: score, score, teacherComment: comment, status: "marked" };
+        alert(Lang.t("mark_saved"));
+        renderSubmission(window.__sub, user);
+      });
+    }
+  }
+}
+
+async function renderTestSubmission(sub) {
+  let test = null;
+  try {
+    const res = await fetch(`data/${sub.taskId}.json`);
+    if (res.ok) test = await res.json();
+  } catch {}
+
+  if (!test) {
+    return `<div class="detail-panel"><pre>${escapeHtml(JSON.stringify(sub.answers, null, 2))}</pre></div>`;
+  }
+
+  const lang = Lang.current;
+  return test.questions
+    .map((q, i) => {
+      const chosen = sub.answers[q.id];
+      const d = (sub.details && sub.details[q.id]) || {};
+      const opts = q.options[lang] || q.options.kk || [];
+      const optHtml = opts
+        .map((opt, oi) => {
+          let cls = "option";
+          if (oi === q.correct) cls += " correct";
+          if (chosen === oi && chosen !== q.correct) cls += " wrong";
+          if (chosen === oi) cls += " selected";
+          return `<div class="${cls}" style="cursor:default">
+            <span class="option-letter">${LETTERS[oi]}</span>
+            <span>${escapeHtml(opt)}</span>
+          </div>`;
+        })
+        .join("");
+      return `<div class="question-card">
+        <div class="q-num">#${i + 1} · ${d.ok ? "✓" : "✗"}</div>
+        <div class="q-text">${escapeHtml(tField(q.text))}</div>
+        <div class="options">${optHtml}</div>
+      </div>`;
+    })
+    .join("");
+}
+
+async function renderCalcSubmission(sub, user) {
+  let calc = null;
+  try {
+    const res = await fetch(`data/${sub.taskId}.json`);
+    if (res.ok) calc = await res.json();
+  } catch {}
+
+  const problems = calc ? calc.problems : Object.keys(sub.answers).map((id) => ({ id, text: id, points: 1 }));
+
+  let html = problems
+    .map((p, i) => {
+      const ans = sub.answers[p.id] || "";
+      return `<div class="question-card">
+        <div class="q-num">#${i + 1}</div>
+        <div class="q-text">${escapeHtml(tField(p.text) || p.id)}</div>
+        <div class="answer-row">
+          <div class="label" data-i18n="student_answer">${Lang.t("student_answer")}</div>
+          <div>${escapeHtml(ans || Lang.t("empty_answer"))}</div>
+        </div>
+      </div>`;
+    })
+    .join("");
+
+  if (user.role === "teacher") {
+    const current = sub.teacherScore != null ? sub.teacherScore : sub.score != null ? sub.score : "";
+    html += `
+      <div class="detail-panel">
+        <h3 data-i18n="mark">${Lang.t("mark")}</h3>
+        <form id="grade-form">
+          <div class="mark-row">
+            <div class="form-group">
+              <label for="grade-score">${Lang.t("mark_score", { max: sub.maxScore })}</label>
+              <input id="grade-score" type="number" min="0" max="${sub.maxScore}" step="0.5" value="${current}" required />
+            </div>
+            <div class="form-group" style="flex:2">
+              <label for="grade-comment" data-i18n="mark_comment">${Lang.t("mark_comment")}</label>
+              <input id="grade-comment" type="text" value="${escapeHtml(sub.teacherComment || "")}" />
+            </div>
+            <button type="submit" class="btn btn-primary" data-i18n="mark_save">${Lang.t("mark_save")}</button>
+          </div>
+        </form>
+      </div>`;
+  }
+
+  return html;
+}
+
+window.bootSubmission = bootSubmission;

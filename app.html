@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geo-Land · Dashboard</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>" />
+</head>
+<body>
+  <div id="app-nav"></div>
+  <main class="app-main">
+    <div id="storage-banner-host"></div>
+    <div class="page-header">
+      <div>
+        <h1>
+          <span data-i18n="dash_welcome">Қош келдіңіз</span>,
+          <span id="welcome-name"></span>
+        </h1>
+        <p id="welcome-sub"></p>
+      </div>
+    </div>
+    <div class="dash-grid" id="dash-grid"></div>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app-nav.js"></script>
+  <script>
+    const user = Auth.require();
+    if (user) {
+      mountAppNav("dash");
+      document.getElementById("welcome-name").textContent = Auth.displayName(user);
+      document.getElementById("welcome-sub").textContent =
+        user.role === "teacher" ? Lang.t("dash_teacher_sub") : Lang.t("dash_student_sub");
+      document.getElementById("welcome-sub").setAttribute(
+        "data-i18n",
+        user.role === "teacher" ? "dash_teacher_sub" : "dash_student_sub"
+      );
+
+      const grid = document.getElementById("dash-grid");
+      if (user.role === "teacher") {
+        grid.innerHTML = `
+          <a class="dash-card" href="teacher.html" style="color:inherit;text-decoration:none">
+            <span class="icon">📋</span>
+            <h3 data-i18n="card_teacher">Оқушы нәтижелері</h3>
+            <p data-i18n="card_teacher_d">Барлық жіберілген тест пен есептер.</p>
+            <span class="btn btn-primary btn-sm" data-i18n="view">Қарау</span>
+          </a>
+          <div class="dash-card">
+            <span class="icon">📝</span>
+            <h3 data-i18n="card_tests">Тесттер</h3>
+            <p data-i18n="card_tests_d">Көп таңдаулы сұрақтар.</p>
+            <p class="meta">1 · <span data-i18n="available">Қолжетімді</span></p>
+            <a class="btn btn-ghost btn-sm" href="test.html?id=test-1" data-i18n="start">Бастау</a>
+          </div>
+          <div class="dash-card">
+            <span class="icon">🧮</span>
+            <h3 data-i18n="card_calcs">Есептер</h3>
+            <p data-i18n="card_calcs_d">Тақырыптық есептеулер.</p>
+            <p class="meta">1 · <span data-i18n="available">Қолжетімді</span></p>
+            <a class="btn btn-ghost btn-sm" href="calc.html?id=calc-1" data-i18n="start">Бастау</a>
+          </div>
+          <div class="dash-card" style="opacity:0.7">
+            <span class="icon">✍️</span>
+            <h3 data-i18n="card_open">Ашық сұрақтар</h3>
+            <p data-i18n="card_open_d">Жақында — AI көмегімен тексеру.</p>
+            <span class="badge badge-teacher" data-i18n="card_open_soon">Жақында</span>
+          </div>
+        `;
+      } else {
+        grid.innerHTML = `
+          <div class="dash-card">
+            <span class="icon">📝</span>
+            <h3 data-i18n="card_tests">Тесттер</h3>
+            <p data-i18n="card_tests_d">Көп таңдаулы сұрақтар. Автоматты бағалау.</p>
+            <p class="meta">Тест №1 · 30 <span data-i18n="points_short">б</span></p>
+            <a class="btn btn-primary btn-sm" href="test.html?id=test-1" data-i18n="start">Бастау</a>
+          </div>
+          <div class="dash-card">
+            <span class="icon">🧮</span>
+            <h3 data-i18n="card_calcs">Есептер</h3>
+            <p data-i18n="card_calcs_d">Тақырыптық есептеулер. Жауапты жазып жіберіңіз.</p>
+            <p class="meta">Есептер №1 · 10 <span data-i18n="points_short">б</span></p>
+            <a class="btn btn-teal btn-sm" href="calc.html?id=calc-1" data-i18n="start">Бастау</a>
+          </div>
+          <div class="dash-card" style="opacity:0.7">
+            <span class="icon">✍️</span>
+            <h3 data-i18n="card_open">Ашық сұрақтар</h3>
+            <p data-i18n="card_open_d">Жақында — AI көмегімен тексеру.</p>
+            <span class="badge badge-student" data-i18n="card_open_soon">Жақында</span>
+          </div>
+          <a class="dash-card" href="history.html" style="color:inherit;text-decoration:none">
+            <span class="icon">📊</span>
+            <h3 data-i18n="card_history">Менің нәтижелерім</h3>
+            <p data-i18n="card_history_d">Өткен талпыныстар мен ұпайлар.</p>
+            <span class="btn btn-ghost btn-sm" data-i18n="view">Қарау</span>
+          </a>
+        `;
+      }
+      Lang.apply();
+      ensureStorageBanner(document.getElementById("storage-banner-host"));
+
+      window.addEventListener("langchange", () => {
+        document.getElementById("welcome-name").textContent = Auth.displayName(user);
+      });
+    }
+  </script>
+</body>
+</html>

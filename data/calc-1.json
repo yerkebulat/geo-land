@@ -1,0 +1,98 @@
+{
+  "id": "calc-1",
+  "title": {
+    "kk": "Есептер №1 — Тақырыптық есептер",
+    "en": "Calculations #1 — Thematic problems"
+  },
+  "description": {
+    "kk": "10 есеп · 10 балл · Жауапты жазыңыз (мұғалім тексереді)",
+    "en": "10 problems · 10 points · Write your answer (teacher reviews)"
+  },
+  "totalPoints": 10,
+  "intro": {
+    "kk": "Әр есепке жауабыңызды енгізіңіз. Қажет болса бірліктерді көрсетіңіз. Жібергеннен кейін мұғалім балл қояды.",
+    "en": "Enter your answer for each problem. Include units where needed. After submit, the teacher will assign scores."
+  },
+  "problems": [
+    {
+      "id": "c1",
+      "points": 1,
+      "text": {
+        "kk": "Егер екінші планда өзеннің ені 20 мм болса, 1:2500 масштабтағы пландағы өзеннің енін анықтаңыз. Екінші планның масштабы – 1 см-де 50 м.",
+        "en": "If the river width is 20 mm on a second plan (scale 1 cm = 50 m), find the river width on a plan at scale 1:2500."
+      }
+    },
+    {
+      "id": "c2",
+      "points": 1,
+      "text": {
+        "kk": "Егер өзен арнасы тең бүйірлі үшбұрыш тәрізді болса және өзеннің орташа жылдамдығы 3,7 м/с болса, сол өзеннің шығынын анықтаңыз. (1-есептегі ені қолданылады)",
+        "en": "If the river channel is an equilateral triangle and mean velocity is 3.7 m/s, find the discharge. (Use width from problem 1.)"
+      }
+    },
+    {
+      "id": "c3",
+      "points": 1,
+      "text": {
+        "kk": "Егер масштабы 1:40000 тіктөртбұрышты егістіктің картадағы ұзындығы 3 см және ені ұзындығынан бес есе аз болса, сол егістіктің ауданын есептеңіз.",
+        "en": "A rectangular field on a 1:40 000 map is 3 cm long; width is five times smaller than length. Find the field area."
+      }
+    },
+    {
+      "id": "c4",
+      "points": 1,
+      "text": {
+        "kk": "Ауыл шаруашылығы серіктестігінің аумағы 1 есептегі сипаттамадағы 30 алқаптан тұрады, онда 420 адам жұмыс істейді. Халықтың ауыл шаруашылығы тығыздығын есептеңіз (1 км² егістік жерге шаққандағы фермерлер саны). (3-есептегі алқап ауданы қолданылады)",
+        "en": "An agricultural partnership has 30 such fields (from problem 3) and 420 workers. Compute agricultural population density (farmers per 1 km² of cropland)."
+      }
+    },
+    {
+      "id": "c5",
+      "points": 1,
+      "text": {
+        "kk": "Бес кіреберісі бар алты қабатты ғимаратта тұратын адамдардың санын есептеңіз. Кіре берісте әр қабатқа 4 пәтерден, әр пәтерге 3,5 тұрғыннан келеді.",
+        "en": "Calculate residents in a 6-storey building with 5 entrances: 4 apartments per floor per entrance, 3.5 residents per apartment."
+      }
+    },
+    {
+      "id": "c6",
+      "points": 1,
+      "text": {
+        "kk": "Егер Манауста (3°06′06″ о.е., 60°01′29″ б.б.) астрономиялық уақыт 9:30 болса, нөлдік меридиандағы астрономиялық уақытты анықтаңыз.",
+        "en": "If astronomical time in Manaus (3°06′06″ S, 60°01′29″ W) is 9:30, find astronomical time on the prime meridian."
+      }
+    },
+    {
+      "id": "c7",
+      "points": 1,
+      "text": {
+        "kk": "22 қыркүйекте Манаустағы Күннің максималды түсу бұрышын есептеңіз.",
+        "en": "Calculate the maximum solar elevation angle in Manaus on 22 September."
+      }
+    },
+    {
+      "id": "c8",
+      "points": 1,
+      "text": {
+        "kk": "Манаустағы (GMT-4) нақты уақыт пен астрономиялық уақыт арасындағы айырмашылықты анықтаңыз.",
+        "en": "Find the difference between standard time (GMT-4) and astronomical time in Manaus."
+      }
+    },
+    {
+      "id": "c9",
+      "points": 1,
+      "text": {
+        "kk": "Анықтамалар: қаныққан ауада температура 6°C/км, қанықпағанда 10°C/км төмендейді. Шық нүктесі — бу қанығып, конденсация басталатын температура. Салыстырмалы ылғалдылығы 100%-дан төмен 3,75 м/с жылдамдықпен қозғалатын ауа температурасының 4°С төмендеуіне қанша уақыт қажет болатынын анықтаңыз.",
+        "en": "Constants: saturated lapse 6°C/km, unsaturated 10°C/km. How long for air (RH < 100%) moving at 3.75 m/s to cool by 4°C?"
+      }
+    },
+    {
+      "id": "c10",
+      "points": 1,
+      "text": {
+        "kk": "Теңіз деңгейінен +25°С температурадағы қанықпаған ауа жоғары көтеріле бастады. Шық температурасы +5°С болса, оның температурасы қай биіктікте −22°С жеткенін анықтаңыз.",
+        "en": "Unsaturated air at +25°C rises from sea level. Dew point +5°C. At what height does its temperature reach −22°C?"
+      }
+    }
+  ]
+}

@@ -1,0 +1,574 @@
+{
+  "id": "test-1",
+  "title": {
+    "kk": "Тест №1 — Аралас география",
+    "en": "Test #1 — Mixed Geography"
+  },
+  "description": {
+    "kk": "30 сұрақ · 30 балл · IGeo / республикалық стиль",
+    "en": "30 questions · 30 points · IGeo / republican style"
+  },
+  "totalPoints": 30,
+  "questions": [
+    {
+      "id": "q1",
+      "points": 1,
+      "text": {
+        "kk": "Солтүстік Македонияның көршілес елдері көрсетілген жауап нұсқасын көрсетіңіз:",
+        "en": "Choose the option that lists the neighboring countries of North Macedonia:"
+      },
+      "options": {
+        "kk": [
+          "Босния мен Герцеговина, Сербия, Албания, Болгария",
+          "Босния мен Герцеговина, Хорватия, Словения, Черногория",
+          "Сербия, Черногория, Грекия, Болгария",
+          "Сербия, Албания, Грекия, Болгария",
+          "Черногория, Албания, Грекия, Болгария"
+        ],
+        "en": [
+          "Bosnia and Herzegovina, Serbia, Albania, Bulgaria",
+          "Bosnia and Herzegovina, Croatia, Slovenia, Montenegro",
+          "Serbia, Montenegro, Greece, Bulgaria",
+          "Serbia, Albania, Greece, Bulgaria",
+          "Montenegro, Albania, Greece, Bulgaria"
+        ]
+      },
+      "correct": 3
+    },
+    {
+      "id": "q2",
+      "points": 1,
+      "text": {
+        "kk": "Сауд Арабиясында жиі құмды дауыл соғатын желдің атауы:",
+        "en": "Name of the wind that often brings sandstorms in Saudi Arabia:"
+      },
+      "options": {
+        "kk": ["Шинук", "Сирокко", "Шамаль", "Мистраль", "Левант"],
+        "en": ["Chinook", "Sirocco", "Shamal", "Mistral", "Levant"]
+      },
+      "correct": 2
+    },
+    {
+      "id": "q3",
+      "points": 1,
+      "text": {
+        "kk": "Өнеркәсіптік революция ең алдымен қандай салаларға әсер етті?",
+        "en": "Which sectors did the Industrial Revolution affect first?"
+      },
+      "options": {
+        "kk": [
+          "Темір, көмір, көлік, тоқыма, химия, тамақ өнеркәсібі",
+          "Мұнай, табиғи газ, гидроэнергетика, аэроғарыштық техника",
+          "Натуралды шаруашылық, саяжай шаруашылығы, жануарларды қолға үйрету",
+          "Автомобиль өнеркәсібі, болат, телекоммуникация, темір жол",
+          "Мыс, натуралды шаруашылық, телекоммуникация, аэроғарыштық техника"
+        ],
+        "en": [
+          "Iron, coal, transport, textiles, chemicals, food industry",
+          "Oil, natural gas, hydropower, aerospace",
+          "Subsistence farming, cottage industry, animal domestication",
+          "Automotive, steel, telecom, railways",
+          "Copper, subsistence farming, telecom, aerospace"
+        ]
+      },
+      "correct": 0
+    },
+    {
+      "id": "q4",
+      "points": 1,
+      "text": {
+        "kk": "Мойнақ СЭСы қай өзенде орналасқан?",
+        "en": "On which river is the Moinak HPP located?"
+      },
+      "options": {
+        "kk": ["Сырдария", "Қаратал", "Шарын", "Сарысу", "Арыс"],
+        "en": ["Syr Darya", "Karatal", "Sharyn (Charyn)", "Sarysu", "Arys"]
+      },
+      "correct": 2
+    },
+    {
+      "id": "q5",
+      "points": 1,
+      "text": {
+        "kk": "Орта мұхит жоталарының ортасында орналасқан негізгі топографиялық белгі:",
+        "en": "Main topographic feature in the middle of mid-ocean ridges:"
+      },
+      "options": {
+        "kk": ["Терең шұңғыма", "Рифт аңғары", "Ығысқан жарық", "Тау белдеуі", "Арал доғасы"],
+        "en": ["Deep trench", "Rift valley", "Transform fault", "Mountain belt", "Island arc"]
+      },
+      "correct": 1
+    },
+    {
+      "id": "q6",
+      "points": 1,
+      "text": {
+        "kk": "Лаперуза бұғазы қайсыларының арасында орналасқан?",
+        "en": "La Pérouse Strait lies between:"
+      },
+      "options": {
+        "kk": [
+          "Корсика мен Сицилия",
+          "Лабрадор мен Баффин Жері",
+          "Сахалин мен Хоккайдо",
+          "Испания мен Марокко",
+          "Ұлыбритания мен Франция"
+        ],
+        "en": [
+          "Corsica and Sicily",
+          "Labrador and Baffin Island",
+          "Sakhalin and Hokkaido",
+          "Spain and Morocco",
+          "Great Britain and France"
+        ]
+      },
+      "correct": 2
+    },
+    {
+      "id": "q7",
+      "points": 1,
+      "text": {
+        "kk": "Қай дәуір неоген кезеңіне жатпайды?",
+        "en": "Which epoch does NOT belong to the Neogene period?"
+      },
+      "options": {
+        "kk": [
+          "Плиоцен дәуірі",
+          "Олигоцен дәуірі",
+          "Плейстоцен дәуірі",
+          "Голоцен дәуірі",
+          "Палеоцен дәуірі"
+        ],
+        "en": ["Pliocene", "Oligocene", "Pleistocene", "Holocene", "Paleocene"]
+      },
+      "correct": 1,
+      "note": "Neogene = Miocene + Pliocene. Oligocene is Paleogene. (Pleistocene/Holocene/Paleocene also not Neogene; common key uses Oligocene.)"
+    },
+    {
+      "id": "q8",
+      "points": 1,
+      "text": {
+        "kk": "Оңтүстік Американың экваторлық тропикалық ормандары:",
+        "en": "Equatorial tropical forests of South America are called:"
+      },
+      "options": {
+        "kk": ["Пампа", "Сертан", "Кампос", "Сельва", "Каатинга"],
+        "en": ["Pampa", "Sertão", "Campos", "Selva", "Caatinga"]
+      },
+      "correct": 3
+    },
+    {
+      "id": "q9",
+      "points": 1,
+      "text": {
+        "kk": "Жаңа Зеландияның байырғы тұрғындары:",
+        "en": "Indigenous people of New Zealand:"
+      },
+      "options": {
+        "kk": ["Атапаски", "Делаварлар", "Навахо", "Маори", "Тлинкиттер"],
+        "en": ["Athabaskans", "Delaware", "Navajo", "Māori", "Tlingit"]
+      },
+      "correct": 3
+    },
+    {
+      "id": "q10",
+      "points": 1,
+      "text": {
+        "kk": "Найзағайды бұлттың қандай түрі құрайды?",
+        "en": "Which cloud type produces thunderstorms?"
+      },
+      "options": {
+        "kk": [
+          "Қабат (Stratus)",
+          "Будақ (Cumulus)",
+          "Будақ жаңбырлы (Cumulonimbus)",
+          "Шарбы (Cirrus)",
+          "Қабатты-будақ (Stratocumulus)"
+        ],
+        "en": ["Stratus", "Cumulus", "Cumulonimbus", "Cirrus", "Stratocumulus"]
+      },
+      "correct": 2
+    },
+    {
+      "id": "q11",
+      "points": 1,
+      "text": {
+        "kk": "Төмендегі елдердің қайсысы ЕО мүшесі емес?",
+        "en": "Which of the following is NOT an EU member?"
+      },
+      "options": {
+        "kk": ["Словения", "Норвегия", "Хорватия", "Болгария", "Румыния"],
+        "en": ["Slovenia", "Norway", "Croatia", "Bulgaria", "Romania"]
+      },
+      "correct": 1
+    },
+    {
+      "id": "q12",
+      "points": 1,
+      "text": {
+        "kk": "Нунатаки дегеніміз",
+        "en": "Nunataks are"
+      },
+      "options": {
+        "kk": [
+          "мұздың еруінен пайда болған ойыстар",
+          "мұздық аңғарының қабырғасында қалыптасқан терраса",
+          "мұздықтың үстіндегі биік, тасты шыңдар",
+          "қатпарланбаған мұздықтардың дрейфі",
+          "глетчер мұзымен жиналған геологиялық шөгінділер"
+        ],
+        "en": [
+          "hollows formed by ice melt",
+          "terraces on glacial valley walls",
+          "high rocky peaks projecting above a glacier",
+          "drift of unstratified ice",
+          "geological deposits carried by glacier ice"
+        ]
+      },
+      "correct": 2
+    },
+    {
+      "id": "q13",
+      "points": 1,
+      "text": {
+        "kk": "Қаланың қала маңындағы аудан (қала маңындағы белдеу) және оған жақын ауылдармен бірге қосылған ауданы:",
+        "en": "A city together with its suburban belt and nearby villages:"
+      },
+      "options": {
+        "kk": [
+          "Қалалық аумақ",
+          "Конурбация",
+          "Қаланың әкімшілік аймағы",
+          "Агломерация",
+          "Метрополитен аймағы"
+        ],
+        "en": [
+          "Urban area",
+          "Conurbation",
+          "Administrative city area",
+          "Agglomeration",
+          "Metropolitan area"
+        ]
+      },
+      "correct": 3
+    },
+    {
+      "id": "q14",
+      "points": 1,
+      "text": {
+        "kk": "Сипаттама бойынша теңіз атауын анықтаңыз: Индонезия аралдарымен қоршалған Тынық мұхитының арал аралық теңізі. Оның орташа тереңдігі 1752 м. Теңіз сонымен қатар маржан, балық және басқа теңіз организмдерінің көптеген түрлерін қоса алғанда, бай теңіз биоәртүрлілігімен танымал.",
+        "en": "Identify the sea: an inter-island sea of the Pacific enclosed by Indonesian islands, average depth 1752 m, rich marine biodiversity including corals and fish."
+      },
+      "options": {
+        "kk": ["Молукка теңізі", "Андаман теңізі", "Филиппин теңізі", "Лигурий теңізі", "Коралл теңізі"],
+        "en": ["Molucca Sea", "Andaman Sea", "Philippine Sea", "Ligurian Sea", "Coral Sea"]
+      },
+      "correct": 0
+    },
+    {
+      "id": "q15",
+      "points": 1,
+      "text": {
+        "kk": "Мавританияның астанасы:",
+        "en": "Capital of Mauritania:"
+      },
+      "options": {
+        "kk": ["Бамако", "Банжул", "Нуакшот", "Конакри", "Ниамей"],
+        "en": ["Bamako", "Banjul", "Nouakchott", "Conakry", "Niamey"]
+      },
+      "correct": 2
+    },
+    {
+      "id": "q16",
+      "points": 1,
+      "text": {
+        "kk": "Өзеннің алқаптың түбімен ағуы кезінде пайда болған және су тасқыны кезінде су басқан алқаптың төмен су деңгейінен көтерілген және өсімдіктермен жабылған бөлігі:",
+        "en": "Valley floor formed by river flow, flooded at high water, vegetated and raised above low-water level:"
+      },
+      "options": {
+        "kk": ["Жайылма", "Оксбоу көлі", "Айналма", "Меандр", "Қайраң"],
+        "en": ["Floodplain", "Oxbow lake", "Cut-off", "Meander", "Shoal / bar"]
+      },
+      "correct": 0
+    },
+    {
+      "id": "q17",
+      "points": 1,
+      "text": {
+        "kk": "Хром қосындылары зауыты қай қалада орналасқан?",
+        "en": "In which city is the chromium compounds plant located?"
+      },
+      "options": {
+        "kk": ["Жезқазған", "Көкшетау", "Тараз", "Ақтөбе", "Қостанай"],
+        "en": ["Zhezkazgan", "Kokshetau", "Taraz", "Aktobe", "Kostanay"]
+      },
+      "correct": 3
+    },
+    {
+      "id": "q18",
+      "points": 1,
+      "text": {
+        "kk": "Нашар дамыған елдердің көпшілігі демографиялық ауысу моделінің қай кезеңінде орналасқан?",
+        "en": "Most less-developed countries are in which stage of the demographic transition model?"
+      },
+      "options": {
+        "kk": ["Бірінші", "Екінші", "Үшінші", "Төртінші", "Бесінші"],
+        "en": ["First", "Second", "Third", "Fourth", "Fifth"]
+      },
+      "correct": 1
+    },
+    {
+      "id": "q19",
+      "points": 1,
+      "text": {
+        "kk": "Қандай химиялық құрамдағы лава ең тұтқыр болып саналады?",
+        "en": "Lava of which chemical composition is considered the most viscous?"
+      },
+      "options": {
+        "kk": ["Риолитті", "Перидотитті", "Базальтты", "Андезитті", "Гранитті"],
+        "en": ["Rhyolitic", "Peridotitic", "Basaltic", "Andesitic", "Granitic"]
+      },
+      "correct": 0
+    },
+    {
+      "id": "q20",
+      "points": 1,
+      "text": {
+        "kk": "Сипаттама бойынша қаланы анықтаңыз: Бұрында Еуропада Кантон атымен белгілі болған, өз еліндегі үшінші үлкен қала. Інжу өзені аңғарында орналасқан. Әлемге әйгілі жеңіл өнеркәсіп орталығы және елдегі автокөлік өнеркәсібінің ірі орталықтарының бірі.",
+        "en": "Identify the city: formerly known in Europe as Canton, third-largest city in its country, Pearl River valley, major light-industry and auto-industry center."
+      },
+      "options": {
+        "kk": ["Сеул", "Шанхай", "Макао", "Гонконг", "Гуанчжоу"],
+        "en": ["Seoul", "Shanghai", "Macau", "Hong Kong", "Guangzhou"]
+      },
+      "correct": 4
+    },
+    {
+      "id": "q21",
+      "points": 1,
+      "text": {
+        "kk": "Сипаттама бойынша елді анықтаңыз: 1990 жылдан 2018 жылға дейін ЖІӨ бойынша ең жылдам өскен ел. Мемлекеттің ресми тілдері испан, француз және португал тілдері. Елдің басым бөлігінің климаты Af/Am/Aw (ылғалды экваторлық).",
+        "en": "Identify the country: fastest GDP growth 1990–2018; official languages Spanish, French and Portuguese; mostly Af/Am/Aw climate."
+      },
+      "options": {
+        "kk": [
+          "Филиппин",
+          "Кабо-Верде",
+          "Экваторлық Гвинея",
+          "Шығыс Тимор",
+          "Доминикан Республикасы"
+        ],
+        "en": [
+          "Philippines",
+          "Cabo Verde",
+          "Equatorial Guinea",
+          "East Timor",
+          "Dominican Republic"
+        ]
+      },
+      "correct": 2
+    },
+    {
+      "id": "q22",
+      "points": 1,
+      "text": {
+        "kk": "Қате тұжырымдаманы таңдаңыз.",
+        "en": "Choose the incorrect statement."
+      },
+      "options": {
+        "kk": [
+          "Мәңгілік тоңның еруі парниктік әсерді арттырады.",
+          "Хлорфторкөміртектер (CFC) озон қабатын бұзады және бір мезгілде парниктік әсерді арттырады.",
+          "Ауадағы қатты бөлшектердің ластануы бұлттардың пайда болуына жол бермейді.",
+          "Халықтың шамадан тыс көп болуы шөлейттенуге әкелуі мүмкін.",
+          "Жердің орташа температурасының жоғарылауы кейбір аймақтардағы мұздықтардың өсуіне әкелуі мүмкін."
+        ],
+        "en": [
+          "Permafrost thaw increases the greenhouse effect.",
+          "CFCs destroy ozone and also enhance the greenhouse effect.",
+          "Particulate air pollution prevents cloud formation.",
+          "Overpopulation can lead to desertification.",
+          "Rising global mean temperature can lead to glacier growth in some regions."
+        ]
+      },
+      "correct": 2
+    },
+    {
+      "id": "q23",
+      "points": 1,
+      "text": {
+        "kk": "Тек бір тіл тобына жататын тілдерді тізімдейтін нұсқаны таңдаңыз.",
+        "en": "Choose the option listing languages that all belong to only one language family."
+      },
+      "options": {
+        "kk": [
+          "Малай, малагаси, филиппин, сингал",
+          "Хинди, словен, албан, күрд",
+          "Фин, литва, венгр, саам",
+          "Ұйғыр, түрік, әзірбайжан, күрд",
+          "Тибет, корей, дүнген, бирма"
+        ],
+        "en": [
+          "Malay, Malagasy, Filipino, Sinhala",
+          "Hindi, Slovenian, Albanian, Kurdish",
+          "Finnish, Lithuanian, Hungarian, Sámi",
+          "Uyghur, Turkish, Azerbaijani, Kurdish",
+          "Tibetan, Korean, Dungan, Burmese"
+        ]
+      },
+      "correct": 1
+    },
+    {
+      "id": "q24",
+      "points": 1,
+      "text": {
+        "kk": "Гематит минералы қандай металл кені болып табылады?",
+        "en": "Hematite is an ore of which metal?"
+      },
+      "options": {
+        "kk": ["Темір (Fe)", "Алюминий (Al)", "Германий (Ge)", "Қорғасын (Pb)", "Магний (Mg)"],
+        "en": ["Iron (Fe)", "Aluminium (Al)", "Germanium (Ge)", "Lead (Pb)", "Magnesium (Mg)"]
+      },
+      "correct": 0
+    },
+    {
+      "id": "q25",
+      "points": 1,
+      "text": {
+        "kk": "Процесс пен сол процесс кезіндегі энергияның өзгеруі арасындағы қате сәйкестікті таңдаңыз.",
+        "en": "Choose the incorrect process–energy change pairing."
+      },
+      "options": {
+        "kk": [
+          "Булану — энергия жұтылады",
+          "Балқу — энергия жұтылады",
+          "Сублимация — энергия жұтылады",
+          "Конденсация — энергия жұтылады",
+          "Мұздану — энергия бөлінеді"
+        ],
+        "en": [
+          "Evaporation — energy absorbed",
+          "Melting — energy absorbed",
+          "Sublimation — energy absorbed",
+          "Condensation — energy absorbed",
+          "Freezing — energy released"
+        ]
+      },
+      "correct": 3
+    },
+    {
+      "id": "q26",
+      "points": 1,
+      "type": "multi",
+      "text": {
+        "kk": "Жасыл революция нені қолдануға енгізді:",
+        "en": "The Green Revolution introduced the use of:"
+      },
+      "statements": {
+        "kk": ["1. Химиялық тыңайтқыштар", "2. Органикалық егіншілік әдістері", "3. Механизацияны"],
+        "en": ["1. Chemical fertilizers", "2. Organic farming methods", "3. Mechanization"]
+      },
+      "options": {
+        "kk": ["Тек 1", "1, 2", "1, 3", "2, 3", "1, 2, 3"],
+        "en": ["Only 1", "1, 2", "1, 3", "2, 3", "1, 2, 3"]
+      },
+      "correct": 2
+    },
+    {
+      "id": "q27",
+      "points": 1,
+      "type": "multi",
+      "text": {
+        "kk": "Луи Вирттің пікірінше, қалалық жерлерде ауылдық жерлерге қарағанда жиі кездеседі:",
+        "en": "According to Louis Wirth, urban areas more often show:"
+      },
+      "statements": {
+        "kk": [
+          "1. Халықтың жоғары тығыздығы",
+          "2. Халықтың едәуір саны",
+          "3. Әлеуметтік гетерогенділік"
+        ],
+        "en": [
+          "1. High population density",
+          "2. Large population size",
+          "3. Social heterogeneity"
+        ]
+      },
+      "options": {
+        "kk": ["Тек 1", "1, 2", "1, 3", "2, 3", "1, 2, 3"],
+        "en": ["Only 1", "1, 2", "1, 3", "2, 3", "1, 2, 3"]
+      },
+      "correct": 4
+    },
+    {
+      "id": "q28",
+      "points": 1,
+      "type": "multi",
+      "text": {
+        "kk": "Өткізу нарықтарына жақынырақ орналасу тиімдірек өндіріс мысалдары:",
+        "en": "Examples of production better located near markets:"
+      },
+      "statements": {
+        "kk": [
+          "1. Киімге арналған түймелерді жасау",
+          "2. Автокөлік құрастыру",
+          "3. Газдалған сусындар өндірісі"
+        ],
+        "en": [
+          "1. Making buttons for clothing",
+          "2. Car assembly",
+          "3. Soft-drink production"
+        ]
+      },
+      "options": {
+        "kk": ["Тек 1", "1, 2", "1, 3", "2, 3", "1, 2, 3"],
+        "en": ["Only 1", "1, 2", "1, 3", "2, 3", "1, 2, 3"]
+      },
+      "correct": 3
+    },
+    {
+      "id": "q29",
+      "points": 1,
+      "type": "multi",
+      "text": {
+        "kk": "Жылы теңіз ағысын (ағыстарын) атаңыз:",
+        "en": "Name the warm ocean current(s):"
+      },
+      "statements": {
+        "kk": ["1. Батыс Аустралиялық", "2. Шығыс Аустралиялық", "3. Мадагаскар"],
+        "en": ["1. West Australian", "2. East Australian", "3. Madagascar (Agulhas/Mozambique)"]
+      },
+      "options": {
+        "kk": ["1, 2, 3", "1, 2", "1, 3", "2, 3", "Тек 3"],
+        "en": ["1, 2, 3", "1, 2", "1, 3", "2, 3", "Only 3"]
+      },
+      "correct": 3
+    },
+    {
+      "id": "q30",
+      "points": 1,
+      "type": "multi",
+      "text": {
+        "kk": "Осы фактордың қайсысы/факторлардың қайсысы Үндістандағы Черрапунджиді Жердегі ең ылғалды жерлердің біріне айналдырды?",
+        "en": "Which factor(s) make Cherrapunji (India) one of the wettest places on Earth?"
+      },
+      "statements": {
+        "kk": [
+          "1. Гималайға жақын жерде орналасқан",
+          "2. Ганг және Брахмапутра аңғарларына жақын орналасқан",
+          "3. Бенгал шығанағы маңында орналасқан"
+        ],
+        "en": [
+          "1. Located near the Himalayas",
+          "2. Near the Ganges and Brahmaputra valleys",
+          "3. Located near the Bay of Bengal"
+        ]
+      },
+      "options": {
+        "kk": ["1, 2, 3", "1, 2", "1, 3", "2, 3", "Тек 3"],
+        "en": ["1, 2, 3", "1, 2", "1, 3", "2, 3", "Only 3"]
+      },
+      "correct": 0
+    }
+  ]
+}
