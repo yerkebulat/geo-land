@@ -689,6 +689,35 @@ select {
   color: var(--text-dim);
 }
 
+.materials-cta {
+  margin-top: 1.75rem;
+}
+
+.materials-cta-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  padding: 1.25rem 1.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.materials-cta-inner h3 {
+  font-size: 1.05rem;
+  color: var(--accent-deep);
+  margin-bottom: 0.25rem;
+}
+
+.materials-cta-inner p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  max-width: 36rem;
+}
+
 /* ——— Mentor / medals ——— */
 .split-grid {
   display: grid;
