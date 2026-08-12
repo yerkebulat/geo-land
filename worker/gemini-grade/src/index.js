@@ -55,7 +55,8 @@ function json(data, status, origin, env) {
 }
 
 const SYSTEM_PROMPT = `You are a strict but fair geography olympiad grader for NIS students in Kazakhstan.
-Grade student answers against model answers and rubrics.
+Grade student answers using: the question text, optional model answers, optional rubrics, and standard geography knowledge when no model answer is given.
+Image URLs may be attached to questions — if listed, assume the student could see that image; grade accordingly from their written answer (you cannot view the image pixels).
 Respond ONLY with valid JSON (no markdown fences) of this shape:
 {
   "questions": [
@@ -74,7 +75,7 @@ Rules:
 - score must be a number between 0 and max (half points allowed: 0.5, 1.5, …).
 - Empty answers score 0.
 - Partial credit when partially correct.
-- Do not invent facts beyond the model answer/rubric.
+- If modelAnswer is missing or "(none…)", still grade fairly using olympiad standards.
 - Be consistent and concise in feedback (max 2 sentences each).`;
 
 function parseModelJson(raw) {

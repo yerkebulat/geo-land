@@ -19,17 +19,27 @@ const GeminiGrader = {
   _buildTasks(openTask, answers, lang) {
     const L = lang || (window.Lang && Lang.current) || "kk";
     return openTask.questions.map((q, i) => {
-      const text = (q.text && (q.text[L] || q.text.kk || q.text.en)) || q.id;
-      const model =
-        (q.modelAnswer && (q.modelAnswer[L] || q.modelAnswer.kk || q.modelAnswer.en)) || "";
-      const rubric = (q.rubric && (q.rubric[L] || q.rubric.kk || q.rubric.en)) || "";
+      let text = q.text;
+      if (text && typeof text === "object") text = text[L] || text.kk || text.en || "";
+      text = text || q.id;
+      let model = q.modelAnswer;
+      if (model && typeof model === "object") model = model[L] || model.kk || model.en || "";
+      model = model || "";
+      let rubric = q.rubric;
+      if (rubric && typeof rubric === "object") rubric = rubric[L] || rubric.kk || rubric.en || "";
+      rubric =
+        rubric ||
+        (model
+          ? "Use model answer and partial credit."
+          : "No model answer provided. Grade as a geography olympiad teacher using the question, standard geography knowledge, and the student answer. Give partial credit for partially correct work.");
       const student = (answers[q.id] || "").trim();
       return {
         id: q.id,
         index: i + 1,
         points: q.points || 1,
         question: text,
-        modelAnswer: model,
+        imageUrl: q.imageUrl || "",
+        modelAnswer: model || "(none — grade from question + geography knowledge)",
         rubric,
         studentAnswer: student || "(empty)",
       };

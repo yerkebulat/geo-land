@@ -1046,6 +1046,38 @@ select {
   letter-spacing: 0.02em;
 }
 
+.q-img-preview {
+  margin: 0.65rem 0 0.85rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: #fff;
+  max-width: 420px;
+}
+
+.q-img-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 320px;
+  object-fit: contain;
+}
+
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  color: var(--text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.check-row input {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
 .user-chip {
   display: flex;
   align-items: center;

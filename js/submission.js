@@ -247,9 +247,13 @@ async function renderOpenSubmission(sub, user) {
         d.score != null
           ? `<span class="q-num" style="float:right">AI: ${d.score}/${d.max != null ? d.max : q.points || 1}</span>`
           : "";
+      const img = q.imageUrl
+        ? `<div class="q-img-preview"><img src="${escapeHtml(q.imageUrl)}" alt="" /></div>`
+        : "";
       return `<div class="question-card">
         <div class="q-num">#${i + 1} · ${q.points || 1} ${Lang.t("points_short")}${scoreBit}</div>
         <div class="q-text" style="white-space:pre-wrap">${escapeHtml(tField(q.text) || q.id)}</div>
+        ${img}
         <div class="answer-row">
           <div class="label">${Lang.t("student_answer")}</div>
           <div style="white-space:pre-wrap">${escapeHtml(ans || Lang.t("empty_answer"))}</div>

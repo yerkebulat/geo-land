@@ -20,7 +20,8 @@ function renderAppNav(active) {
         <li><a href="app.html" class="${active === "dash" ? "active" : ""}" data-i18n="nav_dashboard">Басты бет</a></li>
         ${
           user && user.role === "teacher"
-            ? `<li><a href="teacher.html" class="${active === "teacher" ? "active" : ""}" data-i18n="card_teacher">Оқушы нәтижелері</a></li>`
+            ? `<li><a href="teacher.html" class="${active === "teacher" ? "active" : ""}" data-i18n="card_teacher">Оқушы нәтижелері</a></li>
+               <li><a href="teacher-open.html" class="${active === "teacher-open" ? "active" : ""}" data-i18n="open_manage_nav">Ашық сұрақтар</a></li>`
             : `<li><a href="history.html" class="${active === "history" ? "active" : ""}" data-i18n="card_history">Менің нәтижелерім</a></li>`
         }
       </ul>

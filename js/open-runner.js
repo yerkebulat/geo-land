@@ -6,6 +6,22 @@ function tField(obj) {
 }
 
 async function loadOpen(id) {
+  // Prefer teacher-created sets in Firebase / local open_sets
+  try {
+    if (window.OpenSets) {
+      const set = await OpenSets.get(id);
+      if (set) {
+        // students only take published (teacher may preview)
+        const user = Auth.current();
+        if (!set.published && !(user && user.role === "teacher")) {
+          throw new Error("not_published");
+        }
+        return OpenSets.toTask(set);
+      }
+    }
+  } catch (e) {
+    if (e.message === "not_published") throw e;
+  }
   const res = await fetch(`data/${id}.json`);
   if (!res.ok) throw new Error("not found");
   return res.json();
@@ -29,7 +45,8 @@ function renderOpen(task, state) {
           const d = state.perQuestion[q.id] || {};
           return `<div class="question-card">
             <div class="q-num">#${i + 1} · ${d.score != null ? d.score : "—"}/${q.points}</div>
-            <div class="q-text">${escapeHtml(tField(q.text))}</div>
+            <div class="q-text" style="white-space:pre-wrap">${escapeHtml(tField(q.text))}</div>
+            ${q.imageUrl ? `<div class="q-img-preview"><img src="${escapeHtml(q.imageUrl)}" alt="" /></div>` : ""}
             <div class="answer-row">
               <div class="label" data-i18n="your_answer">${Lang.t("your_answer")}</div>
               <div>${escapeHtml((state.answers[q.id] || "").trim() || Lang.t("empty_answer"))}</div>
@@ -122,6 +139,11 @@ function renderOpen(task, state) {
     card.innerHTML = `
       <div class="q-num">#${i + 1} · ${q.points || 1} ${Lang.t("points_short")}</div>
       <div class="q-text" style="white-space:pre-wrap">${escapeHtml(tField(q.text))}</div>
+      ${
+        q.imageUrl
+          ? `<div class="q-img-preview"><img src="${escapeHtml(q.imageUrl)}" alt="" /></div>`
+          : ""
+      }
       <div class="calc-answer">
         <textarea data-qid="${q.id}" rows="4" placeholder="${
       Lang.current === "kk" ? "Жауабыңызды жазыңыз…" : "Write your answer…"
@@ -234,8 +256,10 @@ async function bootOpen() {
       });
       renderOpen(task, state);
     });
-  } catch {
-    root.innerHTML = `<div class="empty-state"><div class="big">✍️</div><p data-i18n="not_found">Табылмады</p>
+  } catch (e) {
+    const msg =
+      e && e.message === "not_published" ? Lang.t("open_not_published") : Lang.t("not_found");
+    root.innerHTML = `<div class="empty-state"><div class="big">✍️</div><p>${escapeHtml(msg)}</p>
       <a href="app.html" class="btn btn-ghost" data-i18n="back">Артқа</a></div>`;
     Lang.apply();
   }
