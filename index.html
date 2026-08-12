@@ -205,6 +205,33 @@
           </ul>
         </div>
       </div>
+
+      <!-- iGeo alumni map — collapsed by default, unfolds like a chart -->
+      <div class="igeo-map-reveal" id="igeo-map-reveal">
+        <button type="button" class="igeo-map-toggle" id="igeo-map-toggle" aria-expanded="false" aria-controls="igeo-map-panel">
+          <span class="igeo-map-toggle-left">
+            <span class="igeo-map-toggle-icon" aria-hidden="true">🗺️</span>
+            <span class="igeo-map-toggle-text">
+              <strong data-i18n="igeo_map_title">Жетістіктер картасы</strong>
+              <span data-i18n="igeo_map_hint">Авторлық бағдарлама түлектері — әлем картасында. Ашу үшін басыңыз.</span>
+            </span>
+          </span>
+          <span class="igeo-map-chevron" aria-hidden="true">▼</span>
+        </button>
+        <div class="igeo-map-panel" id="igeo-map-panel" hidden>
+          <figure class="igeo-map-figure">
+            <img
+              src="assets/igeo_map.png"
+              alt="World map of alumni achievements under Utebayev’s author program"
+              width="1362"
+              height="746"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption data-i18n="igeo_map_caption">2017–2025 · желілік · республикалық · халықаралық</figcaption>
+          </figure>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -295,6 +322,20 @@
       const b = document.getElementById("btn-enter-nav");
       if (b) b.textContent = Lang.t("nav_dashboard");
     }
+
+    // iGeo map accordion — collapsed by default
+    (function () {
+      const wrap = document.getElementById("igeo-map-reveal");
+      const btn = document.getElementById("igeo-map-toggle");
+      const panel = document.getElementById("igeo-map-panel");
+      if (!wrap || !btn || !panel) return;
+      btn.addEventListener("click", () => {
+        const open = !wrap.classList.contains("is-open");
+        wrap.classList.toggle("is-open", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        panel.hidden = !open;
+      });
+    })();
   </script>
 </body>
 </html>
