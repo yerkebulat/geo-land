@@ -735,13 +735,20 @@ select {
 
 .card h3 {
   font-size: 1.1rem;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.35rem;
   color: var(--accent-deep);
 }
 
 .card p {
   color: var(--text-muted);
   font-size: 0.94rem;
+}
+
+.mentor-role {
+  font-size: 0.82rem !important;
+  font-weight: 600;
+  color: var(--teal) !important;
+  margin-bottom: 0.65rem;
 }
 
 .medal-list {
