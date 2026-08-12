@@ -24,6 +24,24 @@ const USERS = [
     role: "student",
     name: { kk: "Еркебұлан Тазабек", en: "Yerkebulan Tazabek" },
   },
+  {
+    username: "user1",
+    password: "password1!",
+    role: "student",
+    name: { kk: "User 1", en: "User 1" },
+  },
+  {
+    username: "user2",
+    password: "password2!",
+    role: "student",
+    name: { kk: "User 2", en: "User 2" },
+  },
+  {
+    username: "user3",
+    password: "password3!",
+    role: "student",
+    name: { kk: "User 3", en: "User 3" },
+  },
 ];
 
 const Auth = {

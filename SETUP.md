@@ -73,12 +73,15 @@ window.FIREBASE_CONFIG = {
 
 ## 3. Accounts (v1 — no registration)
 
-| Role    | Login                 | Password         |
-|---------|-----------------------|------------------|
-| Teacher | `nursultan.utebayev`  | `nursultan1234!` |
-| Student | `arsen.sydykov`       | `arsen1234!`     |
-| Student | `yerulan.kongrat`     | `yerulan1234!`   |
-| Student | `yerkebulan.tazabek`  | `yerkebulan1234!`|
+| Role    | Login                 | Password          |
+|---------|-----------------------|-------------------|
+| Teacher | `nursultan.utebayev`  | `nursultan1234!`  |
+| Student | `arsen.sydykov`       | `arsen1234!`      |
+| Student | `yerulan.kongrat`     | `yerulan1234!`    |
+| Student | `yerkebulan.tazabek`  | `yerkebulan1234!` |
+| Student | `user1`               | `password1!`      |
+| Student | `user2`               | `password2!`      |
+| Student | `user3`               | `password3!`      |
 
 Edit accounts in `js/auth.js`.
 
