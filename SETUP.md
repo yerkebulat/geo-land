@@ -86,7 +86,30 @@ Edit accounts in `js/auth.js`.
 
 ---
 
-## 4. Adding more tests / calculations
+## 4. Gemini API (AI open-question grading)
+
+1. Open [Google AI Studio](https://aistudio.google.com/apikey) → create an API key  
+2. Edit `js/gemini-config.js`:
+
+```js
+window.GEMINI_CONFIG = {
+  enabled: true,
+  apiKey: "AIza...",
+  model: "gemini-2.0-flash",
+};
+```
+
+3. Commit & push (or test locally).
+
+**Note:** The key is visible in the browser on GitHub Pages. Fine for a private pilot; rotate if abused. Later we can hide it behind a Cloudflare Worker.
+
+If Gemini is off, open answers still save; teacher grades manually.
+
+Open set: `data/open-1.json` (14 questions, 30 points).
+
+---
+
+## 5. Adding more tests / calculations
 
 1. Copy `data/test-1.json` → `data/test-2.json` (or `calc-2.json`).
 2. Edit questions / `correct` index (0-based).
@@ -96,7 +119,7 @@ Open questions + AI marking: planned later.
 
 ---
 
-## 5. Answer keys
+## 6. Answer keys
 
 MCQ keys are in `data/test-1.json` field `"correct"` (0 = A, 1 = B, …).
 
@@ -104,7 +127,7 @@ Please have Nursultan review keys, especially multi-select items and “which do
 
 ---
 
-## 6. Local preview
+## 7. Local preview
 
 ```bash
 cd geo-land

@@ -12,6 +12,7 @@ function studentName(username) {
 
 function statusPill(sub) {
   if (sub.status === "auto") return `<span class="status-pill done">${Lang.t("status_auto")}</span>`;
+  if (sub.status === "ai_marked") return `<span class="status-pill done">${Lang.t("status_ai")}</span>`;
   if (sub.status === "marked") return `<span class="status-pill done">${Lang.t("status_marked")}</span>`;
   return `<span class="status-pill pending">${Lang.t("status_pending")}</span>`;
 }

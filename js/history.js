@@ -6,6 +6,7 @@ function taskLabel(sub) {
 
 function statusPill(sub) {
   if (sub.status === "auto") return `<span class="status-pill done" data-i18n="status_auto">Авто</span>`;
+  if (sub.status === "ai_marked") return `<span class="status-pill done" data-i18n="status_ai">AI</span>`;
   if (sub.status === "marked") return `<span class="status-pill done" data-i18n="status_marked">Бағаланды</span>`;
   return `<span class="status-pill pending" data-i18n="status_pending">Тексеруде</span>`;
 }
@@ -15,7 +16,7 @@ function scoreText(sub) {
     return `${sub.teacherScore} / ${sub.maxScore}`;
   }
   if (sub.score != null) return `${sub.score} / ${sub.maxScore}`;
-  return `— / ${sub.maxScore}`;
+  return `— / ${sub.maxScore || "—"}`;
 }
 
 function formatDate(iso) {
