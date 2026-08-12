@@ -10,6 +10,8 @@
  */
 
 const DEFAULT_ORIGINS = [
+  "https://geo-land.org",
+  "https://www.geo-land.org",
   "https://yerkebulat.github.io",
   "http://localhost:8080",
   "http://127.0.0.1:8080",
