@@ -4,7 +4,7 @@
 
 Personal training room for students: landing page (path to IGeo), bilingual UI (ҚАЗ / EN), tests, calculation exercises, teacher review.
 
-**Live (after Pages is on):** https://yerkebulat.github.io/geo-land/
+**Live (after Pages is on):** [https://yerkebulat.github.io/geo-land/](https://geo-land.org)
 
 ## Features
 
