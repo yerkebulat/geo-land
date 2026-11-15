@@ -133,9 +133,9 @@ match /open_sets/{id} {
 
 ---
 
-## 5. Adding more tests / calculations
+## 5. Adding more practice tests
 
-1. Copy `data/test-1.json` → `data/test-2.json` (or `calc-2.json`).
+1. Copy `data/test-1.json` → `data/test-2.json`.
 2. Edit questions / `correct` index (0-based).
 3. Add a card link in `app.html` (e.g. `test.html?id=test-2`).
 

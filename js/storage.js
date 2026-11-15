@@ -3,7 +3,7 @@
  * Collection: submissions
  * Doc shape:
  * {
- *   id, username, role, type: 'test'|'calc',
+ *   id, username, role, type: 'test'|'open' (legacy 'calc' rows are hidden),
  *   taskId, taskTitle, answers, score, maxScore,
  *   status: 'auto'|'pending'|'marked',
  *   teacherScore, teacherComment, gradedBy, gradedAt,
@@ -145,6 +145,8 @@ const Storage = {
     } else {
       list = this._readLocal().slice().sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
     }
+    // Calculations feature was retired: hide any old calc submissions.
+    list = list.filter((x) => x && x.type !== "calc");
     if (username) list = list.filter((x) => x.username === username);
     if (type) list = list.filter((x) => x.type === type);
     return list;

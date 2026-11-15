@@ -1,4 +1,4 @@
-/* View a single submission; teacher can grade calc sets */
+/* View a single submission; teacher can grade open-question sets */
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 
 function tField(obj) {
@@ -23,7 +23,7 @@ async function bootSubmission() {
   }
 
   const sub = await Storage.getSubmission(id);
-  if (!sub) {
+  if (!sub || sub.type === "calc") {
     root.innerHTML = `<div class="empty-state" data-i18n="not_found">Табылмады</div>`;
     Lang.apply();
     return;
@@ -44,13 +44,11 @@ async function bootSubmission() {
 async function renderSubmission(sub, user) {
   const root = document.getElementById("sub-root");
   const backHref = user.role === "teacher" ? "teacher.html" : "history.html";
-  const title = tField(sub.taskTitle) || sub.taskId;
+  const title = Lang.practiceTestTitle(sub) || tField(sub.taskTitle) || sub.taskId;
 
   let body = "";
   if (sub.type === "test") {
     body = await renderTestSubmission(sub);
-  } else if (sub.type === "calc") {
-    body = await renderCalcSubmission(sub, user);
   } else if (sub.type === "open") {
     body = await renderOpenSubmission(sub, user);
   } else {
@@ -124,7 +122,7 @@ async function renderSubmission(sub, user) {
     }
   }
 
-  if (user.role === "teacher" && (sub.type === "calc" || sub.type === "open")) {
+  if (user.role === "teacher" && sub.type === "open") {
     const form = document.getElementById("grade-form");
     if (form) {
       form.addEventListener("submit", async (e) => {
@@ -194,36 +192,6 @@ async function renderTestSubmission(sub) {
       </div>`;
     })
     .join("");
-}
-
-async function renderCalcSubmission(sub, user) {
-  let calc = null;
-  try {
-    const res = await fetch(`data/${sub.taskId}.json`);
-    if (res.ok) calc = await res.json();
-  } catch {}
-
-  const problems = calc ? calc.problems : Object.keys(sub.answers).map((id) => ({ id, text: id, points: 1 }));
-
-  let html = problems
-    .map((p, i) => {
-      const ans = sub.answers[p.id] || "";
-      return `<div class="question-card">
-        <div class="q-num">#${i + 1}</div>
-        <div class="q-text">${escapeHtml(tField(p.text) || p.id)}</div>
-        <div class="answer-row">
-          <div class="label" data-i18n="student_answer">${Lang.t("student_answer")}</div>
-          <div>${escapeHtml(ans || Lang.t("empty_answer"))}</div>
-        </div>
-      </div>`;
-    })
-    .join("");
-
-  if (user.role === "teacher") {
-    html += teacherGradeForm(sub);
-  }
-
-  return html;
 }
 
 async function renderOpenSubmission(sub, user) {
