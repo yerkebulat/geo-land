@@ -55,7 +55,7 @@ function renderCalc(calc, state) {
       <div class="q-num">#${i + 1} · ${p.points || 1} ${Lang.t("points_short")}</div>
       <div class="q-text">${escapeHtml(tField(p.text))}</div>
       <div class="calc-answer">
-        <textarea data-pid="${p.id}" rows="2" placeholder="${Lang.current === "kk" ? "Жауабыңыз…" : "Your answer…"}">${escapeHtml(state.answers[p.id] || "")}</textarea>
+        <textarea data-pid="${p.id}" rows="2" placeholder="${Lang.pick({ kk: "Жауабыңыз…", en: "Your answer…", ru: "Ваш ответ…" })}">${escapeHtml(state.answers[p.id] || "")}</textarea>
       </div>
     `;
     host.appendChild(card);
@@ -77,9 +77,11 @@ async function submitCalc(calc, state) {
   const empty = calc.problems.filter((p) => !(state.answers[p.id] || "").trim()).length;
   if (empty > 0) {
     const msg =
-      Lang.current === "kk"
-        ? `${empty} есеп бос. Бәрібір жібересіз бе?`
-        : `${empty} problem(s) empty. Submit anyway?`;
+      Lang.pick({
+        kk: `${empty} есеп бос. Бәрібір жібересіз бе?`,
+        en: `${empty} problem(s) empty. Submit anyway?`,
+        ru: `Без ответа задач: ${empty}. Всё равно отправить?`,
+      });
     if (!confirm(msg)) return;
   }
 

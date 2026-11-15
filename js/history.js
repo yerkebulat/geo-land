@@ -22,7 +22,7 @@ function scoreText(sub) {
 function formatDate(iso) {
   if (!iso) return "—";
   try {
-    return new Date(iso).toLocaleString(Lang.current === "kk" ? "kk-KZ" : "en-GB", {
+    return new Date(iso).toLocaleString(Lang.locale(), {
       dateStyle: "medium",
       timeStyle: "short",
     });

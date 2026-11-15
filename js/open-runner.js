@@ -146,7 +146,7 @@ function renderOpen(task, state) {
       }
       <div class="calc-answer">
         <textarea data-qid="${q.id}" rows="4" placeholder="${
-      Lang.current === "kk" ? "Жауабыңызды жазыңыз…" : "Write your answer…"
+      Lang.pick({ kk: "Жауабыңызды жазыңыз…", en: "Write your answer…", ru: "Напишите ваш ответ…" })
     }">${escapeHtml(state.answers[q.id] || "")}</textarea>
       </div>
     `;
@@ -170,9 +170,11 @@ async function submitOpen(task, state) {
   const empty = task.questions.filter((q) => !(state.answers[q.id] || "").trim()).length;
   if (empty > 0) {
     const msg =
-      Lang.current === "kk"
-        ? `${empty} сұрақ бос. Бәрібір жібересіз бе?`
-        : `${empty} question(s) empty. Submit anyway?`;
+      Lang.pick({
+        kk: `${empty} сұрақ бос. Бәрібір жібересіз бе?`,
+        en: `${empty} question(s) empty. Submit anyway?`,
+        ru: `Без ответа: ${empty}. Всё равно отправить?`,
+      });
     if (!confirm(msg)) return;
   }
 

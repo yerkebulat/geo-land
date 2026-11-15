@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Geo-Land · Dashboard</title>
-  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/main.css?v=7" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>" />
 </head>
 <body>
@@ -27,6 +27,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
   <script src="js/firebase-config.js"></script>
   <script src="js/i18n.js"></script>
+  <script src="js/float-ui.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/open-categories.js"></script>
@@ -121,14 +122,14 @@
             <span class="icon">📝</span>
             <h3 data-i18n="card_tests">Тесттер</h3>
             <p data-i18n="card_tests_d">Көп таңдаулы сұрақтар. Автоматты бағалау.</p>
-            <p class="meta">Тест №1 · 30 <span data-i18n="points_short">б</span></p>
+            <p class="meta"><span data-i18n="meta_test_1">Тест №1</span> · 30 <span data-i18n="points_short">б</span></p>
             <a class="btn btn-primary btn-sm" href="test.html?id=test-1" data-i18n="start">Бастау</a>
           </div>
           <div class="dash-card">
             <span class="icon">🧮</span>
             <h3 data-i18n="card_calcs">Есептер</h3>
             <p data-i18n="card_calcs_d">Тақырыптық есептеулер. Жауапты жазып жіберіңіз.</p>
-            <p class="meta">Есептер №1 · 10 <span data-i18n="points_short">б</span></p>
+            <p class="meta"><span data-i18n="meta_calc_1">Есептер №1</span> · 10 <span data-i18n="points_short">б</span></p>
             <a class="btn btn-primary btn-sm" href="calc.html?id=calc-1" data-i18n="start">Бастау</a>
           </div>
           ${openHubCard}

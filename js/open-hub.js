@@ -4,14 +4,16 @@
 function builtInMixedSet() {
   return {
     id: "open-1",
-    title:
-      Lang.current === "en"
-        ? "Open questions #1 — Mixed (built-in)"
-        : "Ашық сұрақтар №1 — Аралас (кірістірілген)",
-    description:
-      Lang.current === "en"
-        ? "Mineralogy, geopolitics, meteorology · 14 questions · 30 pts · AI + teacher"
-        : "Минералогия, геосаясат, метеорология · 14 сұрақ · 30 б · AI + мұғалім",
+    title: Lang.pick({
+      kk: "Ашық сұрақтар №1 — Аралас (кірістірілген)",
+      en: "Open questions #1 — Mixed (built-in)",
+      ru: "Открытые вопросы №1 — Смешанные (встроенная)",
+    }),
+    description: Lang.pick({
+      kk: "Минералогия, геосаясат, метеорология · 14 сұрақ · 30 б · AI + мұғалім",
+      en: "Mineralogy, geopolitics, meteorology · 14 questions · 30 pts · AI + teacher",
+      ru: "Минералогия, геополитика, метеорология · 14 вопросов · 30 б. · ИИ + учитель",
+    }),
     category: "mixed",
     published: true,
     questionCount: 14,

@@ -2,15 +2,18 @@
   "id": "open-1",
   "title": {
     "kk": "Ашық сұрақтар №1 — Минералогия, геосаясат, метеорология",
-    "en": "Open questions #1 — Mineralogy, geopolitics, meteorology"
+    "en": "Open questions #1 — Mineralogy, geopolitics, meteorology",
+    "ru": "Открытые вопросы №1 — Минералогия, геополитика, метеорология"
   },
   "description": {
     "kk": "Жазбаша жауап · AI алдын ала бағалайды · Мұғалім түзете алады",
-    "en": "Written answers · AI drafts scores · Teacher can edit"
+    "en": "Written answers · AI drafts scores · Teacher can edit",
+    "ru": "Письменные ответы · ИИ ставит предварительный балл · Учитель может исправить"
   },
   "intro": {
     "kk": "Жауаптарыңызды толық жазыңыз. Қазақша жазуға болады (кей терминдер орыс/ағылшынша да қабылданады). Әр сұрақтың баллы көрсетілген.",
-    "en": "Write full answers. Kazakh is preferred (Russian/English terms accepted). Points are shown per question."
+    "en": "Write full answers. Kazakh is preferred (Russian/English terms accepted). Points are shown per question.",
+    "ru": "Пишите развёрнутые ответы. Можно отвечать на казахском или русском языке (термины на английском тоже принимаются). Баллы указаны у каждого вопроса."
   },
   "totalPoints": 30,
   "questions": [
@@ -19,15 +22,18 @@
       "points": 3,
       "text": {
         "kk": "Қандай минералдар тобы (тобы) суда ең жылдам және қарқынды ериді? Үш мысал келтіріңіз (топ атауы + мысал).",
-        "en": "Which mineral group(s) dissolve in water fastest and most intensely? Give three examples (group name + example)."
+        "en": "Which mineral group(s) dissolve in water fastest and most intensely? Give three examples (group name + example).",
+        "ru": "Какая группа (группы) минералов растворяется в воде быстрее и интенсивнее всего? Приведите три примера (название группы + пример)."
       },
       "modelAnswer": {
         "kk": "Галоидтер (галит/тас тұз), сульфаттар (гипс, мирабилит), карбонаттар (кальцит — әлсіз қышқылда/суда еруі; негізгі жауап: галоидтер мен сульфаттар, карбонаттар). Негізгі: сульфаттар, карбонаттар, галоидтер.",
-        "en": "Halides (halite), sulfates (gypsum), carbonates (calcite). Source key: sulfates, carbonates, halides."
+        "en": "Halides (halite), sulfates (gypsum), carbonates (calcite). Source key: sulfates, carbonates, halides.",
+        "ru": "Галоиды (галит / каменная соль), сульфаты (гипс, мирабилит), карбонаты (кальцит — растворяется в слабой кислоте/воде). Основной ответ: сульфаты, карбонаты, галоиды."
       },
       "rubric": {
         "kk": "3 топты дұрыс атаса — 3 б; 2 топ — 2 б; 1 топ — 1 б. Мысалдар болмаса топтар үшін жартылай балл беруге болады.",
-        "en": "3 correct groups = 3 pts; 2 = 2; 1 = 1. Examples optional bonus if groups correct."
+        "en": "3 correct groups = 3 pts; 2 = 2; 1 = 1. Examples optional bonus if groups correct.",
+        "ru": "3 верные группы — 3 б.; 2 группы — 2 б.; 1 группа — 1 б. Если примеров нет, за группы можно дать частичный балл."
       }
     },
     {
@@ -35,15 +41,18 @@
       "points": 1,
       "text": {
         "kk": "Төмендегілердің қайсысы тұрақты түске ие минерал? Флюорит, дала шпаты, корунд, уваровит, берилл. Жауабыңызды негіздеңіз (1–2 сөйлем).",
-        "en": "Which of these has a stable color: fluorite, feldspar, corundum, uvarovite, beryl? Justify in 1–2 sentences."
+        "en": "Which of these has a stable color: fluorite, feldspar, corundum, uvarovite, beryl? Justify in 1–2 sentences.",
+        "ru": "Какой из минералов имеет постоянную окраску: флюорит, полевой шпат, корунд, уваровит, берилл? Обоснуйте ответ (1–2 предложения)."
       },
       "modelAnswer": {
         "kk": "Уваровит — хромды гранат, түсі тұрақты (жасыл).",
-        "en": "Uvarovite — chrome garnet with stable green color."
+        "en": "Uvarovite — chrome garnet with stable green color.",
+        "ru": "Уваровит — хромовый гранат, окраска постоянная (зелёная)."
       },
       "rubric": {
         "kk": "Дұрыс минерал (уваровит) — 1 б. Тек атау жеткілікті; қысқа негіздеме қосымша.",
-        "en": "Correct mineral (uvarovite) = 1 pt."
+        "en": "Correct mineral (uvarovite) = 1 pt.",
+        "ru": "Верный минерал (уваровит) — 1 б. Достаточно названия; краткое обоснование — дополнительно."
       }
     },
     {
@@ -51,15 +60,18 @@
       "points": 5,
       "text": {
         "kk": "Сәйкестендіріңіз (жауапты 1-D, 2-C форматында жазыңыз):\n1. Қара кварц\n2. Күлгін кварц\n3. Түтін тәрізді (дымчатый) кварц\n4. Сары кварц\n5. Мөлдір кварц\n\nA. Цитрин  B. Тау хрусталі  C. Аметист  D. Морион  E. Раухтопаз",
-        "en": "Match (write as 1-D, 2-C, …):\n1. Black quartz\n2. Violet quartz\n3. Smoky quartz\n4. Yellow quartz\n5. Clear quartz\n\nA. Citrine  B. Rock crystal  C. Amethyst  D. Morion  E. Smoky topaz (rauchtopaz)"
+        "en": "Match (write as 1-D, 2-C, …):\n1. Black quartz\n2. Violet quartz\n3. Smoky quartz\n4. Yellow quartz\n5. Clear quartz\n\nA. Citrine  B. Rock crystal  C. Amethyst  D. Morion  E. Smoky topaz (rauchtopaz)",
+        "ru": "Установите соответствие (ответ в формате 1-D, 2-C):\n1. Чёрный кварц\n2. Фиолетовый кварц\n3. Дымчатый кварц\n4. Жёлтый кварц\n5. Прозрачный кварц\n\nA. Цитрин  B. Горный хрусталь  C. Аметист  D. Морион  E. Раухтопаз"
       },
       "modelAnswer": {
         "kk": "1-D, 2-C, 3-E, 4-A, 5-B",
-        "en": "1-D, 2-C, 3-E, 4-A, 5-B"
+        "en": "1-D, 2-C, 3-E, 4-A, 5-B",
+        "ru": "1-D, 2-C, 3-E, 4-A, 5-B"
       },
       "rubric": {
         "kk": "Әр дұрыс жұп — 1 б (барлығы 5).",
-        "en": "1 pt per correct pair (5 total)."
+        "en": "1 pt per correct pair (5 total).",
+        "ru": "За каждую верную пару — 1 б. (всего 5)."
       }
     },
     {
@@ -67,15 +79,18 @@
       "points": 1,
       "text": {
         "kk": "Моостың қаттылық шкаласында жоқ минералды анықтаңыз: корунд, ортоклаз, гранат, апатит. Неге?",
-        "en": "Which is NOT on the Mohs hardness scale: corundum, orthoclase, garnet, apatite? Why?"
+        "en": "Which is NOT on the Mohs hardness scale: corundum, orthoclase, garnet, apatite? Why?",
+        "ru": "Определите минерал, которого нет в шкале твёрдости Мооса: корунд, ортоклаз, гранат, апатит. Почему?"
       },
       "modelAnswer": {
         "kk": "Гранат — Моос шкаласының стандартты 10 минералына кірмейді (талк, гипс, кальцит, флюорит, апатит, ортоклаз, кварц, топаз, корунд, алмаз).",
-        "en": "Garnet — not one of the 10 standard Mohs reference minerals."
+        "en": "Garnet — not one of the 10 standard Mohs reference minerals.",
+        "ru": "Гранат — не входит в 10 эталонных минералов шкалы Мооса (тальк, гипс, кальцит, флюорит, апатит, ортоклаз, кварц, топаз, корунд, алмаз)."
       },
       "rubric": {
         "kk": "Гранат деп жазса — 1 б.",
-        "en": "Garnet = 1 pt."
+        "en": "Garnet = 1 pt.",
+        "ru": "Ответ «гранат» — 1 б."
       }
     },
     {
@@ -83,15 +98,18 @@
       "points": 3,
       "text": {
         "kk": "Минералдарды (немесе минерал тобын) атаңыз:\nа) кез келген дәріқобдишада (аптечкада) болуы мүмкін: …\nә) тағамның дәмін жақсартады: …\nб) көп жұмыс үстелінде бар (жазу құралы): …",
-        "en": "Name the mineral (or group):\n(a) often in a first-aid kit: …\n(b) improves food taste: …\n(c) on many desks (writing tool): …"
+        "en": "Name the mineral (or group):\n(a) often in a first-aid kit: …\n(b) improves food taste: …\n(c) on many desks (writing tool): …",
+        "ru": "Назовите минералы (или группу минералов):\nа) может быть в любой аптечке: …\nб) улучшает вкус пищи: …\nв) есть на многих рабочих столах (письменная принадлежность): …"
       },
       "modelAnswer": {
         "kk": "а) Смектит / смека (монтмориллонит тобы) — іш өтуге қарсы; ә) Тұз (галит); б) Графит (қарындаш).",
-        "en": "(a) Smectite / smectite group; (b) salt / halite; (c) graphite."
+        "en": "(a) Smectite / smectite group; (b) salt / halite; (c) graphite.",
+        "ru": "а) Смектит / смекта (группа монтмориллонита) — средство от диареи; б) соль (галит); в) графит (карандаш)."
       },
       "rubric": {
         "kk": "Әр дұрыс жол — 1 б.",
-        "en": "1 pt per correct line."
+        "en": "1 pt per correct line.",
+        "ru": "За каждую верную строку — 1 б."
       }
     },
     {
@@ -99,15 +117,18 @@
       "points": 1,
       "text": {
         "kk": "«Анклав» (enclave) терминіне қысқа анықтама беріңіз.",
-        "en": "Define «enclave» briefly."
+        "en": "Define «enclave» briefly.",
+        "ru": "Дайте краткое определение термину «анклав» (enclave)."
       },
       "modelAnswer": {
         "kk": "Бір мемлекеттің аумағымен толық қоршалған басқа мемлекеттің (немесе аумақтың) бөлігі.",
-        "en": "A territory entirely surrounded by another state."
+        "en": "A territory entirely surrounded by another state.",
+        "ru": "Часть территории государства (или территория), полностью окружённая территорией другого государства."
       },
       "rubric": {
         "kk": "«Басқа мемлекет ішіндегі аумақ/бөлік» мағынасы болса — 1 б.",
-        "en": "Credit if meaning is territory inside another state."
+        "en": "Credit if meaning is territory inside another state.",
+        "ru": "Если передан смысл «территория внутри другого государства» — 1 б."
       }
     },
     {
@@ -115,15 +136,18 @@
       "points": 1,
       "text": {
         "kk": "«От Каира до Кейптауна» (Каирден Кейптаунға) дегеніміз не? Қысқаша түсіндіріңіз.",
-        "en": "What does «from Cairo to Cape Town» refer to? Explain briefly."
+        "en": "What does «from Cairo to Cape Town» refer to? Explain briefly.",
+        "ru": "Что означает выражение «От Каира до Кейптауна»? Кратко объясните."
       },
       "modelAnswer": {
         "kk": "Африканы солтүстіктен оңтүстікке (Каир — Кейптаун) жалғау идеясы/бағыты; империялық/геосаяси жоба (мыс. Cape to Cairo), Африканың бойлық осі.",
-        "en": "North–south axis of Africa (Cairo–Cape Town); colonial/geopolitical project (Cape to Cairo)."
+        "en": "North–south axis of Africa (Cairo–Cape Town); colonial/geopolitical project (Cape to Cairo).",
+        "ru": "Идея/направление соединения Африки с севера на юг (Каир — Кейптаун); имперский/геополитический проект (Cape to Cairo), меридиональная ось Африки."
       },
       "rubric": {
         "kk": "Африканың С–О осі немесе Cape–Cairo жобасы аталса — 1 б.",
-        "en": "Africa N–S axis or Cape-to-Cairo idea = 1 pt."
+        "en": "Africa N–S axis or Cape-to-Cairo idea = 1 pt.",
+        "ru": "Если названа ось С–Ю Африки или проект Cape–Cairo — 1 б."
       }
     },
     {
@@ -131,15 +155,18 @@
       "points": 1,
       "text": {
         "kk": "Тордесильяс шарты (Тордесильясский договор) дегеніміз не?",
-        "en": "What was the Treaty of Tordesillas?"
+        "en": "What was the Treaty of Tordesillas?",
+        "ru": "Что такое Тордесильясский договор?"
       },
       "modelAnswer": {
         "kk": "1494 ж. Испания мен Португалия арасындағы жаңа әлемді бөлу шарты (Папа меридианы бойынша ықпал аймақтары).",
-        "en": "1494 treaty between Spain and Portugal dividing the New World spheres of influence along a meridian."
+        "en": "1494 treaty between Spain and Portugal dividing the New World spheres of influence along a meridian.",
+        "ru": "Договор 1494 г. между Испанией и Португалией о разделе Нового Света (зоны влияния по папскому меридиану)."
       },
       "rubric": {
         "kk": "Испания–Португалия + аумақты бөлу — 1 б. Жыл міндетті емес.",
-        "en": "Spain–Portugal division of New World = 1 pt."
+        "en": "Spain–Portugal division of New World = 1 pt.",
+        "ru": "Испания–Португалия + раздел территорий — 1 б. Год необязателен."
       }
     },
     {
@@ -147,15 +174,18 @@
       "points": 1,
       "text": {
         "kk": "«Африка жылы» (Год Африки) дегеніміз не?",
-        "en": "What is the «Year of Africa»?"
+        "en": "What is the «Year of Africa»?",
+        "ru": "Что такое «Год Африки»?"
       },
       "modelAnswer": {
         "kk": "1960 жыл — көптеген Африка елдері тәуелсіздік алған жыл (17-ге жуық мемлекет).",
-        "en": "1960 — year when many African states gained independence."
+        "en": "1960 — year when many African states gained independence.",
+        "ru": "1960 год — год, когда многие африканские страны (около 17 государств) получили независимость."
       },
       "rubric": {
         "kk": "1960 және/немесе жаппай тәуелсіздік — 1 б.",
-        "en": "1960 and/or mass independence = 1 pt."
+        "en": "1960 and/or mass independence = 1 pt.",
+        "ru": "1960 и/или массовое обретение независимости — 1 б."
       }
     },
     {
@@ -163,15 +193,18 @@
       "points": 1,
       "text": {
         "kk": "Талассократия дегеніміз не?",
-        "en": "What is a thalassocracy?"
+        "en": "What is a thalassocracy?",
+        "ru": "Что такое талассократия?"
       },
       "modelAnswer": {
         "kk": "Теңіз үстемдігіне негізделген мемлекет/империя (теңіз державасы), мыс. Ұлыбритания, Венеция, Португалия.",
-        "en": "A sea-based power / maritime empire (e.g. Britain, Venice, Portugal)."
+        "en": "A sea-based power / maritime empire (e.g. Britain, Venice, Portugal).",
+        "ru": "Государство/империя, основанные на господстве на море (морская держава), например Великобритания, Венеция, Португалия."
       },
       "rubric": {
         "kk": "Теңіз күші / теңіз империясы — 1 б.",
-        "en": "Sea power / maritime empire = 1 pt."
+        "en": "Sea power / maritime empire = 1 pt.",
+        "ru": "Морская держава / морская империя — 1 б."
       }
     },
     {
@@ -179,15 +212,18 @@
       "points": 1,
       "text": {
         "kk": "Делимитация дегеніміз не?",
-        "en": "What is delimitation?"
+        "en": "What is delimitation?",
+        "ru": "Что такое делимитация?"
       },
       "modelAnswer": {
         "kk": "Шекараны картада/құжатта келісім бойынша анықтау (демаркация — жерде белгілеу).",
-        "en": "Defining a border on maps/treaties (vs demarcation on the ground)."
+        "en": "Defining a border on maps/treaties (vs demarcation on the ground).",
+        "ru": "Определение границы по договору на карте/в документах (демаркация — обозначение границы на местности)."
       },
       "rubric": {
         "kk": "Шекараны келісу/картада белгілеу — 1 б. Демаркациямен шатастырса — 0–0.5 б.",
-        "en": "Agreeing/defining border on map = 1 pt."
+        "en": "Agreeing/defining border on map = 1 pt.",
+        "ru": "Согласование/обозначение границы на карте — 1 б. Если спутано с демаркацией — 0–0,5 б."
       }
     },
     {
@@ -195,15 +231,18 @@
       "points": 3,
       "text": {
         "kk": "Нидерланды отары болған Азия елдерін (қазіргі атауларымен) атаңыз (кемінде 2–3).",
-        "en": "Name Asian countries that were Dutch colonies (modern names; at least 2–3)."
+        "en": "Name Asian countries that were Dutch colonies (modern names; at least 2–3).",
+        "ru": "Назовите азиатские страны (современные названия), которые были колониями Нидерландов (не менее 2–3)."
       },
       "modelAnswer": {
         "kk": "Индонезия (Нидерландтық Үндістан); ішінара Шри-Ланка (Цейлон); Тайвань (Формоза, уақытша); Үндістанның кей бөліктері (Керала т.б.). Негізгі: Индонезия.",
-        "en": "Indonesia (Dutch East Indies); parts of Sri Lanka; briefly Taiwan; enclaves in India. Core: Indonesia."
+        "en": "Indonesia (Dutch East Indies); parts of Sri Lanka; briefly Taiwan; enclaves in India. Core: Indonesia.",
+        "ru": "Индонезия (Нидерландская Индия); частично Шри-Ланка (Цейлон); Тайвань (Формоза, временно); некоторые части Индии (Керала и др.). Основной ответ: Индонезия."
       },
       "rubric": {
         "kk": "Индонезия + тағы 1–2 дұрыс — 3 б; тек Индонезия — 1–2 б.",
-        "en": "Indonesia + 1–2 more = 3; Indonesia alone = 1–2."
+        "en": "Indonesia + 1–2 more = 3; Indonesia alone = 1–2.",
+        "ru": "Индонезия + ещё 1–2 верных — 3 б.; только Индонезия — 1–2 б."
       }
     },
     {
@@ -211,15 +250,18 @@
       "points": 4,
       "text": {
         "kk": "Кестенің орнына қысқаша сипаттаңыз (әр құралға 2–3 сөйлем): анемометр және барометр — құрылысы/принципі, нені өлшейді, өлшем бірлігі.",
-        "en": "Briefly describe (2–3 sentences each): anemometer and barometer — principle, what they measure, units."
+        "en": "Briefly describe (2–3 sentences each): anemometer and barometer — principle, what they measure, units.",
+        "ru": "Вместо таблицы кратко опишите (2–3 предложения на каждый прибор): анемометр и барометр — устройство/принцип, что измеряют, единицы измерения."
       },
       "modelAnswer": {
         "kk": "Анемометр: жел жылдамдығы (м/с), көбіне шыныаяқ/импеллер. Барометр: атмосфералық қысым (гПа/мм.сын.бағ.), сынапты немесе анероид.",
-        "en": "Anemometer: wind speed (m/s). Barometer: air pressure (hPa/mmHg), mercury or aneroid."
+        "en": "Anemometer: wind speed (m/s). Barometer: air pressure (hPa/mmHg), mercury or aneroid.",
+        "ru": "Анемометр: скорость ветра (м/с), чаще чашечный или крыльчатый. Барометр: атмосферное давление (гПа / мм рт. ст.), ртутный или анероид."
       },
       "rubric": {
         "kk": "Әр құрал үшін дұрыс элемент + бірлік — 2 б (барлығы 4).",
-        "en": "2 pts per instrument (element + unit)."
+        "en": "2 pts per instrument (element + unit).",
+        "ru": "Для каждого прибора верная величина + единица — 2 б. (всего 4)."
       }
     },
     {
@@ -227,15 +269,18 @@
       "points": 4,
       "text": {
         "kk": "Қолайсыз құбылыстың бірін таңдаңыз (жылыжай эффектісі, қышқыл жаңбыр, озон қабатының жұқаруы, шаңды дауыл, құрғақшылық). Пайда болу себебі, салдары, алдын алу/шешу жолдарын жазыңыз.",
-        "en": "Pick one hazard (greenhouse effect, acid rain, ozone depletion, dust storm, drought). Write causes, consequences, and prevention/solutions."
+        "en": "Pick one hazard (greenhouse effect, acid rain, ozone depletion, dust storm, drought). Write causes, consequences, and prevention/solutions.",
+        "ru": "Выберите одно неблагоприятное явление (парниковый эффект, кислотные дожди, истощение озонового слоя, пыльная буря, засуха). Напишите причины возникновения, последствия и пути предотвращения/решения."
       },
       "modelAnswer": {
         "kk": "Мысалы қышқыл жаңбыр: SO2/NOx шығарындылары → H2SO4/HNO3 → топырақ/су/ғимарат зақымы → сүзгі, таза отын, халықаралық келісімдер.",
-        "en": "E.g. acid rain: SO2/NOx → acids → ecosystem/building damage → filters, cleaner fuels, treaties."
+        "en": "E.g. acid rain: SO2/NOx → acids → ecosystem/building damage → filters, cleaner fuels, treaties.",
+        "ru": "Например, кислотные дожди: выбросы SO2/NOx → H2SO4/HNO3 → повреждение почв, вод, зданий → фильтры, чистое топливо, международные соглашения."
       },
       "rubric": {
         "kk": "Себеп 1–1.5 б, салдар 1–1.5 б, шешім 1–1.5 б (барлығы 4). Таңдалған құбылыс нақты болуы керек.",
-        "en": "Cause ~1.5, effects ~1.5, solutions ~1 (total 4)."
+        "en": "Cause ~1.5, effects ~1.5, solutions ~1 (total 4).",
+        "ru": "Причина 1–1,5 б., последствия 1–1,5 б., решение 1–1,5 б. (всего 4). Выбранное явление должно быть конкретным."
       }
     }
   ]

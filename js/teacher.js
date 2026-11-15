@@ -28,7 +28,7 @@ function scoreText(sub) {
 function formatDate(iso) {
   if (!iso) return "—";
   try {
-    return new Date(iso).toLocaleString(Lang.current === "kk" ? "kk-KZ" : "en-GB", {
+    return new Date(iso).toLocaleString(Lang.locale(), {
       dateStyle: "medium",
       timeStyle: "short",
     });
@@ -104,9 +104,11 @@ function renderTeacherTable(list) {
       const id = btn.dataset.id;
       const label = btn.dataset.label || id;
       const msg =
-        Lang.current === "kk"
-          ? `Бұл талпынысты жоясыз ба?\n${label}\n\nБұл әрекетті қайтаруға болмайды.`
-          : `Delete this attempt?\n${label}\n\nThis cannot be undone.`;
+        Lang.pick({
+          kk: `Бұл талпынысты жоясыз ба?\n${label}\n\nБұл әрекетті қайтаруға болмайды.`,
+          en: `Delete this attempt?\n${label}\n\nThis cannot be undone.`,
+          ru: `Удалить эту попытку?\n${label}\n\nЭто действие нельзя отменить.`,
+        });
       if (!confirm(msg)) return;
       btn.disabled = true;
       try {

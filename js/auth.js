@@ -94,7 +94,9 @@ const Auth = {
   displayName(user, lang) {
     if (!user) return "";
     const l = lang || (window.Lang && Lang.current) || "kk";
-    return (user.name && (user.name[l] || user.name.en || user.name.kk)) || user.username;
+    const n = user.name;
+    if (!n) return user.username;
+    return (l === "ru" ? n.ru || n.kk || n.en : n[l] || n.en || n.kk) || user.username;
   },
 
   listStudents() {
