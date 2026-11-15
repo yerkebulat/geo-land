@@ -2170,3 +2170,15 @@ table.data tr:hover td {
     text-align: center;
   }
 }
+
+.rule-wa-btn {
+  margin-top: 0.6rem;
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.rule-wa-btn:hover {
+  background: #1ebe5b;
+  color: #fff;
+}
