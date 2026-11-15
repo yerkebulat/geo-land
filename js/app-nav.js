@@ -21,6 +21,7 @@ function renderAppNav(active) {
         ${
           user && user.role === "teacher"
             ? `<li><a href="teacher.html" class="${active === "teacher" ? "active" : ""}" data-i18n="card_teacher">Оқушы нәтижелері</a></li>
+               <li><a href="teacher.html#students" data-i18n="acc_nav">Оқушылар</a></li>
                <li><a href="teacher-open.html" class="${active === "teacher-open" ? "active" : ""}" data-i18n="open_manage_nav">Ашық сұрақтар</a></li>`
             : `<li><a href="history.html" class="${active === "history" ? "active" : ""}" data-i18n="card_history">Менің нәтижелерім</a></li>`
         }
@@ -63,12 +64,16 @@ function mountAppNav(active) {
       window.location.href = "index.html";
     });
   }
-  window.addEventListener("langchange", () => {
+  const refreshChip = () => {
     const u = Auth.current();
     if (!u) return;
     const chip = document.querySelector(".user-chip strong");
     if (chip) chip.textContent = Auth.displayName(u);
-  });
+  };
+  window.addEventListener("langchange", refreshChip);
+  window.addEventListener("sessionupdate", refreshChip);
+  // Server check: signs out deleted users / changed passwords, refreshes the stored name
+  Auth.verify();
 }
 
 /* Storage banner removed from UI (Firebase is configured and working). */

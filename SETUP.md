@@ -71,10 +71,18 @@ window.FIREBASE_CONFIG = {
 
 ---
 
-## 3. Accounts (v1 — no registration)
+## 3. Accounts (managed by the teacher)
 
-| Role    | Login                 | Password          |
-|---------|-----------------------|-------------------|
+Accounts are stored server-side in the Cloudflare Worker **`geo-land-accounts`** (KV namespace `geo-land-accounts`).
+Passwords are hashed (PBKDF2-SHA256, per-user salt); the site only keeps a signed session token.
+There is no public registration.
+
+- The teacher (`nursultan.utebayev`) manages students on **teacher.html → Students / Оқушылар**:
+  add, edit full name (Kazakh), reset password, delete. He can also change his own password there.
+- Code and deployment notes: `worker/accounts/` and `worker/README.md`.
+- Site config (public URL only, no secrets): `js/accounts-config.js`.
+
+---------|-----------------------|-------------------|
 | Teacher | `nursultan.utebayev`  | `nursultan1234!`  |
 | Student | `arsen.sydykov`       | `arsen1234!`      |
 | Student | `yerulan.kongrat`     | `yerulan1234!`    |

@@ -2182,3 +2182,20 @@ table.data tr:hover td {
   background: #1ebe5b;
   color: #fff;
 }
+
+/* ——— Teacher: student accounts ——— */
+.acc-section { margin-bottom: 3rem; scroll-margin-top: 90px; }
+.acc-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; align-items: start; }
+.acc-card h3 { margin-bottom: 0.8rem; }
+.acc-input-row { display: flex; gap: 0.5rem; align-items: center; }
+.acc-input-row input { flex: 1; min-width: 0; }
+.acc-help { font-size: 0.82rem; color: var(--text-muted, #6b7c8f); margin-top: 0.3rem; }
+.acc-sub { font-size: 0.82rem; color: var(--text-muted, #6b7c8f); font-weight: 400; }
+.acc-count { font-weight: 600; }
+.acc-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.acc-flash { background: #e8f6ee; color: #1d6b43; border: 1px solid #bfe3cf; border-radius: 12px; padding: 0.7rem 1rem; margin-bottom: 1rem; }
+.acc-msg { padding: 1rem 0; }
+.acc-msg.is-error { color: #b42318; }
+.acc-modal-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.8rem; }
+.acc-results-header { margin-top: 1rem; }
+@media (max-width: 760px) { .acc-grid { grid-template-columns: 1fr; } }

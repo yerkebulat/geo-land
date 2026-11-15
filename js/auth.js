@@ -1,67 +1,47 @@
-/* Hardcoded accounts — client-side only (school pilot). Not cryptographically secure. */
-const USERS = [
-  {
-    username: "nursultan.utebayev",
-    password: "nursultan1234!",
-    role: "teacher",
-    name: { kk: "Утебаев Нұрсұлтан Байжанұлы", en: "Nursultan B. Utebayev" },
-  },
-  {
-    username: "arsen.sydykov",
-    password: "arsen1234!",
-    role: "student",
-    name: { kk: "Арсен Сыдықов", en: "Arsen Sydykov" },
-  },
-  {
-    username: "yerulan.kongrat",
-    password: "yerulan1234!",
-    role: "student",
-    name: { kk: "Ерулан Қонғырат", en: "Yerulan Kongrat" },
-  },
-  {
-    username: "yerkebulan.tazabek",
-    password: "yerkebulan1234!",
-    role: "student",
-    name: { kk: "Еркебұлан Тазабек", en: "Yerkebulan Tazabek" },
-  },
-  {
-    username: "user1",
-    password: "password1!",
-    role: "student",
-    name: { kk: "User 1", en: "User 1" },
-  },
-  {
-    username: "user2",
-    password: "password2!",
-    role: "student",
-    name: { kk: "User 2", en: "User 2" },
-  },
-  {
-    username: "user3",
-    password: "password3!",
-    role: "student",
-    name: { kk: "User 3", en: "User 3" },
-  },
-];
-
+/* Accounts live on the server (Cloudflare Worker + KV, hashed passwords).
+   The browser only keeps a signed session token in localStorage. */
 const Auth = {
   SESSION_KEY: "geoland_session",
 
-  login(username, password) {
-    const u = String(username || "").trim().toLowerCase();
-    const p = String(password || "");
-    const user = USERS.find(
-      (x) => x.username === u && x.password === p
-    );
-    if (!user) return { ok: false };
-    const session = {
-      username: user.username,
-      role: user.role,
-      name: user.name,
-      at: Date.now(),
-    };
+  _url(path) {
+    const base = (window.ACCOUNTS_CONFIG && window.ACCOUNTS_CONFIG.url) || "";
+    return base.replace(/\/+$/, "") + path;
+  },
+
+  /** Call the accounts API. Returns { ok, status, data }. Network failure -> status 0. */
+  async api(method, path, body) {
+    const s = this.current();
+    const headers = { "Content-Type": "application/json" };
+    if (s && s.token) headers.Authorization = "Bearer " + s.token;
+    try {
+      const res = await fetch(this._url(path), {
+        method,
+        headers,
+        body: body === undefined ? undefined : JSON.stringify(body),
+      });
+      let data = {};
+      try {
+        data = await res.json();
+      } catch {}
+      return { ok: res.ok, status: res.status, data };
+    } catch (e) {
+      return { ok: false, status: 0, data: { error: "network" } };
+    }
+  },
+
+  _save(token, user) {
+    const session = { username: user.username, role: user.role, name: user.name, token, at: Date.now() };
     localStorage.setItem(this.SESSION_KEY, JSON.stringify(session));
-    return { ok: true, user: session };
+    return session;
+  },
+
+  async login(username, password) {
+    const res = await this.api("POST", "/login", {
+      username: String(username || "").trim().toLowerCase(),
+      password: String(password || ""),
+    });
+    if (!res.ok) return { ok: false, error: res.status === 0 ? "network" : "invalid" };
+    return { ok: true, user: this._save(res.data.token, res.data.user) };
   },
 
   logout() {
@@ -72,7 +52,13 @@ const Auth = {
     try {
       const raw = localStorage.getItem(this.SESSION_KEY);
       if (!raw) return null;
-      return JSON.parse(raw);
+      const s = JSON.parse(raw);
+      if (!s || !s.token) {
+        // Old sessions from before server accounts: sign in again
+        localStorage.removeItem(this.SESSION_KEY);
+        return null;
+      }
+      return s;
     } catch {
       return null;
     }
@@ -91,22 +77,38 @@ const Auth = {
     return user;
   },
 
+  /** Check the token with the server; refresh the stored name; sign out if revoked. */
+  async verify() {
+    const s = this.current();
+    if (!s) return null;
+    const res = await this.api("GET", "/me");
+    if (res.status === 401) {
+      this.logout();
+      window.location.href = "index.html#login";
+      return null;
+    }
+    if (res.ok && res.data.user) {
+      const u = res.data.user;
+      if (JSON.stringify(u.name) !== JSON.stringify(s.name) || u.role !== s.role) {
+        this._save(s.token, u);
+        window.dispatchEvent(new CustomEvent("sessionupdate"));
+      }
+    }
+    return this.current();
+  },
+
+  /** Replace the stored token (after changing own password). */
+  updateToken(token, user) {
+    return this._save(token, user || this.current());
+  },
+
   displayName(user, lang) {
     if (!user) return "";
     const l = lang || (window.Lang && Lang.current) || "kk";
     const n = user.name;
     if (!n) return user.username;
-    return (l === "ru" ? n.ru || n.kk || n.en : n[l] || n.en || n.kk) || user.username;
-  },
-
-  listStudents() {
-    return USERS.filter((u) => u.role === "student").map((u) => ({
-      username: u.username,
-      name: u.name,
-      role: u.role,
-    }));
+    return (l === "en" ? n.en || n.kk : n.kk || n.en) || user.username;
   },
 };
 
 window.Auth = Auth;
-window.USERS_PUBLIC = USERS.map(({ username, role, name }) => ({ username, role, name }));

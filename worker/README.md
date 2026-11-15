@@ -79,3 +79,27 @@ Then put the printed URL into `js/gemini-config.js` as above.
 2. Secret `GEMINI_API_KEY` set?
 3. `workerUrl` in `gemini-config.js` exact (https, no trailing slash issues)?
 4. Browser console Network tab → POST to worker → status/body
+
+---
+
+# Accounts Worker (`geo-land-accounts`)
+
+Server-side logins for the site. Code: `worker/accounts/src/index.js`, config: `worker/accounts/wrangler.toml`.
+
+- Storage: KV namespace `geo-land-accounts` (binding `ACCOUNTS`), one record per user at `user:<login>`
+  with full name (kk/en), role, PBKDF2-SHA256 hash and per-user salt. No plaintext passwords anywhere.
+- Secret: `SESSION_SECRET` (HMAC key for session tokens). Set with `wrangler secret put SESSION_SECRET`; never commit it.
+- Var: `ALLOWED_ORIGINS` (CORS allow list), default `https://geo-land.org,https://www.geo-land.org` plus localhost for testing.
+
+| Method | Path | Who | Body |
+|--------|------|-----|------|
+| POST | `/login` | anyone | `{username, password}` returns `{token, user}` |
+| GET | `/me` | signed in | |
+| POST | `/me/password` | signed in | `{oldPassword, newPassword}` returns a new token |
+| GET | `/admin/users` | teacher | |
+| POST | `/admin/users` | teacher | `{username, password, nameKk, nameEn?}` |
+| PATCH | `/admin/users/:login` | teacher | `{password?, nameKk?, nameEn?}` |
+| DELETE | `/admin/users/:login` | teacher | students only |
+
+Changing a password or deleting an account immediately invalidates that user's existing sessions.
+Deploy: `cd worker/accounts && npx wrangler deploy`.
