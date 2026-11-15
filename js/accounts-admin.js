@@ -75,7 +75,7 @@
     renderList();
   }
 
-  /* ——— Small modal (one or two fields) ——— */
+  /* Small modal (one or two fields) */
   function openDialog({ title, hint, fields, submitKey, onSubmit }) {
     const ov = document.getElementById("acc-modal");
     ov.querySelector("h2").textContent = title;

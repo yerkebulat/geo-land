@@ -82,19 +82,6 @@ There is no public registration.
 - Code and deployment notes: `worker/accounts/` and `worker/README.md`.
 - Site config (public URL only, no secrets): `js/accounts-config.js`.
 
----------|-----------------------|-------------------|
-| Teacher | `nursultan.utebayev`  | `nursultan1234!`  |
-| Student | `arsen.sydykov`       | `arsen1234!`      |
-| Student | `yerulan.kongrat`     | `yerulan1234!`    |
-| Student | `yerkebulan.tazabek`  | `yerkebulan1234!` |
-| Student | `user1`               | `password1!`      |
-| Student | `user2`               | `password2!`      |
-| Student | `user3`               | `password3!`      |
-
-Edit accounts in `js/auth.js`.
-
-> Passwords live in frontend JS — fine for a private class pilot, **not** for public registration.
-
 ---
 
 ## 4. Gemini API via Cloudflare Worker (AI open-question grading)

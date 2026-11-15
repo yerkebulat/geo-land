@@ -2183,7 +2183,7 @@ table.data tr:hover td {
   color: #fff;
 }
 
-/* ——— Teacher: student accounts ——— */
+/* Teacher: student accounts */
 .acc-section { margin-bottom: 3rem; scroll-margin-top: 90px; }
 .acc-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; align-items: start; }
 .acc-card h3 { margin-bottom: 0.8rem; }
