@@ -3,16 +3,16 @@
  * 9 topic tracks + Аралас (mixed).
  */
 const OPEN_CATEGORIES = [
-  { id: "geology", icon: "🪨", kk: "Геология", en: "Geology" },
-  { id: "geomorphology", icon: "⛰️", kk: "Геоморфология", en: "Geomorphology" },
-  { id: "cartography", icon: "📐", kk: "Картография", en: "Cartography" },
-  { id: "physical", icon: "🌍", kk: "Физ Гео", en: "Physical Geo" },
-  { id: "social", icon: "👥", kk: "Әлеуметтік Гео", en: "Social Geo" },
-  { id: "economic", icon: "🏭", kk: "Экон Гео", en: "Economic Geo" },
-  { id: "country", icon: "🇰🇿", kk: "Елтану", en: "Country studies" },
-  { id: "world_map", icon: "🗺️", kk: "Әлем картасы", en: "World map" },
-  { id: "international", icon: "🌐", kk: "Халықаралық Гео", en: "International Geo" },
-  { id: "mixed", icon: "🔀", kk: "Аралас", en: "Mixed" },
+  { id: "geology", icon: "🪨", kk: "Геология", en: "Geology", ru: "Геология" },
+  { id: "geomorphology", icon: "⛰️", kk: "Геоморфология", en: "Geomorphology", ru: "Геоморфология" },
+  { id: "cartography", icon: "📐", kk: "Картография", en: "Cartography", ru: "Картография" },
+  { id: "physical", icon: "🌍", kk: "Физ Гео", en: "Physical Geo", ru: "Физ. география" },
+  { id: "social", icon: "👥", kk: "Әлеуметтік Гео", en: "Social Geo", ru: "Соц. география" },
+  { id: "economic", icon: "🏭", kk: "Экон Гео", en: "Economic Geo", ru: "Экон. география" },
+  { id: "country", icon: "🇰🇿", kk: "Елтану", en: "Country studies", ru: "Страноведение" },
+  { id: "world_map", icon: "🗺️", kk: "Әлем картасы", en: "World map", ru: "Карта мира" },
+  { id: "international", icon: "🌐", kk: "Халықаралық Гео", en: "International Geo", ru: "Международная география" },
+  { id: "mixed", icon: "🔀", kk: "Аралас", en: "Mixed", ru: "Смешанные" },
 ];
 
 const OpenCategories = {

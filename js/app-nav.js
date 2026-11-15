@@ -29,6 +29,7 @@ function renderAppNav(active) {
         <div class="lang-toggle" aria-label="Language">
           <button type="button" data-lang="kk" class="active">ҚАЗ</button>
           <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="ru">РУС</button>
         </div>
         ${
           user

@@ -153,8 +153,12 @@ const OpenSets = {
       description: set.description || "",
       category: set.category || "",
       intro:
-        Lang && Lang.current === "en"
-          ? "Write full answers. AI will draft a score; your teacher can adjust it."
+        window.Lang && Lang.pick
+          ? Lang.pick({
+              kk: "Жауаптарыңызды толық жазыңыз. AI алдын ала бағалайды; мұғалім түзете алады.",
+              en: "Write full answers. AI will draft a score; your teacher can adjust it.",
+              ru: "Пишите развёрнутые ответы. ИИ поставит предварительный балл; учитель может его изменить.",
+            })
           : "Жауаптарыңызды толық жазыңыз. AI алдын ала бағалайды; мұғалім түзете алады.",
       totalPoints: set.totalPoints || this._totalPoints(questions),
       questions,

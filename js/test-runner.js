@@ -118,9 +118,11 @@ async function submitTest(test, state) {
   const answered = Object.keys(state.answers).length;
   if (answered < total) {
     const msg =
-      Lang.current === "kk"
-        ? `Тек ${answered}/${total} сұраққа жауап берілді. Бәрібір жібересіз бе?`
-        : `Only ${answered}/${total} answered. Submit anyway?`;
+      Lang.pick({
+        kk: `Тек ${answered}/${total} сұраққа жауап берілді. Бәрібір жібересіз бе?`,
+        en: `Only ${answered}/${total} answered. Submit anyway?`,
+        ru: `Отвечено только на ${answered} из ${total}. Всё равно отправить?`,
+      });
     if (!confirm(msg)) return;
   }
 

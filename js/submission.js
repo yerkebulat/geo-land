@@ -105,9 +105,11 @@ async function renderSubmission(sub, user) {
     if (del) {
       del.addEventListener("click", async () => {
         const msg =
-          Lang.current === "kk"
-            ? "Бұл талпынысты жоясыз ба? Қайтаруға болмайды."
-            : "Delete this attempt? This cannot be undone.";
+          Lang.pick({
+            kk: "Бұл талпынысты жоясыз ба? Қайтаруға болмайды.",
+            en: "Delete this attempt? This cannot be undone.",
+            ru: "Удалить эту попытку? Это действие нельзя отменить.",
+          });
         if (!confirm(msg)) return;
         del.disabled = true;
         try {

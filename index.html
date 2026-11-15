@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Geo-Land — geography olympiad prep by Nursultan Utebayev (NIS Karatau, Shymkent)" />
   <title>Geo-Land · Geography Olympiad Prep</title>
-  <link rel="stylesheet" href="css/main.css?v=6" />
+  <link rel="stylesheet" href="css/main.css?v=7" />
   <link rel="preload" as="image" href="assets/earth-bluemarble.webp" type="image/webp" />
   <link rel="icon" href="assets/logo-earth.png" type="image/png" />
 </head>
@@ -21,12 +21,14 @@
       <ul class="nav-links">
         <li><a href="#path" data-i18n="nav_path">Жол</a></li>
         <li><a href="#topics" data-i18n="nav_topics">Тақырыптар</a></li>
+        <li><a href="#rules" data-i18n="nav_rules">Ереже</a></li>
         <li><a href="#mentor" data-i18n="nav_mentor">Ұстаз</a></li>
       </ul>
       <div class="nav-actions">
         <div class="lang-toggle" aria-label="Language">
           <button type="button" data-lang="kk" class="active">ҚАЗ</button>
           <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="ru">РУС</button>
         </div>
         <button type="button" class="btn btn-ghost btn-sm nav-btn-login" id="btn-login-nav" data-i18n="nav_login">Кіру</button>
         <button type="button" class="btn btn-primary btn-sm nav-btn-enter" id="btn-enter-nav">
@@ -151,18 +153,18 @@
       </h2>
       <p class="section-lead" data-i18n="topics_lead">IGeo және республикалық бағдарламадағы негізгі бірліктер.</p>
       <div class="topics-grid">
-        <div class="topic-card"><span class="topic-icon">🪨</span><h3 data-i18n="topic_1">Геология</h3><p data-i18n="topic_1_s">Тау жыныстары</p></div>
-        <div class="topic-card"><span class="topic-icon">⛰️</span><h3 data-i18n="topic_2">Геоморфология</h3><p data-i18n="topic_2_s">Рельеф</p></div>
-        <div class="topic-card"><span class="topic-icon">🌊</span><h3 data-i18n="topic_3">Океанология</h3><p data-i18n="topic_3_s">Мұхиттар</p></div>
-        <div class="topic-card"><span class="topic-icon">💧</span><h3 data-i18n="topic_4">Гидрология</h3><p data-i18n="topic_4_s">Өзен, көл</p></div>
-        <div class="topic-card"><span class="topic-icon">👥</span><h3 data-i18n="topic_5">Демография</h3><p data-i18n="topic_5_s">Халқы</p></div>
-        <div class="topic-card"><span class="topic-icon">🏙️</span><h3 data-i18n="topic_6">Урбанистика</h3><p data-i18n="topic_6_s">Қалалар</p></div>
-        <div class="topic-card"><span class="topic-icon">🗺️</span><h3 data-i18n="topic_7">Саяси география</h3><p data-i18n="topic_7_s">Шекара</p></div>
-        <div class="topic-card"><span class="topic-icon">🌦️</span><h3 data-i18n="topic_8">Климатология</h3><p data-i18n="topic_8_s">Климат</p></div>
-        <div class="topic-card"><span class="topic-icon">🏭</span><h3 data-i18n="topic_9">Экономикалық гео</h3><p data-i18n="topic_9_s">Өнеркәсіп</p></div>
-        <div class="topic-card"><span class="topic-icon">📐</span><h3 data-i18n="topic_10">Картография</h3><p data-i18n="topic_10_s">Есептер</p></div>
-        <div class="topic-card"><span class="topic-icon">🌿</span><h3 data-i18n="topic_11">Биогеография</h3><p data-i18n="topic_11_s">Зоналар</p></div>
-        <div class="topic-card"><span class="topic-icon">🇰🇿</span><h3 data-i18n="topic_12">Қазақстан</h3><p data-i18n="topic_12_s">Отандық</p></div>
+        <a class="topic-card" href="https://drive.google.com/drive/folders/1MBjen6sY16ns0DoCUg2LglvWXHTtTiwA" target="_blank" rel="noopener noreferrer"><span class="topic-icon">🪨</span><h3 data-i18n="topic_1">Геология</h3><p data-i18n="topic_1_s">Тау жыныстары</p></a>
+        <a class="topic-card" href="https://drive.google.com/drive/folders/1zgj2xyEBKQ8kuZq2EakGM6vRCzEeBrGx" target="_blank" rel="noopener noreferrer"><span class="topic-icon">⛰️</span><h3 data-i18n="topic_2">Геоморфология</h3><p data-i18n="topic_2_s">Рельеф</p></a>
+        <a class="topic-card" href="https://drive.google.com/drive/folders/1-u8afSqFr020SLyaPz0fnJCoRtR2SCUx" target="_blank" rel="noopener noreferrer"><span class="topic-icon">🌊</span><h3 data-i18n="topic_3">Океанология</h3><p data-i18n="topic_3_s">Мұхиттар</p></a>
+        <a class="topic-card" href="https://drive.google.com/drive/folders/13WNOZAvoGMmLueo8fyDVHBMPPwtG-MZ5" target="_blank" rel="noopener noreferrer"><span class="topic-icon">💧</span><h3 data-i18n="topic_4">Гидрология</h3><p data-i18n="topic_4_s">Өзен, көл</p></a>
+        <a class="topic-card" href="https://drive.google.com/drive/folders/1f2RZq4ILV23XsAUn4mAcAZMFoa4couMS" target="_blank" rel="noopener noreferrer"><span class="topic-icon">👥</span><h3 data-i18n="topic_5">Демография</h3><p data-i18n="topic_5_s">Халқы</p></a>
+        <a class="topic-card" href="https://drive.google.com/drive/folders/1zT8gi5n0tL84bC2IzXbmUjycNKA-1G-7" target="_blank" rel="noopener noreferrer"><span class="topic-icon">🏙️</span><h3 data-i18n="topic_6">Урбанистика</h3><p data-i18n="topic_6_s">Қалалар</p></a>
+        <a class="topic-card" href="https://drive.google.com/drive/folders/1MnhcoGYseG85DwcXlBowNxs8XufxUW4M" target="_blank" rel="noopener noreferrer"><span class="topic-icon">🗺️</span><h3 data-i18n="topic_7">Саяси география</h3><p data-i18n="topic_7_s">Шекара</p></a>
+        <a class="topic-card" href="https://drive.google.com/drive/folders/12HFfjyG00nF51bmyeUOSYlQ9in73lHBp" target="_blank" rel="noopener noreferrer"><span class="topic-icon">🌦️</span><h3 data-i18n="topic_8">Климатология</h3><p data-i18n="topic_8_s">Климат</p></a>
+        <a class="topic-card" href="https://drive.google.com/drive/folders/1TpHujsrdryoyWaYslj3Od8Ze-kY2MVrk" target="_blank" rel="noopener noreferrer"><span class="topic-icon">🏭</span><h3 data-i18n="topic_9">Экономикалық гео</h3><p data-i18n="topic_9_s">Өнеркәсіп</p></a>
+        <a class="topic-card" href="https://drive.google.com/drive/folders/1IH_XK7JEupF9AmuTCMjWCfYiDa3oeGLg" target="_blank" rel="noopener noreferrer"><span class="topic-icon">📐</span><h3 data-i18n="topic_10">Картография</h3><p data-i18n="topic_10_s">Есептер</p></a>
+        <a class="topic-card" href="https://drive.google.com/drive/folders/1cpLI6Bx7603L61MqjCStX3AiBa__gAD9" target="_blank" rel="noopener noreferrer"><span class="topic-icon">🌿</span><h3 data-i18n="topic_11">Биогеография</h3><p data-i18n="topic_11_s">Зоналар</p></a>
+        <a class="topic-card" href="https://drive.google.com/drive/folders/1cswsAGtAN9GV4-2IvGihsGe7t-pqWyCi" target="_blank" rel="noopener noreferrer"><span class="topic-icon">🇰🇿</span><h3 data-i18n="topic_12">Қазақстан</h3><p data-i18n="topic_12_s">Отандық</p></a>
       </div>
       <div class="materials-cta">
         <div class="materials-cta-inner">
@@ -182,6 +184,81 @@
     </div>
   </section>
 
+  <section class="section rules-section" id="rules">
+    <div class="container">
+      <h2 class="section-title">
+        <span data-i18n="rules_title">Geo-Land</span>
+        <span data-i18n="rules_title_em">ережесі</span>
+      </h2>
+      <p class="section-lead" data-i18n="rules_lead">Қысқа нұсқаулық: қалай кіру, тапсырма орындау және нәтижені көру.</p>
+      <ol class="rules-grid">
+        <li class="rule-card">
+          <span class="rule-icon" aria-hidden="true">🔑</span>
+          <div>
+            <h3 data-i18n="rules_1_t">Кіру</h3>
+            <p data-i18n="rules_1_d">Тіркелу жоқ. «Кіру» батырмасын басып, мұғалім берген логин мен құпия сөзді енгізіңіз.</p>
+          </div>
+        </li>
+        <li class="rule-card">
+          <span class="rule-icon" aria-hidden="true">🏠</span>
+          <div>
+            <h3 data-i18n="rules_2_t">Басты бет</h3>
+            <p data-i18n="rules_2_d">Кіргеннен кейін басты бетте барлық бөлім бар: тесттер, есептер, ашық сұрақтар, нәтижелеріңіз, презентациялар және WhatsApp.</p>
+          </div>
+        </li>
+        <li class="rule-card">
+          <span class="rule-icon" aria-hidden="true">📝</span>
+          <div>
+            <h3 data-i18n="rules_3_t">Тесттер</h3>
+            <p data-i18n="rules_3_d">Әр сұраққа бір нұсқаны таңдап, «Жіберу» басыңыз. Тест бірден автоматты бағаланады: дұрыс жауаптар саны мен баллды көресіз, жауаптарды қарап, қайта тапсыра аласыз.</p>
+          </div>
+        </li>
+        <li class="rule-card">
+          <span class="rule-icon" aria-hidden="true">🧮</span>
+          <div>
+            <h3 data-i18n="rules_4_t">Есептер</h3>
+            <p data-i18n="rules_4_d">Әр есептің жауабын жазыңыз (қажет болса өлшем бірлігімен) және жіберіңіз. Есептерді мұғалім тексереді; оған дейін күйі «Тексеруде» болады.</p>
+          </div>
+        </li>
+        <li class="rule-card">
+          <span class="rule-icon" aria-hidden="true">✍️</span>
+          <div>
+            <h3 data-i18n="rules_5_t">Ашық сұрақтар</h3>
+            <p data-i18n="rules_5_d">Тақырыпты (немесе «Аралас») таңдап, жинақты ашыңыз да, толық жауап жазыңыз. AI бірнеше секундта алдын ала балл қояды, содан кейін мұғалім тексеріп, түпкілікті бағаны қояды.</p>
+          </div>
+        </li>
+        <li class="rule-card">
+          <span class="rule-icon" aria-hidden="true">📊</span>
+          <div>
+            <h3 data-i18n="rules_6_t">Нәтижелер мен тарих</h3>
+            <p data-i18n="rules_6_d">«Менің нәтижелерім» бөлімінде барлық талпыныстарыңыз бар: балл, күйі және күні. «Қарау» батырмасы жауаптарыңызды, AI пікірін және мұғалім пікірін көрсетеді.</p>
+          </div>
+        </li>
+        <li class="rule-card">
+          <span class="rule-icon" aria-hidden="true">📂</span>
+          <div>
+            <h3 data-i18n="rules_9_t">Презентациялар</h3>
+            <p data-i18n="rules_9_d">«Олимпиада картасы» бөліміндегі кез келген тақырып карточкасын басыңыз — сол тақырыптың Google Drive-тағы презентациялары жаңа бетте ашылады.</p>
+          </div>
+        </li>
+        <li class="rule-card">
+          <span class="rule-icon" aria-hidden="true">🌐</span>
+          <div>
+            <h3 data-i18n="rules_7_t">Тіл</h3>
+            <p data-i18n="rules_7_d">Жоғарғы оң жақтағы ҚАЗ / EN / РУС батырмаларымен тілді ауыстырыңыз. Таңдауыңыз осы құрылғыда сақталады.</p>
+          </div>
+        </li>
+        <li class="rule-card">
+          <span class="rule-icon" aria-hidden="true">💬</span>
+          <div>
+            <h3 data-i18n="rules_8_t">Ұстазбен байланыс</h3>
+            <p data-i18n="rules_8_d">Сұрағыңыз бар ма? Төменгі оң жақтағы жасыл WhatsApp батырмасын басып, Нұрсұлтан Утебаевқа жазыңыз.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
   <section class="section" id="mentor">
     <div class="container">
       <h2 class="section-title">
@@ -189,11 +266,28 @@
         <span data-i18n="mentor_title_em">нәтиже</span>
       </h2>
       <div class="split-grid" style="margin-top: 1.5rem">
-        <div class="card">
+        <div class="card mentor-card">
+          <figure class="mentor-photo">
+            <picture>
+              <source srcset="assets/nursultan-utebayev.webp" type="image/webp" />
+              <img
+                src="assets/nursultan-utebayev.jpg"
+                alt="Утебаев Нұрсұлтан Байжанұлы, география олимпиада тренері, әлем картасы аясында"
+                data-i18n="mentor_photo_alt"
+                data-i18n-attr="alt"
+                width="600"
+                height="750"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+          </figure>
+          <div class="mentor-text">
           <h3 data-i18n="mentor_name">Утебаев Нұрсұлтан Байжанұлы</h3>
           <p class="mentor-role" data-i18n="mentor_role">НЗМ география · олимпиада тренері · NIS Қаратау, Шымкент</p>
           <p data-i18n="mentor_bio">Авторлық бағдарлама: «Дарынды оқушыларды жетістікке жетелеу қадамы» — 2017 жылдан бері.</p>
           <p style="margin-top: 0.75rem" data-i18n="mentor_mission">Мақсаты — халықаралық олимпиадаларға (iGeo және басқа) жүлдегерлер дайындау. Geo-Land — осы жолдағы онлайн дайындық бөлмесі.</p>
+          </div>
         </div>
         <div class="card">
           <h3 data-i18n="medals_title">Нәтижелер · 2017–2025</h3>
@@ -270,6 +364,7 @@
   </div>
 
   <script src="js/i18n.js"></script>
+  <script src="js/float-ui.js"></script>
   <script src="js/auth.js"></script>
   <script>
     Lang.bindToggles();

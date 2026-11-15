@@ -111,9 +111,11 @@ async function renderList(user) {
       const row = mine.find((s) => s.id === id);
       const label = row ? row.title : id;
       const msg =
-        Lang.current === "kk"
-          ? `Жинақты толығымен жоясыз ба?\n«${label}»\n\nБарлық сұрақтар өшеді. Қайтаруға болмайды.`
-          : `Delete this entire set?\n«${label}»\n\nAll questions in it will be removed. This cannot be undone.`;
+        Lang.pick({
+          kk: `Жинақты толығымен жоясыз ба?\n«${label}»\n\nБарлық сұрақтар өшеді. Қайтаруға болмайды.`,
+          en: `Delete this entire set?\n«${label}»\n\nAll questions in it will be removed. This cannot be undone.`,
+          ru: `Удалить всю подборку?\n«${label}»\n\nВсе вопросы в ней будут удалены. Это действие нельзя отменить.`,
+        });
       if (!confirm(msg)) return;
       btn.disabled = true;
       try {
@@ -131,7 +133,7 @@ async function renderList(user) {
 function formatDate(iso) {
   if (!iso) return "—";
   try {
-    return new Date(iso).toLocaleString(Lang.current === "kk" ? "kk-KZ" : "en-GB", {
+    return new Date(iso).toLocaleString(Lang.locale(), {
       dateStyle: "medium",
       timeStyle: "short",
     });
@@ -357,9 +359,11 @@ async function renderEditor(user, setId) {
           // Only one question left → deleting it means delete whole set (if saved) or reset form
           if (set) {
             const msg =
-              Lang.current === "kk"
-                ? "Бұл жинақта бір ғана сұрақ қалды. Жинақты толығымен жоясыз ба?"
-                : "This set has only one question. Delete the entire set?";
+              Lang.pick({
+                kk: "Бұл жинақта бір ғана сұрақ қалды. Жинақты толығымен жоясыз ба?",
+                en: "This set has only one question. Delete the entire set?",
+                ru: "В подборке остался один вопрос. Удалить всю подборку?",
+              });
             if (!confirm(msg)) return;
             try {
               await OpenSets.delete(state.id);
@@ -418,9 +422,11 @@ async function renderEditor(user, setId) {
       delWhole.onclick = async () => {
         const label = state.title || state.id;
         const msg =
-          Lang.current === "kk"
-            ? `Жинақты толығымен жоясыз ба?\n«${label}»\n\nБарлық сұрақтар өшеді.`
-            : `Delete this entire set?\n«${label}»\n\nAll questions will be removed.`;
+          Lang.pick({
+            kk: `Жинақты толығымен жоясыз ба?\n«${label}»\n\nБарлық сұрақтар өшеді.`,
+            en: `Delete this entire set?\n«${label}»\n\nAll questions will be removed.`,
+            ru: `Удалить всю подборку?\n«${label}»\n\nВсе вопросы будут удалены.`,
+          });
         if (!confirm(msg)) return;
         delWhole.disabled = true;
         try {
