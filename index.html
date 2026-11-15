@@ -19,6 +19,7 @@
         <span class="logo-text" data-i18n="brand">Geo-Land</span>
       </a>
       <ul class="nav-links">
+        <li><a href="#top" id="nav-home" data-i18n="nav_home">Басты бет</a></li>
         <li><a href="#path" data-i18n="nav_path">Жол</a></li>
         <li><a href="#topics" data-i18n="nav_topics">Тақырыптар</a></li>
         <li><a href="#rules" data-i18n="nav_rules">Ереже</a></li>
@@ -191,7 +192,7 @@
           <span class="rule-icon" aria-hidden="true">🏠</span>
           <div>
             <h3 data-i18n="rules_2_t">Басты бет</h3>
-            <p data-i18n="rules_2_d">Кіргеннен кейін басты беттің жоғарғы жағында 12 тақырып карточкасы тұр (әрқайсысы сол тақырыптың презентацияларын ашады), төменде — сынама тесттер, ашық сұрақтар, нәтижелеріңіз, презентациялар және WhatsApp.</p>
+            <p data-i18n="rules_2_d">Кіргеннен кейін басты беттің жоғарғы жағында 12 тақырып карточкасы тұр, әрқайсысы сол тақырыптың презентацияларын ашады. Төменде сынама тесттер, ашық сұрақтар, нәтижелеріңіз, презентациялар және WhatsApp бар.</p>
           </div>
         </li>
         <li class="rule-card">
@@ -219,7 +220,7 @@
           <span class="rule-icon" aria-hidden="true">📂</span>
           <div>
             <h3 data-i18n="rules_9_t">Презентациялар</h3>
-            <p data-i18n="rules_9_d">Басты беттегі немесе «Олимпиада картасы» бөліміндегі кез келген тақырып карточкасын басыңыз — сол тақырыптың Google Drive-тағы презентациялары жаңа бетте ашылады.</p>
+            <p data-i18n="rules_9_d">Басты беттегі немесе «Олимпиада картасы» бөліміндегі кез келген тақырып карточкасын басыңыз. Сол тақырыптың Google Drive-тағы презентациялары жаңа бетте ашылады.</p>
           </div>
         </li>
         <li class="rule-card">
@@ -400,6 +401,14 @@
       const b = document.getElementById("btn-enter-nav");
       if (b) b.textContent = Lang.t("nav_dashboard");
     }
+
+    // "Home" nav link: smooth scroll to the very top, keep the URL clean
+    document.getElementById("nav-home").addEventListener("click", (e) => {
+      e.preventDefault();
+      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+      if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    });
 
     // iGeo map accordion — collapsed by default
     (function () {
