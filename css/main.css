@@ -2070,3 +2070,103 @@ table.data tr:hover td {
     display: none;
   }
 }
+
+/* ——— Student dashboard: topics on top, balanced task grid ——— */
+.dash-section-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent-deep);
+  margin: 0.5rem 0 0.25rem;
+  letter-spacing: -0.01em;
+}
+
+.dash-section-lead {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+
+.dash-topics {
+  margin-bottom: 1.75rem;
+}
+
+.dash-topics .topics-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+#dash-tasks-title {
+  margin-bottom: 0.9rem;
+}
+
+.dash-grid-student {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.dash-grid-student > * {
+  grid-column: span 2;
+}
+
+.dash-grid-student > :nth-child(n + 4) {
+  grid-column: span 3;
+}
+
+/* WhatsApp card laid out horizontally when it sits in a wide slot */
+.dash-grid-student .dash-card-wa {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "icon qr"
+    "title qr"
+    "text qr"
+    "btn qr"
+    "phone qr";
+  align-items: start;
+  justify-items: start;
+  text-align: left;
+  column-gap: 1.25rem;
+}
+
+.dash-grid-student .dash-card-wa .icon { grid-area: icon; }
+.dash-grid-student .dash-card-wa h3 { grid-area: title; }
+.dash-grid-student .dash-card-wa > p:not(.meta) { grid-area: text; text-align: left; }
+.dash-grid-student .dash-card-wa .wa-qr-link { grid-area: qr; margin: 0; align-self: center; }
+.dash-grid-student .dash-card-wa .btn { grid-area: btn; }
+.dash-grid-student .dash-card-wa .wa-phone { grid-area: phone; }
+
+@media (max-width: 1000px) {
+  .dash-topics .topics-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .dash-grid-student {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dash-grid-student > *,
+  .dash-grid-student > :nth-child(n + 4) {
+    grid-column: span 1;
+  }
+  .dash-grid-student > :last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .dash-topics .topics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+  .dash-topics .topic-card {
+    padding: 0.85rem 0.6rem;
+  }
+  .dash-grid-student {
+    grid-template-columns: 1fr;
+  }
+  .dash-grid-student .dash-card-wa {
+    grid-template-columns: 1fr;
+    grid-template-areas: "icon" "title" "text" "qr" "btn" "phone";
+    justify-items: center;
+    text-align: center;
+  }
+  .dash-grid-student .dash-card-wa > p:not(.meta) {
+    text-align: center;
+  }
+}

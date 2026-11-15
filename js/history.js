@@ -1,4 +1,6 @@
 function taskLabel(sub) {
+  const pt = Lang.practiceTestTitle(sub);
+  if (pt) return pt;
   const t = sub.taskTitle;
   if (t && typeof t === "object") return t[Lang.current] || t.kk || t.en || sub.taskId;
   return sub.taskId || "—";

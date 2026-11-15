@@ -20,6 +20,12 @@
         <p id="welcome-sub"></p>
       </div>
     </div>
+    <section class="dash-topics" id="dash-topics" hidden>
+      <h2 class="dash-section-title" data-i18n="dash_topics_title">Тақырыптық презентациялар</h2>
+      <p class="dash-section-lead" data-i18n="dash_topics_lead">Тақырыпты басыңыз — Google Drive-тағы материалдар жаңа бетте ашылады.</p>
+      <div class="topics-grid" data-topic-grid></div>
+    </section>
+    <h2 class="dash-section-title" id="dash-tasks-title" data-i18n="dash_tasks_title" hidden>Тапсырмалар</h2>
     <div class="dash-grid" id="dash-grid"></div>
   </main>
 
@@ -28,6 +34,7 @@
   <script src="js/firebase-config.js"></script>
   <script src="js/i18n.js"></script>
   <script src="js/float-ui.js"></script>
+  <script src="js/topics.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/open-categories.js"></script>
@@ -89,7 +96,7 @@
           <a class="dash-card" href="teacher.html" style="color:inherit;text-decoration:none">
             <span class="icon">📋</span>
             <h3 data-i18n="card_teacher">Оқушы нәтижелері</h3>
-            <p data-i18n="card_teacher_d">Барлық жіберілген тест пен есептер.</p>
+            <p data-i18n="card_teacher_d">Барлық жіберілген сынама тесттер мен ашық сұрақтар.</p>
             <span class="btn btn-primary btn-sm" data-i18n="view">Қарау</span>
           </a>
           <a class="dash-card" href="teacher-open.html" style="color:inherit;text-decoration:none">
@@ -100,37 +107,28 @@
           </a>
           <div class="dash-card">
             <span class="icon">📝</span>
-            <h3 data-i18n="card_tests">Тесттер</h3>
+            <h3 data-i18n="card_tests">Сынама тесттер</h3>
             <p data-i18n="card_tests_d">Көп таңдаулы сұрақтар.</p>
             <p class="meta">1 · <span data-i18n="available">Қолжетімді</span></p>
             <a class="btn btn-primary btn-sm" href="test.html?id=test-1" data-i18n="start">Бастау</a>
-          </div>
-          <div class="dash-card">
-            <span class="icon">🧮</span>
-            <h3 data-i18n="card_calcs">Есептер</h3>
-            <p data-i18n="card_calcs_d">Тақырыптық есептеулер.</p>
-            <p class="meta">1 · <span data-i18n="available">Қолжетімді</span></p>
-            <a class="btn btn-primary btn-sm" href="calc.html?id=calc-1" data-i18n="start">Бастау</a>
           </div>
           ${openHubCard}
           ${materialsCardHtml()}
           ${whatsappCardHtml()}
         `;
       } else {
+        // Student: topic cards on top, then task cards
+        document.getElementById("dash-topics").hidden = false;
+        document.getElementById("dash-tasks-title").hidden = false;
+        renderTopicGrids(document.getElementById("dash-topics"));
+        grid.classList.add("dash-grid-student");
         grid.innerHTML = `
           <div class="dash-card">
             <span class="icon">📝</span>
-            <h3 data-i18n="card_tests">Тесттер</h3>
+            <h3 data-i18n="card_tests">Сынама тесттер</h3>
             <p data-i18n="card_tests_d">Көп таңдаулы сұрақтар. Автоматты бағалау.</p>
-            <p class="meta"><span data-i18n="meta_test_1">Тест №1</span> · 30 <span data-i18n="points_short">б</span></p>
+            <p class="meta"><span data-i18n="meta_test_1">Сынама тест №1</span> · 30 <span data-i18n="points_short">б</span></p>
             <a class="btn btn-primary btn-sm" href="test.html?id=test-1" data-i18n="start">Бастау</a>
-          </div>
-          <div class="dash-card">
-            <span class="icon">🧮</span>
-            <h3 data-i18n="card_calcs">Есептер</h3>
-            <p data-i18n="card_calcs_d">Тақырыптық есептеулер. Жауапты жазып жіберіңіз.</p>
-            <p class="meta"><span data-i18n="meta_calc_1">Есептер №1</span> · 10 <span data-i18n="points_short">б</span></p>
-            <a class="btn btn-primary btn-sm" href="calc.html?id=calc-1" data-i18n="start">Бастау</a>
           </div>
           ${openHubCard}
           <a class="dash-card" href="history.html" style="color:inherit;text-decoration:none">
