@@ -1,0 +1,13 @@
+name = "geo-land-accounts"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# KV namespace holding "user:<login>" records (hashed passwords only)
+[[kv_namespaces]]
+binding = "ACCOUNTS"
+id = "7d53fdcd532d4986a5e3772277cfbd38"
+
+# Secret (never commit): npx wrangler secret put SESSION_SECRET
+
+[vars]
+ALLOWED_ORIGINS = "https://geo-land.org,https://www.geo-land.org,http://localhost:8765,http://127.0.0.1:8765"

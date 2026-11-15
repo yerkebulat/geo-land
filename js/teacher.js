@@ -7,7 +7,7 @@ function taskLabel(sub) {
 }
 
 function studentName(username) {
-  const u = (window.USERS_PUBLIC || []).find((x) => x.username === username);
+  const u = (window.__accountList || []).find((x) => x.username === username);
   if (!u) return username;
   return Auth.displayName(u);
 }
@@ -49,14 +49,14 @@ async function bootTeacher() {
   const list = await Storage.listSubmissions();
   // only student work
   const filtered = list.filter((s) => s.role !== "teacher" || s.username !== user.username);
-  // Prefer showing all non-empty; show student submissions (all submissions from students)
-  const students = Auth.listStudents().map((s) => s.username);
-  const studentSubs = list.filter((s) => students.includes(s.username));
+  // Student work only (kept even if the account was later deleted)
+  const studentSubs = filtered.filter((s) => s.role !== "teacher");
 
   window.__teacherList = studentSubs;
   renderTeacherTable(studentSubs);
 
   window.addEventListener("langchange", () => renderTeacherTable(window.__teacherList || []));
+  window.addEventListener("accountsloaded", () => renderTeacherTable(window.__teacherList || []));
 }
 
 function renderTeacherTable(list) {

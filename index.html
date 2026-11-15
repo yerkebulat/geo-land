@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Geo-Land — geography olympiad prep by Nursultan Utebayev (NIS Karatau, Shymkent)" />
   <title>Geo-Land · Geography Olympiad Prep</title>
-  <link rel="stylesheet" href="css/main.css?v=8" />
+  <link rel="stylesheet" href="css/main.css?v=9" />
   <link rel="preload" as="image" href="assets/earth-bluemarble.webp" type="image/webp" />
   <link rel="icon" href="assets/logo-earth.png" type="image/png" />
 </head>
@@ -348,6 +348,7 @@
   <script src="js/i18n.js"></script>
   <script src="js/float-ui.js"></script>
   <script src="js/topics.js"></script>
+  <script src="js/accounts-config.js"></script>
   <script src="js/auth.js"></script>
   <script>
     renderTopicGrids();
@@ -380,13 +381,19 @@
       if (e.target.id === "login-modal") closeLogin();
     });
 
-    document.getElementById("login-form").addEventListener("submit", (e) => {
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
       e.preventDefault();
+      const form = e.currentTarget;
+      const btn = form.querySelector('button[type="submit"]');
+      const err = document.getElementById("login-error");
       const username = document.getElementById("login-user").value;
       const password = document.getElementById("login-pass").value;
-      const res = Auth.login(username, password);
+      err.textContent = "";
+      btn.disabled = true;
+      const res = await Auth.login(username, password);
+      btn.disabled = false;
       if (!res.ok) {
-        document.getElementById("login-error").textContent = Lang.t("login_error");
+        err.textContent = Lang.t(res.error === "network" ? "err_network" : "login_error");
         return;
       }
       window.location.href = "app.html";

@@ -4,14 +4,71 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Geo-Land · Teacher</title>
-  <link rel="stylesheet" href="css/main.css?v=8" />
+  <link rel="stylesheet" href="css/main.css?v=9" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>" />
 </head>
 <body>
   <div id="app-nav"></div>
   <main class="app-main">
     <div id="storage-banner-host"></div>
-    <div class="page-header">
+    <section class="acc-section" id="students">
+      <div class="page-header">
+        <div>
+          <h1 data-i18n="acc_title">Оқушылар</h1>
+          <p><span data-i18n="acc_lead"></span> <span class="acc-count" id="acc-count"></span></p>
+        </div>
+      </div>
+      <p class="acc-flash" id="acc-flash" role="status" hidden></p>
+      <div class="acc-grid">
+        <form class="card acc-card" id="acc-add-form" autocomplete="off">
+          <h3 data-i18n="acc_add_title">Жаңа оқушы</h3>
+          <div class="form-group">
+            <label for="acc-add-name" data-i18n="acc_name_kk">Аты-жөні (қазақша)</label>
+            <input id="acc-add-name" required maxlength="120" />
+          </div>
+          <div class="form-group">
+            <label for="acc-add-name-en" data-i18n="acc_name_en">Аты-жөні (латынша, міндетті емес)</label>
+            <input id="acc-add-name-en" maxlength="120" />
+          </div>
+          <div class="form-group">
+            <label for="acc-add-login" data-i18n="acc_login">Логин</label>
+            <input id="acc-add-login" required maxlength="40" autocapitalize="none" spellcheck="false" />
+            <p class="acc-help" data-i18n="acc_login_hint"></p>
+          </div>
+          <div class="form-group">
+            <label for="acc-add-pass" data-i18n="acc_password">Құпия сөз</label>
+            <div class="acc-input-row">
+              <input id="acc-add-pass" type="text" required minlength="6" maxlength="128" autocomplete="new-password" />
+              <button type="button" class="btn btn-ghost btn-sm" id="acc-add-gen" data-i18n="acc_generate">Жасау</button>
+            </div>
+            <p class="acc-help" data-i18n="acc_password_hint"></p>
+          </div>
+          <div class="form-error" id="acc-add-error"></div>
+          <button type="submit" class="btn btn-primary" data-i18n="acc_add_btn">Оқушы қосу</button>
+        </form>
+        <form class="card acc-card" id="acc-my-form" autocomplete="off">
+          <h3 data-i18n="acc_my_title">Менің құпия сөзім</h3>
+          <p class="acc-help" data-i18n="acc_my_lead"></p>
+          <div class="form-group">
+            <label for="acc-my-old" data-i18n="acc_old_pw">Қазіргі құпия сөз</label>
+            <input id="acc-my-old" type="password" required autocomplete="current-password" />
+          </div>
+          <div class="form-group">
+            <label for="acc-my-new" data-i18n="acc_new_pw">Жаңа құпия сөз</label>
+            <input id="acc-my-new" type="password" required minlength="6" maxlength="128" autocomplete="new-password" />
+          </div>
+          <div class="form-group">
+            <label for="acc-my-new2" data-i18n="acc_new_pw2">Жаңа құпия сөзді қайталаңыз</label>
+            <input id="acc-my-new2" type="password" required minlength="6" maxlength="128" autocomplete="new-password" />
+          </div>
+          <div class="form-error" id="acc-my-error"></div>
+          <button type="submit" class="btn btn-primary" data-i18n="save">Сақтау</button>
+        </form>
+      </div>
+      <div id="acc-list"></div>
+    </section>
+
+    <div class="page-header acc-results-header">
       <div>
         <h1 data-i18n="card_teacher">Оқушы нәтижелері</h1>
         <p data-i18n="card_teacher_d">Барлық жіберілген сынама тесттер мен ашық сұрақтар.</p>
@@ -21,15 +78,33 @@
     <div id="teacher-root"></div>
   </main>
 
+  <div class="modal-overlay" id="acc-modal" role="dialog" aria-modal="true" aria-labelledby="acc-modal-title">
+    <div class="modal">
+      <button type="button" class="modal-close" aria-label="Close">&times;</button>
+      <h2 id="acc-modal-title"></h2>
+      <p class="hint"></p>
+      <form autocomplete="off">
+        <div class="acc-fields"></div>
+        <div class="form-error"></div>
+        <div class="acc-modal-actions">
+          <button type="button" class="btn btn-ghost" data-cancel data-i18n="cancel">Болдырмау</button>
+          <button type="submit" class="btn btn-primary"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
   <script src="js/firebase-config.js"></script>
   <script src="js/i18n.js"></script>
   <script src="js/float-ui.js"></script>
+  <script src="js/accounts-config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/app-nav.js"></script>
   <script src="js/teacher.js"></script>
-  <script>bootTeacher();</script>
+  <script src="js/accounts-admin.js"></script>
+  <script>bootTeacher(); bootAccountsAdmin();</script>
 </body>
 </html>

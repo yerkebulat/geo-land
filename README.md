@@ -9,7 +9,7 @@ Personal training room for students: landing page (path to IGeo), trilingual UI 
 ## Features
 
 - Public landing: ascent path (school → city → oblast → republican → **IGeo**), topic map, mentor & medals
-- Login only (4 pilot accounts, no public registration)
+- Login only (no public registration); the teacher adds, renames, resets and deletes student accounts on the teacher page
 - **Practice tests** — multiple choice, auto-graded
 - **Open questions** — written answers, AI draft score, teacher reviews
 - **Teacher panel** — view all submissions, grade open questions
@@ -21,7 +21,7 @@ Personal training room for students: landing page (path to IGeo), trilingual UI 
 
 1. Enable **GitHub Pages** (branch `main`, `/root`) — see [SETUP.md](SETUP.md)
 2. (Recommended) Connect **Firebase Firestore** so teacher sees students across devices
-3. Log in with accounts listed in SETUP.md
+3. Accounts are server-side (Cloudflare Worker `geo-land-accounts`), see SETUP.md
 
 ## Structure
 
@@ -31,11 +31,13 @@ app.html            Dashboard
 test.html           Take a test
 open-hub.html       Open questions (pick topic / set)
 open.html           Answer an open-question set
-teacher.html        Teacher results
+teacher.html        Teacher: student accounts + results
 history.html        Student history
 submission.html     View / grade one submission
 css/main.css        Dark atlas theme
-js/                 Auth, storage, i18n, runners
+js/                 Auth (session client), storage, i18n, runners
+worker/accounts/    Accounts Worker (login, sessions, teacher admin API)
+worker/gemini-grade/ Gemini grading Worker
 data/test-1.json    First MCQ test (30 Q)
 data/open-1.json    Built-in open-question set (14)
 tasks/              Original Word sources
